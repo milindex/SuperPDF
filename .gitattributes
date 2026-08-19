@@ -1,0 +1,10 @@
+# Normalize line endings to LF in the repo, keep working-tree defaults.
+* text=auto
+
+# Binary files must not be touched.
+*.ico binary
+*.png binary
+*.jpg binary
+*.webp binary
+*.woff binary
+*.woff2 binary
