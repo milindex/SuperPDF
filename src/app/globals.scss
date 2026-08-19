@@ -1,0 +1,182 @@
+:root {
+  color-scheme: light;
+
+  --color-brand: #29d192;
+  --color-brand-hover: #20b67f;
+  --color-brand-light: #4be0a7;
+
+  --color-bg: #ffffff;
+  --color-surface: #f7f7f7;
+  --color-surface-2: #efefef;
+  --color-surface-3: #e7e7e7;
+
+  --color-border: #e2e2e2;
+  --color-border-light: #d9d9d9;
+  --color-border-active: #29d192;
+
+  --color-text-primary: #111111;
+  --color-text-secondary: #4a4a4a;
+  --color-text-muted: #6b6b6b;
+
+  --container-width: 1280px;
+
+  --radius: 12px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body,
+p {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  font-family: var(--font-montserrat, var(--font-geist-sans, system-ui, sans-serif));
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-brand);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--color-brand-hover);
+}
+
+// Sticky-footer layout: header on top, footer pinned to bottom on short pages.
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1;
+  width: 100%;
+  padding-top: 64px; // fixed header height
+}
+
+/* === Animation keyframes & effects (ported from v1 globals.css) === */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out;
+}
+
+@keyframes border-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Running gradient border on hover — used by tool/feature cards */
+.animate-border-run {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-border-run::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 70%,
+    #4be0a7 85%,
+    #29d192 100%
+  );
+  animation: border-spin 2s linear infinite;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.animate-border-run:hover::before {
+  opacity: 1;
+}
+
+.animate-border-run::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--color-surface);
+  border-radius: inherit;
+  z-index: 2;
+}
+
+.animate-border-run > * {
+  position: relative;
+  z-index: 3;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delay {
+  animation: float 7s ease-in-out 1s infinite;
+}
+
+.animate-float-delay-2 {
+  animation: float 8s ease-in-out 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
