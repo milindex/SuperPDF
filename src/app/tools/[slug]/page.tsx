@@ -12,6 +12,7 @@ const toolLoaders: Record<string, () => Promise<ToolPageModule>> = {
   "merge-pdf": () => import("@/tools/merge-pdf/ToolPage"),
   "split-pdf": () => import("@/tools/split-pdf/ToolPage"),
   "rotate-pdf": () => import("@/tools/rotate-pdf/ToolPage"),
+  "delete-pages": () => import("@/tools/delete-pages/ToolPage"),
 };
 
 export default async function ToolRoute({

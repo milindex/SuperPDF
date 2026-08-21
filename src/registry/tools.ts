@@ -60,4 +60,15 @@ export const toolsRegistry: ToolDefinition[] = [
     status: "implemented",
     swType: "rotate-pdf",
   },
+  {
+    id: "delete-pages",
+    slug: "delete-pdf-pages",
+    name: "Delete Pages",
+    description: "Delete unwanted pages from your PDF documents.",
+    category: "Organize",
+    icon: "organize",
+    mode: "sw-routed",
+    status: "implemented",
+    swType: "delete-pages",
+  },
 ];

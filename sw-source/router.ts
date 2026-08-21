@@ -44,10 +44,20 @@ export async function routeRequest(
       }
       return logic.rotateAllPages(p.buffer, p.angle ?? 90);
     }
+    case "delete-pages": {
+      const { deletePages } = await import("@/tools/delete-pages/logic");
+      const p = payload as { buffer: ArrayBuffer; pageIndices: number[] };
+      return deletePages(p.buffer, p.pageIndices);
+    }
     default:
       throw new Error(`Unknown tool type: ${type}`);
   }
 }
 
 /** Set of handled types — kept in sync with the switch above for the lint check. */
-export const handledTypes: string[] = ["merge-pdf", "split-pdf", "rotate-pdf"];
+export const handledTypes: string[] = [
+  "merge-pdf",
+  "split-pdf",
+  "rotate-pdf",
+  "delete-pages",
+];

@@ -76,3 +76,15 @@ export interface RotatePdfPayload {
   angle?: number;
   pageRotations?: Record<number, number>;
 }
+
+/**
+ * Delete Pages — remove unwanted pages from a PDF.
+ * UI → SW: `{ type: "delete-pages", payload: { buffer, pageIndices } }`
+ * SW → UI: `Uint8Array` of the document with pages removed.
+ * `pageIndices` are 0-based page indices to delete.
+ */
+export const DELETE_PAGES_TYPE = "delete-pages" as const;
+export interface DeletePagesPayload {
+  buffer: ArrayBuffer;
+  pageIndices: number[];
+}
