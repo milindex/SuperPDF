@@ -38,4 +38,15 @@ export const toolsRegistry: ToolDefinition[] = [
     status: "implemented",
     swType: "merge-pdf",
   },
+  {
+    id: "split-pdf",
+    slug: "split-pdf",
+    name: "Split PDF",
+    description: "Extract pages or ranges into separate files.",
+    category: "Organize",
+    icon: "split",
+    mode: "sw-routed",
+    status: "implemented",
+    swType: "split-pdf",
+  },
 ];

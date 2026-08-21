@@ -47,3 +47,18 @@ export const MERGE_PDF_TYPE = "merge-pdf" as const;
 export interface MergePdfPayload {
   buffers: ArrayBuffer[];
 }
+
+/**
+ * Split PDF — split a PDF by page ranges, selected pages, or target size.
+ * UI → SW: `{ type: "split-pdf", payload: { action, buffer, ... } }`
+ * SW → UI: `Uint8Array[]` of the produced documents.
+ */
+export const SPLIT_PDF_TYPE = "split-pdf" as const;
+export type SplitPdfAction = "by-range" | "by-pages" | "by-size";
+export interface SplitPdfPayload {
+  action: SplitPdfAction;
+  buffer: ArrayBuffer;
+  rangeString?: string;
+  pageNumbers?: number[];
+  maxSizeBytes?: number;
+}

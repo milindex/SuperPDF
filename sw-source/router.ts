@@ -13,10 +13,29 @@ export async function routeRequest(
       const p = payload as { buffers: ArrayBuffer[] };
       return mergePdfs(p.buffers);
     }
+    case "split-pdf": {
+      const logic = await import("@/tools/split-pdf/logic");
+      const p = payload as {
+        action: string;
+        buffer: ArrayBuffer;
+        rangeString?: string;
+        pageNumbers?: number[];
+        maxSizeBytes?: number;
+      };
+      switch (p.action) {
+        case "by-pages":
+          return logic.splitPdfByPages(p.buffer, p.pageNumbers ?? []);
+        case "by-size":
+          return logic.splitPdfBySize(p.buffer, p.maxSizeBytes ?? 0);
+        case "by-range":
+        default:
+          return logic.splitPdfByRange(p.buffer, p.rangeString ?? "");
+      }
+    }
     default:
       throw new Error(`Unknown tool type: ${type}`);
   }
 }
 
 /** Set of handled types — kept in sync with the switch above for the lint check. */
-export const handledTypes: string[] = ["merge-pdf"];
+export const handledTypes: string[] = ["merge-pdf", "split-pdf"];
