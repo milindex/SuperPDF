@@ -32,10 +32,22 @@ export async function routeRequest(
           return logic.splitPdfByRange(p.buffer, p.rangeString ?? "");
       }
     }
+    case "rotate-pdf": {
+      const logic = await import("@/tools/rotate-pdf/logic");
+      const p = payload as {
+        buffer: ArrayBuffer;
+        angle?: number;
+        pageRotations?: Record<number, number>;
+      };
+      if (p.pageRotations) {
+        return logic.rotatePdf(p.buffer, p.pageRotations);
+      }
+      return logic.rotateAllPages(p.buffer, p.angle ?? 90);
+    }
     default:
       throw new Error(`Unknown tool type: ${type}`);
   }
 }
 
 /** Set of handled types — kept in sync with the switch above for the lint check. */
-export const handledTypes: string[] = ["merge-pdf", "split-pdf"];
+export const handledTypes: string[] = ["merge-pdf", "split-pdf", "rotate-pdf"];

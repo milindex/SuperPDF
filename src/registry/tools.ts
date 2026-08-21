@@ -49,4 +49,15 @@ export const toolsRegistry: ToolDefinition[] = [
     status: "implemented",
     swType: "split-pdf",
   },
+  {
+    id: "rotate-pdf",
+    slug: "rotate-pdf",
+    name: "Rotate PDF",
+    description: "Rotate pages in your PDF file.",
+    category: "Organize",
+    icon: "rotate",
+    mode: "sw-routed",
+    status: "implemented",
+    swType: "rotate-pdf",
+  },
 ];

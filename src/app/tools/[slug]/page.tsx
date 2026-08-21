@@ -11,6 +11,7 @@ type ToolPageModule = { default: React.ComponentType<{ toolId: string }> };
 const toolLoaders: Record<string, () => Promise<ToolPageModule>> = {
   "merge-pdf": () => import("@/tools/merge-pdf/ToolPage"),
   "split-pdf": () => import("@/tools/split-pdf/ToolPage"),
+  "rotate-pdf": () => import("@/tools/rotate-pdf/ToolPage"),
 };
 
 export default async function ToolRoute({

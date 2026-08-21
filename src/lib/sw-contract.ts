@@ -62,3 +62,17 @@ export interface SplitPdfPayload {
   pageNumbers?: number[];
   maxSizeBytes?: number;
 }
+
+/**
+ * Rotate PDF — rotate pages by 90/180/270 degrees.
+ * UI → SW: `{ type: "rotate-pdf", payload: { buffer, angle } }`
+ * SW → UI: `Uint8Array` of the rotated document.
+ * `angle` rotates all pages. `pageRotations` maps page index (0-based) →
+ * degrees to add and overrides `angle` when present.
+ */
+export const ROTATE_PDF_TYPE = "rotate-pdf" as const;
+export interface RotatePdfPayload {
+  buffer: ArrayBuffer;
+  angle?: number;
+  pageRotations?: Record<number, number>;
+}

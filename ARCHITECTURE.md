@@ -12,7 +12,7 @@
 | Framework | Next.js (App Router), React, TypeScript, SCSS modules |
 | Processing | Service Worker (pdf-lib) + client-direct (WASM/DOM tools) |
 | Status | <!-- GENERATED:START:status -->
-2
+3
 <!-- GENERATED:END:status --> |
 
 ## 2. Processing model
@@ -36,6 +36,7 @@ No third mode without an ADR in `docs/adr/`.
 |---|---|---|---|
 | merge-pdf | Organize | implemented | sw-routed |
 | split-pdf | Organize | implemented | sw-routed |
+| rotate-pdf | Organize | implemented | sw-routed |
 <!-- GENERATED:END:tool-table -->
 
 ## 4. Per-tool spec format
