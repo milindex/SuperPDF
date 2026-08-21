@@ -1,10 +1,20 @@
 "use client";
 
-import type { SwResponse } from "./sw-contract";
+let swRegistration: ServiceWorkerRegistration | null = null;
+let messageId = 0;
+
+export function setSwRegistration(reg: ServiceWorkerRegistration | null) {
+  swRegistration = reg;
+}
+
+export function getSwRegistration(): ServiceWorkerRegistration | null {
+  return swRegistration;
+}
 
 /**
  * Sends a typed message to the Service Worker router and resolves the
- * matching response via the correlation `id`. Used by SW-routed tools.
+ * matching response over a MessageChannel. Posting to `reg.active` directly
+ * works on first load (no controlled-page requirement).
  *
  * The caller must guarantee `type` is handled in sw-source/index.ts (see
  * Agent.md §0.2). A lint/CI check cross-references every `sendToSw()` call
@@ -14,27 +24,20 @@ export function sendToSw<P = unknown, R = unknown>(
   type: string,
   payload: P,
 ): Promise<R> {
+  const active = swRegistration?.active;
+  if (!active) {
+    return Promise.reject(new Error("Service Worker not ready"));
+  }
+
+  const id = ++messageId;
+
   return new Promise<R>((resolve, reject) => {
-    const id = Math.floor(Math.random() * 2 ** 31);
-    const controller = navigator.serviceWorker;
-
-    if (!controller?.controller) {
-      reject(new Error("Service Worker not ready. Refresh the page."));
-      return;
-    }
-
-    const onMessage = (event: MessageEvent<SwResponse<R>>) => {
-      const data = event.data;
-      if (!data || data.id !== id) return;
-      controller.removeEventListener("message", onMessage);
-      if (data.error) {
-        reject(new Error(data.error));
-      } else {
-        resolve(data.result as R);
-      }
+    const channel = new MessageChannel();
+    channel.port1.onmessage = (event: MessageEvent) => {
+      const { error, result } = event.data as { error?: string; result?: R };
+      if (error) reject(new Error(error));
+      else resolve(result as R);
     };
-
-    controller.addEventListener("message", onMessage);
-    controller.controller.postMessage({ type, id, payload });
+    active.postMessage({ type, id, payload }, [channel.port2]);
   });
 }

@@ -29,6 +29,7 @@ await esbuild.build({
   target: "es2022",
   minify: true,
   sourcemap: false,
+  alias: { "@": "./src" },
   banner: { js: banner },
 });
 

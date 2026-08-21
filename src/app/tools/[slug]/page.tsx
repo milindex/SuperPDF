@@ -8,7 +8,9 @@ type ToolPageModule = { default: React.ComponentType<{ toolId: string }> };
  * `src/tools/{tool-id}/ToolPage.tsx` (client component). Each tool also
  * exports its `slug` so the resolver can route `[slug]` → `{tool-id}`.
  */
-const toolLoaders: Record<string, () => Promise<ToolPageModule>> = {};
+const toolLoaders: Record<string, () => Promise<ToolPageModule>> = {
+  "merge-pdf": () => import("@/tools/merge-pdf/ToolPage"),
+};
 
 export default async function ToolRoute({
   params,

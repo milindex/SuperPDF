@@ -37,3 +37,13 @@ export interface SwBinaryResult {
   /** MIME type of the produced file. */
   mimeType: string;
 }
+
+/**
+ * Merge PDF — combine multiple PDFs into one.
+ * UI → SW: `{ type: "merge-pdf", payload: { buffers } }`
+ * SW → UI: `Uint8Array` of the merged document.
+ */
+export const MERGE_PDF_TYPE = "merge-pdf" as const;
+export interface MergePdfPayload {
+  buffers: ArrayBuffer[];
+}

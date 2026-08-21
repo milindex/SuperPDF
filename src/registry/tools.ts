@@ -26,4 +26,16 @@ export interface ToolDefinition {
   swType?: string;
 }
 
-export const toolsRegistry: ToolDefinition[] = [];
+export const toolsRegistry: ToolDefinition[] = [
+  {
+    id: "merge-pdf",
+    slug: "merge-pdf",
+    name: "Merge PDF",
+    description: "Combine multiple PDF files into one document.",
+    category: "Organize",
+    icon: "merge",
+    mode: "sw-routed",
+    status: "implemented",
+    swType: "merge-pdf",
+  },
+];
