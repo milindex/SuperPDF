@@ -29,6 +29,10 @@
   box-sizing: border-box;
 }
 
+html {
+  font-family: var(--font-montserrat, var(--font-geist-sans, system-ui, sans-serif));
+}
+
 html,
 body {
   margin: 0;
@@ -42,7 +46,17 @@ p {
   font-weight: 400;
   color: var(--color-text-primary);
   line-height: 1.6;
-  font-family: var(--font-montserrat, var(--font-geist-sans, system-ui, sans-serif));
+}
+
+// Form controls do not inherit font-family from their ancestors (browsers
+// apply a user-agent system font). Force them onto the app font.
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 body {

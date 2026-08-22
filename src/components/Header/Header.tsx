@@ -24,7 +24,6 @@ const pdfTools: Record<string, ToolLink[]> = {
   ],
   "Convert To PDF": [
     { name: "Word to PDF", href: "/tools/word-to-pdf" },
-    { name: "PowerPoint to PDF", href: "/tools/powerpoint-to-pdf" },
     { name: "Excel to PDF", href: "/tools/excel-to-pdf" },
     { name: "JPG to PDF", href: "/tools/jpg-to-pdf" },
     { name: "PNG to PDF", href: "/tools/png-to-pdf" },
@@ -33,6 +32,7 @@ const pdfTools: Record<string, ToolLink[]> = {
     { name: "SVG to PDF", href: "/tools/svg-to-pdf" },
     { name: "TIFF to PDF", href: "/tools/tiff-to-pdf" },
     { name: "Text to PDF", href: "/tools/text-to-pdf" },
+    { name: "CSV to PDF", href: "/tools/csv-to-pdf" },
     { name: "Webpage to PDF", href: "/tools/webpage-to-pdf" },
   ],
   "Convert From PDF": [
@@ -68,12 +68,6 @@ const pdfTools: Record<string, ToolLink[]> = {
     { name: "Repair PDF", href: "/tools/repair-pdf" },
     { name: "PDF OCR", href: "/tools/ocr-pdf" },
     { name: "PDF to PDF/A", href: "/tools/pdf-to-pdfa" },
-  ],
-  AI: [
-    { name: "Translate PDF", href: "/tools/translate-pdf" },
-    { name: "Summarize PDF", href: "/tools/summarize-pdf" },
-    { name: "Chat with PDF", href: "/tools/chat-pdf" },
-    { name: "Extract Insights", href: "/tools/extract-insights" },
   ],
 };
 
@@ -373,7 +367,7 @@ export default function ResponsiveHeader() {
                           closeMenu={() => setActiveDropdown(null)}
                         />
                         <MegaColumn
-                          categories={["Optimize", "AI"]}
+                          categories={["Optimize"]}
                           tools={pdfTools}
                           closeMenu={() => setActiveDropdown(null)}
                         />

@@ -27,7 +27,6 @@ export const tools: HomepageTool[] = [
 
   // === Convert To PDF ===
   { name: "Word to PDF", description: "Convert Word documents to PDF files.", href: "/tools/word-to-pdf", icon: "word-to-pdf", category: "convert", subcategory: "to-pdf" },
-  { name: "PowerPoint to PDF", description: "Convert PowerPoint presentations to PDF.", href: "/tools/powerpoint-to-pdf", icon: "powerpoint-to-pdf", category: "convert", subcategory: "to-pdf" },
   { name: "Excel to PDF", description: "Convert Excel spreadsheets to PDF.", href: "/tools/excel-to-pdf", icon: "excel-to-pdf", category: "convert", subcategory: "to-pdf" },
   { name: "JPG to PDF", description: "Convert JPG images to PDF files.", href: "/tools/jpg-to-pdf", icon: "jpg", category: "convert", subcategory: "to-pdf" },
   { name: "PNG to PDF", description: "Convert PNG images to PDF files.", href: "/tools/png-to-pdf", icon: "jpg", category: "convert", subcategory: "to-pdf" },
@@ -36,6 +35,7 @@ export const tools: HomepageTool[] = [
   { name: "SVG to PDF", description: "Convert SVG vector graphics to PDF.", href: "/tools/svg-to-pdf", icon: "vector", category: "convert", subcategory: "to-pdf" },
   { name: "TIFF to PDF", description: "Convert TIFF images to PDF documents.", href: "/tools/tiff-to-pdf", icon: "convert", category: "convert", subcategory: "to-pdf" },
   { name: "Text to PDF", description: "Convert plain text files to PDF.", href: "/tools/text-to-pdf", icon: "typography", category: "convert", subcategory: "to-pdf" },
+  { name: "CSV to PDF", description: "Convert CSV spreadsheets to PDF tables.", href: "/tools/csv-to-pdf", icon: "excel-to-pdf", category: "convert", subcategory: "to-pdf" },
   { name: "Webpage to PDF", description: "Convert any webpage URL to a PDF.", href: "/tools/webpage-to-pdf", icon: "world-www", category: "convert", subcategory: "to-pdf" },
 
   // === Convert From PDF ===
@@ -65,10 +65,4 @@ export const tools: HomepageTool[] = [
   // === Create & Forms ===
   { name: "Scan to PDF", description: "Scan documents with your camera and save as PDF.", href: "/tools/scan-to-pdf", icon: "scan", category: "create-forms" },
   { name: "Fill Out PDF", description: "Fill out PDF forms and save them digitally.", href: "/tools/fill-forms", icon: "edit", category: "create-forms" },
-
-  // === AI ===
-  { name: "Translate PDF", description: "Translate PDF documents into multiple languages using AI.", href: "/tools/translate-pdf", icon: "language", category: "ai" },
-  { name: "Summarize PDF", description: "Generate concise AI-powered summaries of any PDF document.", href: "/tools/summarize-pdf", icon: "sparkles", category: "ai" },
-  { name: "Chat with PDF", description: "Ask questions and get answers from your PDF documents using AI.", href: "/tools/chat-pdf", icon: "chat", category: "ai" },
-  { name: "Extract Insights", description: "Automatically extract key insights and data from your PDF documents.", href: "/tools/extract-insights", icon: "insights", category: "ai" },
 ];
