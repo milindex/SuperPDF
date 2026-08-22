@@ -4,12 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Icon from "@/components/Icon/Icon";
 import type { HomepageTool } from "@/data/homepage-tools";
-import { toolsRegistry } from "@/registry/tools";
 import styles from "./ToolsFilter.module.scss";
-
-const WORKING_SLUGS = new Set(
-  toolsRegistry.filter((t) => t.status === "implemented").map((t) => t.slug),
-);
 
 const CATEGORIES = [
   { value: "all", label: "All" },
@@ -96,9 +91,6 @@ export default function ToolsFilter({ tools }: { tools: HomepageTool[] }) {
                 {tool.name}
                 {tool.category === "ai" && (
                   <span className={styles.proBadge}>PRO</span>
-                )}
-                {WORKING_SLUGS.has(tool.href.replace(/^\/tools\//, "")) && (
-                  <span className={styles.workingChip}>Working</span>
                 )}
               </h3>
               <p className={styles.cardDesc}>{tool.description}</p>
