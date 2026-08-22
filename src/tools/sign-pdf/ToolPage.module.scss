@@ -1,0 +1,92 @@
+.panel {
+  margin-top: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.fileName {
+  display: block;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.signPad {
+  width: 100%;
+  max-width: 560px;
+  height: 180px;
+  border: 1px dashed var(--color-border);
+  border-radius: 12px;
+  background: #ffffff;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.signActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.clearBtn {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0;
+  min-height: 0;
+
+  &:hover {
+    color: var(--color-brand);
+  }
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.signBtn {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-brand);
+  color: #000000;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 200ms;
+
+  &:hover:not(:disabled) {
+    background: var(--color-brand-hover);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.error {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #dc2626;
+}
