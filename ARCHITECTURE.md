@@ -12,7 +12,7 @@
 | Framework | Next.js (App Router), React, TypeScript, SCSS modules |
 | Processing | Service Worker (pdf-lib) + client-direct (WASM/DOM tools) |
 | Status | <!-- GENERATED:START:status -->
-4
+44
 <!-- GENERATED:END:status --> |
 
 ## 2. Processing model
@@ -38,6 +38,46 @@ No third mode without an ADR in `docs/adr/`.
 | split-pdf | Organize | implemented | sw-routed |
 | rotate-pdf | Organize | implemented | sw-routed |
 | delete-pages | Organize | implemented | sw-routed |
+| reorder-pages | Organize | implemented | sw-routed |
+| extract-pages | Organize | implemented | sw-routed |
+| organize-pages | Organize | implemented | sw-routed |
+| add-page-numbers | Organize | implemented | sw-routed |
+| flatten-pdf | Organize | implemented | sw-routed |
+| sign-pdf | Edit | implemented | sw-routed |
+| crop-pdf | Edit | implemented | sw-routed |
+| redact-pdf | Edit | implemented | sw-routed |
+| watermark-pdf | Edit | implemented | sw-routed |
+| page-size | Edit | implemented | sw-routed |
+| protect-pdf | Security | implemented | client-direct |
+| unlock-pdf | Security | implemented | client-direct |
+| remove-metadata | Security | implemented | sw-routed |
+| edit-metadata | Security | implemented | sw-routed |
+| text-to-pdf | Convert To PDF | implemented | sw-routed |
+| csv-to-pdf | Convert To PDF | implemented | sw-routed |
+| repair-pdf | Optimization | implemented | sw-routed |
+| fill-forms | Create & Forms | implemented | sw-routed |
+| pdf-to-text | Convert From PDF | implemented | client-direct |
+| pdf-to-jpg | Convert From PDF | implemented | client-direct |
+| pdf-to-png | Convert From PDF | implemented | client-direct |
+| extract-images | Convert From PDF | implemented | client-direct |
+| pdf-to-word | Convert From PDF | implemented | client-direct |
+| pdf-to-powerpoint | Convert From PDF | implemented | client-direct |
+| pdf-to-excel | Convert From PDF | implemented | client-direct |
+| pdf-to-svg | Convert From PDF | implemented | client-direct |
+| pdf-to-html | Convert From PDF | implemented | client-direct |
+| jpg-to-pdf | Convert To PDF | implemented | client-direct |
+| png-to-pdf | Convert To PDF | implemented | client-direct |
+| webp-to-pdf | Convert To PDF | implemented | client-direct |
+| svg-to-pdf | Convert To PDF | implemented | client-direct |
+| heic-to-pdf | Convert To PDF | implemented | client-direct |
+| tiff-to-pdf | Convert To PDF | implemented | client-direct |
+| excel-to-pdf | Convert To PDF | implemented | client-direct |
+| word-to-pdf | Convert To PDF | implemented | client-direct |
+| webpage-to-pdf | Convert To PDF | implemented | client-direct |
+| compress-pdf | Optimization | implemented | client-direct |
+| ocr-pdf | Optimization | implemented | client-direct |
+| pdf-to-pdfa | Optimization | implemented | client-direct |
+| scan-to-pdf | Create & Forms | implemented | client-direct |
 <!-- GENERATED:END:tool-table -->
 
 ## 4. Per-tool spec format
