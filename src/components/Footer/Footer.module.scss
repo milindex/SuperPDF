@@ -74,6 +74,24 @@
   align-items: center;
 }
 
+.legal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  @media (min-width: 768px) {
+    align-items: flex-end;
+  }
+}
+
+.version {
+  color: var(--color-text-muted);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
 .copyright {
   color: var(--color-text-secondary);
   font-size: 0.75rem;

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SuperPDFLogo from "@/components/logos/SuperPDFLogo";
+import { APP_VERSION } from "@/lib/version";
 import styles from "./Footer.module.scss";
 
 const footerLinks: Record<string, { name: string; href: string }[]> = {
@@ -52,8 +53,11 @@ export default function Footer() {
           <Link href="/" className={styles.logoLink} aria-label="SuperPDF home">
             <SuperPDFLogo style={{ height: 40, width: "auto" }} />
           </Link>
-          <div className={styles.copyright}>
-            &copy; {new Date().getFullYear()} SuperPDF. All rights reserved.
+          <div className={styles.legal}>
+            <span className={styles.version}>v{APP_VERSION}</span>
+            <span className={styles.copyright}>
+              &copy; 2026 Milind Sonawane
+            </span>
           </div>
         </div>
       </div>
