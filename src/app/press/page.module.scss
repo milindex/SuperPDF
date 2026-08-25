@@ -1,0 +1,66 @@
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 0.75rem;
+}
+
+.boilerplate {
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.th,
+.td {
+  text-align: left;
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.th {
+  width: 35%;
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.td {
+  color: var(--color-text-secondary);
+}
+
+.contact {
+  color: var(--color-text-secondary);
+
+  a {
+    color: var(--color-brand);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-brand-hover);
+    }
+  }
+}
+
+.note {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.link {
+  color: var(--color-brand);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-brand-hover);
+  }
+}

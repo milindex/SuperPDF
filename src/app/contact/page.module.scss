@@ -1,0 +1,107 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1.4fr 1fr;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.input,
+.textarea {
+  padding: 0.75rem 0.875rem;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 200ms;
+
+  &:focus {
+    border-color: var(--color-brand);
+  }
+}
+
+.textarea {
+  resize: vertical;
+}
+
+.submit {
+  padding: 0.75rem 1.25rem;
+  background: var(--color-brand);
+  color: #000000;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 200ms;
+
+  &:hover {
+    background: var(--color-brand-hover);
+  }
+}
+
+.note {
+  font-size: 0.875rem;
+  color: var(--color-brand);
+}
+
+.info {
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  align-self: start;
+}
+
+.infoTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 1rem;
+}
+
+.infoText {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 0.75rem;
+
+  a {
+    color: var(--color-brand);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-brand-hover);
+    }
+  }
+}
+
+.infoNote {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin: 1rem 0 0;
+  line-height: 1.6;
+}
