@@ -44,6 +44,16 @@
   margin-bottom: 1.25rem;
 }
 
+.note {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.75rem 0.875rem;
+  margin: 0 0 1.25rem;
+}
+
 .label {
   display: block;
   font-size: 0.875rem;

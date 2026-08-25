@@ -32,6 +32,7 @@ const toolLoaders: Record<string, () => Promise<ToolPageModule>> = {
   "repair-pdf": () => import("@/tools/repair-pdf/ToolPage"),
   "fill-forms": () => import("@/tools/fill-forms/ToolPage"),
   "pdf-to-text": () => import("@/tools/pdf-to-text/ToolPage"),
+  "pdf-to-markdown": () => import("@/tools/pdf-to-markdown/ToolPage"),
   "pdf-to-jpg": () => import("@/tools/pdf-to-jpg/ToolPage"),
   "pdf-to-png": () => import("@/tools/pdf-to-png/ToolPage"),
   "extract-images": () => import("@/tools/extract-images/ToolPage"),

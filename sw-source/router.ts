@@ -21,12 +21,19 @@ export async function routeRequest(
         rangeString?: string;
         pageNumbers?: number[];
         maxSizeBytes?: number;
+        everyNPages?: number;
       };
       switch (p.action) {
         case "by-pages":
           return logic.splitPdfByPages(p.buffer, p.pageNumbers ?? []);
         case "by-size":
           return logic.splitPdfBySize(p.buffer, p.maxSizeBytes ?? 0);
+        case "by-even-odd":
+          return logic.splitPdfByEvenOdd(p.buffer);
+        case "by-n":
+          return logic.splitPdfEveryN(p.buffer, p.everyNPages ?? 1);
+        case "by-bookmarks":
+          return logic.splitPdfByBookmarks(p.buffer);
         case "by-range":
         default:
           return logic.splitPdfByRange(p.buffer, p.rangeString ?? "");

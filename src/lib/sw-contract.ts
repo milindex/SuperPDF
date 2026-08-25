@@ -54,13 +54,21 @@ export interface MergePdfPayload {
  * SW → UI: `Uint8Array[]` of the produced documents.
  */
 export const SPLIT_PDF_TYPE = "split-pdf" as const;
-export type SplitPdfAction = "by-range" | "by-pages" | "by-size";
+export type SplitPdfAction =
+  | "by-range"
+  | "by-pages"
+  | "by-size"
+  | "by-even-odd"
+  | "by-n"
+  | "by-bookmarks";
 export interface SplitPdfPayload {
   action: SplitPdfAction;
   buffer: ArrayBuffer;
   rangeString?: string;
   pageNumbers?: number[];
   maxSizeBytes?: number;
+  /** Pages per chunk for `by-n`. */
+  everyNPages?: number;
 }
 
 /**

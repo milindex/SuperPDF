@@ -50,6 +50,29 @@ test("split tool splits a PDF by range and lists outputs", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("split tool splits every N pages", async ({ page }) => {
+  await page.goto("/tools/split-pdf");
+
+  const pdf = await makePdfBuffer(7);
+  await page.locator('input[type="file"]').setInputFiles({
+    name: "doc.pdf",
+    mimeType: "application/pdf",
+    buffer: pdf,
+  });
+
+  await page.getByRole("button", { name: "Every N Pages" }).click();
+  await page.getByRole("spinbutton", { name: /Pages per split/ }).fill("2");
+  await waitForSw(page);
+  await page.getByRole("button", { name: "Split PDF" }).click();
+
+  await expect(
+    page.getByText(/Split into 4 files/),
+  ).toBeVisible({ timeout: 15000 });
+  await expect(
+    page.getByRole("link", { name: "Download" }).first(),
+  ).toBeVisible();
+});
+
 test("split tool shows the drop region on load", async ({ page }) => {
   await page.goto("/tools/split-pdf");
   await expect(

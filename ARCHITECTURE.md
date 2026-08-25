@@ -12,7 +12,7 @@
 | Framework | Next.js (App Router), React, TypeScript, SCSS modules |
 | Processing | Service Worker (pdf-lib) + client-direct (WASM/DOM tools) |
 | Status | <!-- GENERATED:START:status -->
-44
+45
 <!-- GENERATED:END:status --> |
 
 ## 2. Processing model
@@ -57,6 +57,7 @@ No third mode without an ADR in `docs/adr/`.
 | repair-pdf | Optimization | implemented | sw-routed |
 | fill-forms | Create & Forms | implemented | sw-routed |
 | pdf-to-text | Convert From PDF | implemented | client-direct |
+| pdf-to-markdown | Convert From PDF | implemented | client-direct |
 | pdf-to-jpg | Convert From PDF | implemented | client-direct |
 | pdf-to-png | Convert From PDF | implemented | client-direct |
 | extract-images | Convert From PDF | implemented | client-direct |

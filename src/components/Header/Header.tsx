@@ -45,6 +45,7 @@ const pdfTools: Record<string, ToolLink[]> = {
     { name: "PDF to SVG", href: "/tools/pdf-to-svg" },
     { name: "PDF to HTML", href: "/tools/pdf-to-html" },
     { name: "PDF to Text", href: "/tools/pdf-to-text" },
+    { name: "PDF to Markdown", href: "/tools/pdf-to-markdown" },
   ],
   "Edit & Review": [
     { name: "Sign PDF", href: "/tools/sign-pdf" },

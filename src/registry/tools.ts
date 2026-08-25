@@ -279,6 +279,16 @@ export const toolsRegistry: ToolDefinition[] = [
     status: "implemented",
   },
   {
+    id: "pdf-to-markdown",
+    slug: "pdf-to-markdown",
+    name: "PDF to Markdown",
+    description: "Convert PDF files to clean Markdown documents.",
+    category: "Convert From PDF",
+    icon: "markdown",
+    mode: "client-direct",
+    status: "implemented",
+  },
+  {
     id: "pdf-to-jpg",
     slug: "pdf-to-jpg",
     name: "PDF to JPG",

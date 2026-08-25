@@ -48,6 +48,7 @@ export const tools: HomepageTool[] = [
   { name: "PDF to SVG", description: "Convert PDF pages to SVG vector graphics.", href: "/tools/pdf-to-svg", icon: "vector", category: "convert", subcategory: "from-pdf" },
   { name: "PDF to HTML", description: "Convert PDF to HTML web pages.", href: "/tools/pdf-to-html", icon: "html-to-pdf", category: "convert", subcategory: "from-pdf" },
   { name: "PDF to Text", description: "Extract text content from PDF documents.", href: "/tools/pdf-to-text", icon: "typography", category: "convert", subcategory: "from-pdf" },
+  { name: "PDF to Markdown", description: "Convert PDF files to clean Markdown documents.", href: "/tools/pdf-to-markdown", icon: "markdown", category: "convert", subcategory: "from-pdf" },
 
   // === Edit & Review ===
   { name: "Sign PDF", description: "Add your signature to a document.", href: "/tools/sign-pdf", icon: "sign", category: "edit-review" },

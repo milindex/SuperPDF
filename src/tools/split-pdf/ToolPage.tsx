@@ -19,6 +19,9 @@ const MODES: { value: Mode; label: string }[] = [
   { value: "by-range", label: "By Range" },
   { value: "by-pages", label: "By Pages" },
   { value: "by-size", label: "By Size" },
+  { value: "by-n", label: "Every N Pages" },
+  { value: "by-even-odd", label: "By Even/Odd" },
+  { value: "by-bookmarks", label: "By Bookmarks" },
 ];
 
 export default function SplitPdfTool() {
@@ -26,6 +29,7 @@ export default function SplitPdfTool() {
   const [mode, setMode] = useState<Mode>("by-range");
   const [rangeString, setRangeString] = useState("");
   const [pageNumbers, setPageNumbers] = useState("");
+  const [everyN, setEveryN] = useState("");
   const [maxSize, setMaxSize] = useState("");
   const [sizeUnit, setSizeUnit] = useState<"KB" | "MB">("MB");
   const [processing, setProcessing] = useState(false);
@@ -61,7 +65,11 @@ export default function SplitPdfTool() {
           .filter((n) => !Number.isNaN(n));
         if (pages.length === 0) throw new Error("Enter page numbers.");
         payload = { pageNumbers: pages };
-      } else {
+      } else if (mode === "by-n") {
+        const n = parseInt(everyN, 10);
+        if (!n || n < 1) throw new Error("Enter the number of pages per split.");
+        payload = { everyNPages: n };
+      } else if (mode === "by-size") {
         const size = parseFloat(maxSize);
         if (!size || size <= 0) throw new Error("Enter a target size.");
         const bytes =
@@ -156,6 +164,37 @@ export default function SplitPdfTool() {
                 className={styles.input}
               />
             </div>
+          )}
+
+          {mode === "by-n" && (
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="everyN">
+                Pages per split
+              </label>
+              <input
+                id="everyN"
+                type="number"
+                min="1"
+                value={everyN}
+                onChange={(e) => setEveryN(e.target.value)}
+                placeholder="10"
+                className={styles.input}
+              />
+            </div>
+          )}
+
+          {mode === "by-even-odd" && (
+            <p className={styles.note}>
+              Produces two files: odd-numbered pages (1, 3, 5…) and
+              even-numbered pages (2, 4, 6…).
+            </p>
+          )}
+
+          {mode === "by-bookmarks" && (
+            <p className={styles.note}>
+              Splits at each top-level bookmark (PDF outline). Files with no
+              readable bookmarks are not split.
+            </p>
           )}
 
           {mode === "by-size" && (
