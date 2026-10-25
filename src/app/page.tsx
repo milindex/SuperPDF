@@ -6,7 +6,15 @@ import RecentBanner from "@/components/RecentBanner/RecentBanner";
 import FeatureSlider from "@/components/FeatureSlider/FeatureSlider";
 import { faqs } from "@/data/homepage-content";
 import { toolsRegistry } from "@/registry/tools";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
+
+export const metadata = pageMetadata({
+  title: "SuperPDF | PDF work without the upload",
+  description:
+    "Merge, split, compress, convert, and sign PDFs in your browser. Files stay on your device, with no account and no upload.",
+  path: "/",
+});
 
 const toolCount = toolsRegistry.length;
 

@@ -2,7 +2,15 @@ import Link from "next/link";
 import Icon from "@/components/Icon/Icon";
 import StaticPage from "@/components/StaticPage/StaticPage";
 import { educationBenefits, educationUseCases } from "@/data/page-content";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
+
+export const metadata = pageMetadata({
+  title: "SuperPDF for education",
+  description:
+    "Free PDF tools for students, teachers, and researchers. Files are read on the device, so student work never goes to a server.",
+  path: "/education",
+});
 
 export default function EducationPage() {
   return (

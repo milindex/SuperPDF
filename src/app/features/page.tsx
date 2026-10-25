@@ -2,7 +2,14 @@ import Link from "next/link";
 import Icon from "@/components/Icon/Icon";
 import StaticPage from "@/components/StaticPage/StaticPage";
 import { TOOL_COUNT, toolsRegistry, type ToolCategory } from "@/registry/tools";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
+
+export const metadata = pageMetadata({
+  title: "Features",
+  description: `All ${TOOL_COUNT} SuperPDF tools by category, from merging and splitting to OCR, encryption, and conversion.`,
+  path: "/features",
+});
 
 const CATEGORY_LABELS: Record<ToolCategory, string> = {
   Organize: "Organize",

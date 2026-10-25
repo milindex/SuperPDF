@@ -2,7 +2,15 @@ import Link from "next/link";
 import Icon from "@/components/Icon/Icon";
 import StaticPage from "@/components/StaticPage/StaticPage";
 import { businessBenefits, businessUseCases } from "@/data/page-content";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
+
+export const metadata = pageMetadata({
+  title: "SuperPDF for business",
+  description:
+    "Handle client documents without sending them to another company. Browser-based PDF tools for teams, with no upload and no account.",
+  path: "/business",
+});
 
 export default function BusinessPage() {
   return (

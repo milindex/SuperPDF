@@ -1,13 +1,15 @@
 import Link from "next/link";
 import ToolsFilter from "@/components/ToolsFilter/ToolsFilter";
 import { toolsRegistry } from "@/registry/tools";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "All PDF tools",
   description:
     "Every SuperPDF tool in one list. Merge, split, compress, convert, sign, and protect PDFs without uploading them.",
-};
+  path: "/tools",
+});
 
 export default function ToolsPage() {
   const toolCount = toolsRegistry.length;

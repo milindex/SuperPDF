@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { toolsRegistry } from "@/registry/tools";
+import { pageMetadata } from "@/lib/seo";
 
 type ToolPageModule = { default: React.ComponentType<{ toolId: string }> };
 
@@ -64,6 +66,22 @@ const toolLoaders: Record<string, () => Promise<ToolPageModule>> = {
 
 export function generateStaticParams() {
   return toolsRegistry.map((tool) => ({ slug: tool.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const tool = toolsRegistry.find((t) => t.slug === slug);
+  if (!tool) return {};
+
+  return pageMetadata({
+    title: tool.name,
+    description: tool.description,
+    path: `/tools/${tool.slug}`,
+  });
 }
 
 export default async function ToolRoute({

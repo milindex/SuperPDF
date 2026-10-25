@@ -1,6 +1,14 @@
 import Link from "next/link";
 import StaticPage from "@/components/StaticPage/StaticPage";
+import { LEGAL_LAST_UPDATED, pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
+
+export const metadata = pageMetadata({
+  title: "Legal",
+  description:
+    "SuperPDF policies: privacy, terms, cookies, and security. The short version is that files stay on your device.",
+  path: "/legal",
+});
 
 const LEGAL_PAGES = [
   {
@@ -31,6 +39,7 @@ export default function LegalPage() {
     <StaticPage
       title="Legal"
       intro="Policies for SuperPDF. The short version: files stay on your device."
+      updated={LEGAL_LAST_UPDATED}
     >
       <div className={styles.grid}>
         {LEGAL_PAGES.map((p) => (

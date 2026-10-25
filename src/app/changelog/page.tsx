@@ -1,4 +1,5 @@
 import StaticPage from "@/components/StaticPage/StaticPage";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./changelog.module.scss";
 
 const RELEASES = [
@@ -21,7 +22,7 @@ const RELEASES = [
     title: "Content and discovery",
     changes: [
       "Added the tools index at /tools, grouped by category.",
-      "Added About, Blog, FAQ, Legal, Press, Privacy, Terms, Cookies, and Security pages.",
+      "Added About, FAQ, Legal, Press, Privacy, Terms, Cookies, and Security pages.",
       "Added PDF to Markdown and new split modes for ranges, pages, size, and bookmarks.",
       "Added the version badge in the footer and the generated tool documentation.",
     ],
@@ -51,11 +52,12 @@ const RELEASES = [
   },
 ];
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Changelog",
   description:
     "Every release of SuperPDF, from the first scaffold to the current browser toolkit.",
-};
+  path: "/changelog",
+});
 
 export default function ChangelogPage() {
   return (

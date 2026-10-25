@@ -14,7 +14,6 @@ const footerLinks: Record<string, { name: string; href: string }[]> = {
   Company: [
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
-    { name: "Blog", href: "/blog" },
   ],
   Legal: [
     { name: "Privacy policy", href: "/privacy" },
@@ -59,7 +58,15 @@ export default function Footer() {
 
         <div className={styles.bottom}>
           <span className={styles.copyright}>
-            &copy; 2026 Milind Sonawane
+            &copy; 2026{" "}
+            <a
+              href="https://milinds.dev"
+              className={styles.author}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Milind Sonawane
+            </a>
           </span>
           <span className={styles.version}>SuperPDF v{APP_VERSION}</span>
         </div>

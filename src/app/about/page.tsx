@@ -1,5 +1,13 @@
 import StaticPage from "@/components/StaticPage/StaticPage";
 import { aboutMilestones } from "@/data/page-content";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "About",
+  description:
+    "SuperPDF is a PDF toolkit for people who would rather not upload the file. The work happens in the browser, on your device.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

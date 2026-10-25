@@ -1,7 +1,15 @@
 import Link from "next/link";
 import StaticPage from "@/components/StaticPage/StaticPage";
 import { fullFaqs } from "@/data/page-content";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
+
+export const metadata = pageMetadata({
+  title: "Frequently asked questions",
+  description:
+    "Answers on privacy, supported formats, limits, and how SuperPDF does the work in your browser.",
+  path: "/faq",
+});
 
 export default function FaqPage() {
   const categories = [...new Set(fullFaqs.map((f) => f.category).filter(Boolean))];

@@ -1,14 +1,22 @@
 import Link from "next/link";
 import StaticPage from "@/components/StaticPage/StaticPage";
 import { pressBoilerplate, pressFacts } from "@/data/page-content";
+import { LEGAL_LAST_UPDATED, pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
+
+export const metadata = pageMetadata({
+  title: "Press",
+  description:
+    "Press information for SuperPDF, including a short fact sheet and media contact.",
+  path: "/press",
+});
 
 export default function PressPage() {
   return (
     <StaticPage
       title="Press"
       intro="Press information and a short fact sheet."
-      updated="2026"
+      updated={LEGAL_LAST_UPDATED}
     >
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>About SuperPDF</h2>
@@ -41,10 +49,6 @@ export default function PressPage() {
         Founder: Milind Sonawane. Read more{" "}
         <Link href="/about" className={styles.link}>
           about the project
-        </Link>{" "}
-        or{" "}
-        <Link href="/blog" className={styles.link}>
-          the blog
         </Link>
         .
       </p>
