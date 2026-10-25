@@ -47,7 +47,7 @@ export default function ExcelToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Excel to PDF"
-        description="Convert Excel spreadsheets to PDF — entirely in your browser."
+        description="Turn a spreadsheet into a PDF you can send."
       />
 
       <DragNDropRegion

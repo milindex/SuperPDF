@@ -2,7 +2,7 @@
   margin-top: 1.5rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
 }
 
@@ -11,8 +11,8 @@
   max-width: 560px;
   display: block;
   margin: 0 auto 1rem;
-  border-radius: 12px;
-  background: #000;
+  border-radius: var(--radius-md);
+  background: var(--color-brand-ink);
 }
 
 .captureActions {
@@ -25,9 +25,9 @@
 .captureBtn {
   padding: 0.75rem 1.5rem;
   background: var(--color-brand);
-  color: #000000;
+  color: var(--color-on-brand);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -43,14 +43,14 @@
   background: var(--color-surface-2);
   color: var(--color-text-secondary);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 200ms;
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
 
   &:hover {
-    border-color: rgba(41, 209, 146, 0.4);
+    border-color: var(--color-brand);
     color: var(--color-brand);
   }
 }
@@ -58,7 +58,7 @@
 .error {
   margin-top: 0.75rem;
   font-size: 0.875rem;
-  color: #dc2626;
+  color: var(--color-danger);
 }
 
 .resultsTitle {
@@ -85,7 +85,7 @@
   padding: 0.75rem;
   background: var(--color-surface-2);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .resultName {
@@ -104,7 +104,7 @@
   transition: color 200ms;
 
   &:hover {
-    color: var(--color-danger, #ef4444);
+    color: var(--color-danger, var(--color-danger));
   }
 }
 
@@ -112,9 +112,9 @@
   width: 100%;
   padding: 0.75rem 1.25rem;
   background: var(--color-brand);
-  color: #000000;
+  color: var(--color-on-brand);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;

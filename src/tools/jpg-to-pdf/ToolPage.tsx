@@ -47,7 +47,7 @@ export default function JpgToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="JPG to PDF"
-        description="Convert JPG images into a PDF — entirely in your browser."
+        description="Put one or more JPG images into a single PDF."
       />
 
       <DragNDropRegion

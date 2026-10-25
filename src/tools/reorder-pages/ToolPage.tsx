@@ -59,7 +59,7 @@ export default function ReorderPagesTool() {
     <ToolLayout>
       <ToolHeader
         title="Reorder Pages"
-        description="Change the order of pages in your PDF — entirely in your browser."
+        description="Put pages in a new order without rebuilding the document."
       />
 
       <DragNDropRegion

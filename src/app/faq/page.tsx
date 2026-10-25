@@ -9,7 +9,7 @@ export default function FaqPage() {
   return (
     <StaticPage
       title="Frequently Asked Questions"
-      intro="Answers to common questions about SuperPDF — privacy, usage, formats, limitations, and more."
+      intro="Answers on privacy, formats, limits, and how the browser does the work."
     >
       <div className={styles.categories}>
         {categories.map((cat) => (
@@ -33,7 +33,7 @@ export default function FaqPage() {
         <Link href="/contact" className={styles.link}>
           Contact us
         </Link>{" "}
-        and we'll help.
+        and we will help.
       </p>
     </StaticPage>
   );

@@ -48,7 +48,7 @@ export default function PdfToPowerPointTool() {
     <ToolLayout>
       <ToolHeader
         title="PDF to PowerPoint"
-        description="Convert PDF pages into a PowerPoint presentation — entirely in your browser."
+        description="Turn PDF pages into slides."
       />
 
       <DragNDropRegion

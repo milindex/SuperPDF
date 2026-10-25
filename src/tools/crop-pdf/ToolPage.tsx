@@ -40,7 +40,7 @@ export default function CropPdfTool() {
       };
       for (const [k, v] of Object.entries(parsed)) {
         if (Number.isNaN(v) || v < 0 || v > 90) {
-          throw new Error(`${k} margin must be 0–90%.`);
+          throw new Error(`${k} margin must be between 0 and 90%.`);
         }
       }
 
@@ -72,7 +72,7 @@ export default function CropPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Crop PDF"
-        description="Remove margins and unwanted areas from your PDFs — entirely in your browser."
+        description="Trim the margins from every page."
       />
 
       <DragNDropRegion
@@ -104,6 +104,10 @@ export default function CropPdfTool() {
               </div>
             ))}
           </div>
+          <p className={styles.hint}>
+            Margins are a percentage of each page. A small trim removes a scan
+            border; 0% leaves the page unchanged.
+          </p>
           <button
             type="button"
             onClick={crop}

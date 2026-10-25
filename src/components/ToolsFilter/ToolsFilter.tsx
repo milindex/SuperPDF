@@ -1,69 +1,143 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useMemo, useState } from "react";
 import Link from "next/link";
-import Icon from "@/components/Icon/Icon";
-import type { HomepageTool } from "@/data/homepage-tools";
+import { toolsRegistry } from "@/registry/tools";
 import styles from "./ToolsFilter.module.scss";
 
-const CATEGORIES = [
-  { value: "all", label: "All" },
-  { value: "organize", label: "Organize" },
-  { value: "convert", label: "Convert" },
-  { value: "edit-review", label: "Edit & Review" },
-  { value: "security", label: "Security" },
-  { value: "create-forms", label: "Create & Forms" },
-  { value: "optimize", label: "Optimize" },
+const CATEGORY_GROUPS = [
+  { value: "all", label: "All", categories: [] as string[] },
+  { value: "organize", label: "Organize", categories: ["Organize"] },
+  {
+    value: "convert",
+    label: "Convert",
+    categories: ["Convert To PDF", "Convert From PDF"],
+  },
+  { value: "edit", label: "Edit", categories: ["Edit"] },
+  { value: "security", label: "Security", categories: ["Security"] },
+  { value: "optimize", label: "Optimize", categories: ["Optimization"] },
+  { value: "create", label: "Create & forms", categories: ["Create & Forms"] },
 ];
 
-const SUBCATEGORIES: Record<string, { value: string; label: string }[]> = {
-  convert: [
-    { value: "all", label: "All" },
-    { value: "to-pdf", label: "To PDF" },
-    { value: "from-pdf", label: "From PDF" },
-  ],
-};
+const CONVERT_SUBS = [
+  { value: "to-pdf", label: "To PDF", category: "Convert To PDF" },
+  { value: "from-pdf", label: "From PDF", category: "Convert From PDF" },
+];
 
-export default function ToolsFilter({ tools }: { tools: HomepageTool[] }) {
+const POPULAR = [
+  "merge-pdf",
+  "split-pdf",
+  "compress",
+  "pdf-to-word",
+  "jpg-to-pdf",
+  "sign-pdf",
+  "page-numbers",
+  "protect",
+];
+
+const allTools = toolsRegistry.map((tool) => ({
+  id: tool.id,
+  name: tool.name,
+  description: tool.description,
+  href: `/tools/${tool.slug}`,
+  category: tool.category,
+  wip: tool.wip ?? false,
+}));
+
+export default function ToolsFilter({ limit = 1000 }: { limit?: number }) {
+  const searchId = useId();
+  const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeSubcategory, setActiveSubcategory] = useState("all");
 
-  const handleCategory = (value: string) => {
+  const group = CATEGORY_GROUPS.find(
+    (item) => item.value === activeCategory,
+  );
+
+  const matches = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    return allTools.filter((tool) => {
+      if (term) {
+        const haystack = `${tool.name} ${tool.description}`.toLowerCase();
+        if (!haystack.includes(term)) return false;
+      }
+      if (activeCategory !== "all") {
+        if (!group?.categories.includes(tool.category)) return false;
+      }
+      if (activeCategory === "convert" && activeSubcategory !== "all") {
+        const sub = CONVERT_SUBS.find(
+          (item) => item.value === activeSubcategory,
+        );
+        if (sub && tool.category !== sub.category) return false;
+      }
+      return true;
+    });
+  }, [query, activeCategory, activeSubcategory, group]);
+
+  const isBrowsingAll = query.trim() === "" && activeCategory === "all";
+  const visible = isBrowsingAll
+    ? [...matches].sort((a, b) => {
+        const aIndex = POPULAR.indexOf(a.href.replace("/tools/", ""));
+        const bIndex = POPULAR.indexOf(b.href.replace("/tools/", ""));
+        return (aIndex === -1 ? 99 : aIndex) - (bIndex === -1 ? 99 : bIndex);
+      }).slice(0, limit)
+    : matches;
+
+  const chooseCategory = (value: string) => {
     setActiveCategory(value);
     setActiveSubcategory("all");
   };
 
-  const filteredTools = tools.filter((t) => {
-    if (activeCategory !== "all" && t.category !== activeCategory) return false;
-    if (activeSubcategory !== "all" && t.subcategory !== activeSubcategory)
-      return false;
-    return true;
-  });
-
-  const subs = SUBCATEGORIES[activeCategory];
+  const reset = () => {
+    setQuery("");
+    setActiveCategory("all");
+    setActiveSubcategory("all");
+  };
 
   return (
-    <>
-      <div className={styles.filterRow}>
-        {CATEGORIES.map((cat) => (
+    <div className={styles.finder}>
+      <div className={styles.searchRow}>
+        <label className={styles.searchLabel} htmlFor={searchId}>
+          Search tools
+        </label>
+        <input
+          id={searchId}
+          type="search"
+          className={styles.searchInput}
+          placeholder="Merge, compress, Word, sign…"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+        />
+      </div>
+
+      <div className={styles.filterRow} role="group" aria-label="Filter by category">
+        {CATEGORY_GROUPS.map((item) => (
           <button
-            key={cat.value}
-            onClick={() => handleCategory(cat.value)}
+            key={item.value}
+            type="button"
+            aria-pressed={activeCategory === item.value}
+            onClick={() => chooseCategory(item.value)}
             className={`${styles.filterPill} ${
-              activeCategory === cat.value ? styles.filterPillActive : ""
+              activeCategory === item.value ? styles.filterPillActive : ""
             }`}
           >
-            {cat.label}
+            {item.label}
           </button>
         ))}
       </div>
 
-      {subs && (
-        <div className={styles.subRow}>
-          {subs.map((sub) => (
+      {activeCategory === "convert" && (
+        <div className={styles.subRow} role="group" aria-label="Conversion direction">
+          {CONVERT_SUBS.map((sub) => (
             <button
               key={sub.value}
-              onClick={() => setActiveSubcategory(sub.value)}
+              type="button"
+              aria-pressed={activeSubcategory === sub.value}
+              onClick={() =>
+                setActiveSubcategory((current) =>
+                  current === sub.value ? "all" : sub.value,
+                )
+              }
               className={`${styles.subPill} ${
                 activeSubcategory === sub.value ? styles.subPillActive : ""
               }`}
@@ -74,30 +148,44 @@ export default function ToolsFilter({ tools }: { tools: HomepageTool[] }) {
         </div>
       )}
 
-      {filteredTools.length === 0 ? (
-        <div className={styles.empty}>No tools found in this category.</div>
-      ) : (
-        <div className={styles.grid}>
-          {filteredTools.map((tool) => (
-            <Link
-              key={tool.name}
-              href={tool.href}
-              className={`animate-border-run ${styles.card}`}
-            >
-              <div className={styles.cardIcon}>
-                <Icon name={tool.icon} size={28} />
-              </div>
-              <h3 className={styles.cardTitle}>
-                {tool.name}
-                {tool.category === "ai" && (
-                  <span className={styles.proBadge}>PRO</span>
-                )}
-              </h3>
-              <p className={styles.cardDesc}>{tool.description}</p>
-            </Link>
-          ))}
+      <div className={styles.statusRow}>
+        <p className={styles.count} role="status">
+          {visible.length === 0
+            ? "No tools match"
+            : isBrowsingAll
+              ? `${allTools.length} tools`
+              : `${visible.length} ${visible.length === 1 ? "tool" : "tools"} found`}
+        </p>
+        {isBrowsingAll && visible.length < allTools.length && (
+          <Link href="/tools" className={styles.seeAll}>
+            See all {allTools.length} tools
+          </Link>
+        )}
+      </div>
+
+      {visible.length === 0 ? (
+        <div className={styles.empty}>
+          <p>
+            No tool matches{" "}
+            {query.trim() ? <strong>“{query.trim()}”</strong> : "this filter"}.
+          </p>
+          <button type="button" className={styles.reset} onClick={reset}>
+            Clear search and filters
+          </button>
         </div>
+      ) : (
+        <ul className={styles.grid}>
+          {visible.map((tool) => (
+            <li key={tool.id}>
+              <Link href={tool.href} className={styles.card}>
+                {tool.wip && <span className={styles.wip}>WIP</span>}
+                <span className={styles.cardName}>{tool.name}</span>
+                <span className={styles.cardDesc}>{tool.description}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       )}
-    </>
+    </div>
   );
 }

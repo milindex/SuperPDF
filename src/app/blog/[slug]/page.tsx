@@ -13,7 +13,7 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   return (
-    <main className={styles.main}>
+    <div className={styles.main}>
       <div className={styles.container}>
         <nav className={styles.crumb}>
           <Link href="/">Home</Link>
@@ -24,7 +24,6 @@ export default async function BlogPostPage({
         </nav>
         <div className={styles.meta}>
           <span>{post.date}</span>
-          <span>·</span>
           <span>{post.readTime} read</span>
         </div>
         <h1 className={styles.title}>{post.title}</h1>
@@ -41,9 +40,9 @@ export default async function BlogPostPage({
           ))}
         </article>
         <p className={styles.back}>
-          <Link href="/blog">← Back to blog</Link>
+          <Link href="/blog">Back to blog</Link>
         </p>
       </div>
-    </main>
+    </div>
   );
 }

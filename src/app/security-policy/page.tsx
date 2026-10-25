@@ -5,13 +5,13 @@ export default function SecurityPolicyPage() {
   return (
     <StaticPage
       title="Security"
-      intro="How SuperPDF keeps your documents private and secure."
+      intro="How the browser processing works, and what it means for your files."
       updated="2026"
       sections={[
         {
-          heading: "The core guarantee",
+          heading: "The short version",
           body: [
-            "SuperPDF processes every document in your browser. There is no document-processing server, so your files cannot be intercepted, stored, analyzed, or leaked at the network level.",
+            "The document is read and changed in your browser. There is no document-processing server, so there is no network copy to intercept, store, or leak.",
           ],
         },
         ...securityControls.map((c) => ({
@@ -19,7 +19,7 @@ export default function SecurityPolicyPage() {
           body: [c.description],
         })),
         {
-          heading: "What this means in practice",
+          heading: "In practice",
           bullets: [
             "Files are read directly from your device and results are downloaded locally.",
             "Password-protected PDFs use AES-256, computed on your device.",

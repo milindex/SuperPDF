@@ -47,7 +47,7 @@ export default function TiffToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="TIFF to PDF"
-        description="Convert TIFF images into a PDF — entirely in your browser."
+        description="Put one or more TIFF images into a single PDF."
       />
 
       <DragNDropRegion

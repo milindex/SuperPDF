@@ -60,6 +60,7 @@ test("split tool splits every N pages", async ({ page }) => {
     buffer: pdf,
   });
 
+  await page.getByRole("button", { name: "Advanced" }).click();
   await page.getByRole("button", { name: "Every N Pages" }).click();
   await page.getByRole("spinbutton", { name: /Pages per split/ }).fill("2");
   await waitForSw(page);

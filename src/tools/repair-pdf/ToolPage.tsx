@@ -51,7 +51,7 @@ export default function RepairPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Repair PDF"
-        description="Repair corrupted or damaged PDF files — entirely in your browser."
+        description="Rebuild a damaged PDF so it opens again."
       />
 
       <DragNDropRegion

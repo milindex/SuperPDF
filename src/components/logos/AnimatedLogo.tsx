@@ -50,7 +50,8 @@ export default function AnimatedLogo({
             display: "flex",
             alignItems: "center",
             height: "100%",
-            transition: "all 500ms ease-in-out",
+            transition:
+              "opacity 500ms ease-in-out, transform 500ms ease-in-out",
             opacity: nameVisible ? 1 : 0,
             transform: nameVisible ? "translateX(0)" : "translateX(-10px)",
             visibility: nameVisible ? "visible" : "hidden",

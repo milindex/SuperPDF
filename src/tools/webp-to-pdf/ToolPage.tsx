@@ -47,7 +47,7 @@ export default function WebpToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="WEBP to PDF"
-        description="Convert WEBP images into a PDF — entirely in your browser."
+        description="Put one or more WEBP images into a single PDF."
       />
 
       <DragNDropRegion

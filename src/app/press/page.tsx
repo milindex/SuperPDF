@@ -7,7 +7,7 @@ export default function PressPage() {
   return (
     <StaticPage
       title="Press"
-      intro="Press kit and media resources for SuperPDF."
+      intro="Press information and a short fact sheet."
       updated="2026"
     >
       <section className={styles.section}>
@@ -38,14 +38,15 @@ export default function PressPage() {
       </section>
 
       <p className={styles.note}>
-        Founder: Milind Sonawane · More at{" "}
+        Founder: Milind Sonawane. Read more{" "}
         <Link href="/about" className={styles.link}>
-          About
+          about the project
         </Link>{" "}
-        ·{" "}
+        or{" "}
         <Link href="/blog" className={styles.link}>
-          Blog
+          the blog
         </Link>
+        .
       </p>
     </StaticPage>
   );

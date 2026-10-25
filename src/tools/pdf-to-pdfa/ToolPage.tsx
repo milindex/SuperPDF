@@ -48,7 +48,7 @@ export default function PdfToPdfATool() {
     <ToolLayout>
       <ToolHeader
         title="PDF to PDF/A"
-        description="Convert PDFs to PDF/A format for archiving — entirely in your browser."
+        description="Create an archival copy for long-term storage."
       />
 
       <DragNDropRegion

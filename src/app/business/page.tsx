@@ -7,8 +7,8 @@ import styles from "./page.module.scss";
 export default function BusinessPage() {
   return (
     <StaticPage
-      title="SuperPDF for Business"
-      intro="Handle sensitive documents without exposing them. SuperPDF's browser-native tools keep every file on the device — ideal for teams that work with confidential client data."
+      title="SuperPDF for business"
+      intro="Handle client documents without sending them to another company. Every tool runs in the browser, on the device."
     >
       <section className={styles.useCases}>
         {businessUseCases.map((u) => (
@@ -23,7 +23,7 @@ export default function BusinessPage() {
       </section>
 
       <section className={styles.benefits}>
-        <h2 className={styles.sectionTitle}>Why teams choose SuperPDF</h2>
+        <h2 className={styles.sectionTitle}>What changes for the team</h2>
         <ul className={styles.benefitList}>
           {businessBenefits.map((b) => (
             <li key={b} className={styles.benefit}>
@@ -35,22 +35,20 @@ export default function BusinessPage() {
       </section>
 
       <section className={styles.workflow}>
-        <h2 className={styles.sectionTitle}>How it fits into your workflow</h2>
+        <h2 className={styles.sectionTitle}>Where it fits</h2>
         <p className={styles.workflowText}>
-          SuperPDF works alongside your existing tools. Employees open a tool,
-          drop in a file, and download the result — no training, no accounts, no
-          IT setup. Because processing is local, documents used for contracts,
-          proposals, and client files never leave the organization.
+          Employees open a tool, add the file, and download the result. No
+          account, no install, no IT setup. Contracts, proposals, and client
+          files stay inside the organisation.
         </p>
         <p className={styles.workflowText}>
-          The same engines that protect files with AES-256 also compress, sign,
-          and convert them — giving teams one private toolset for common PDF
-          tasks.
+          The same engines that apply AES-256 also compress, sign, and convert,
+          so one private toolkit covers the common PDF work.
         </p>
       </section>
 
       <p className={styles.cta}>
-        Want to roll SuperPDF out across your team?{" "}
+        Want to use SuperPDF across a team?{" "}
         <Link href="/contact" className={styles.link}>
           Contact us
         </Link>

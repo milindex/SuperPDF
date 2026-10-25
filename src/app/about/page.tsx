@@ -4,27 +4,27 @@ import { aboutMilestones } from "@/data/page-content";
 export default function AboutPage() {
   return (
     <StaticPage
-      title="About Us"
-      intro="SuperPDF is a privacy-first PDF toolkit built on a simple idea: your documents belong to you, and processing them should never require handing them to a server."
+      title="About"
+      intro="SuperPDF is a PDF toolkit for people who would rather not upload the file. The work happens in the browser, on your device."
       sections={[
         {
-          heading: "Our mission",
+          heading: "Why this exists",
           body: [
-            "Most PDF tools upload your documents to a server to process them. That means trusting a third party with files that may contain contracts, medical records, financial data, or personal information.",
-            "Modern browsers are powerful enough to do this work locally. SuperPDF was built to prove it — a complete PDF toolkit that runs entirely in the browser using proven client-side engines.",
+            "Most PDF sites ask for the file before they do anything. For a contract, a medical record, or a client's accounts, that is a needless exposure.",
+            "The browser can do this work now. SuperPDF was built to make that the normal way to handle a PDF, not a technical demo.",
           ],
         },
-        ...aboutMilestones.map((m) => ({
-          heading: m.title,
-          body: [m.description],
+        ...aboutMilestones.map((milestone) => ({
+          heading: milestone.title,
+          body: [milestone.description],
         })),
         {
-          heading: "Our values",
+          heading: "What we will not do",
           bullets: [
-            "Privacy is a feature, not a checkbox — files should never leave your device.",
-            "Free tools should not come at the cost of your data.",
-            "Transparency matters — we tell you exactly how processing works.",
-            "Fast, reliable tools beat feature bloat.",
+            "We do not upload your files.",
+            "We do not require an account to use a tool.",
+            "We do not add our watermark to the output.",
+            "We do not build features that need a server copy of the document.",
           ],
         },
       ]}

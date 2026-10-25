@@ -124,7 +124,7 @@ export default function SignPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Sign PDF"
-        description="Add your signature to a document — entirely in your browser."
+        description="Draw a signature and place it on the page."
       />
 
       <DragNDropRegion
@@ -139,6 +139,10 @@ export default function SignPdfTool() {
         <div className={styles.panel}>
           <span className={styles.fileName}>{file.name}</span>
           <label className={styles.label}>Draw your signature</label>
+          <p className={styles.signHint}>
+            Use a mouse, finger, or stylus. The signature is placed at the
+            bottom-right of the first page.
+          </p>
           <canvas
             ref={canvasRef}
             width={560}
@@ -157,9 +161,6 @@ export default function SignPdfTool() {
             >
               Clear
             </button>
-            <p className={styles.hint}>
-              Signature is placed at the bottom-right of the first page.
-            </p>
           </div>
           <button
             type="button"

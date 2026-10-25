@@ -61,7 +61,7 @@ export default function ExtractPagesTool() {
     <ToolLayout>
       <ToolHeader
         title="Extract Pages"
-        description="Extract specific pages from a PDF into a new file — entirely in your browser."
+        description="Pull selected pages into a new PDF."
       />
 
       <DragNDropRegion
@@ -87,6 +87,10 @@ export default function ExtractPagesTool() {
               placeholder="1,3,5"
               className={styles.input}
             />
+            <p className={styles.hint}>
+              Pages you leave out are not included in the new file. Their order
+              is kept as listed.
+            </p>
           </div>
           <button
             type="button"

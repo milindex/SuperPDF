@@ -51,7 +51,7 @@ export default function FlattenPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Flatten PDF"
-        description="Flatten layers and interactive elements into a single static PDF — entirely in your browser."
+        description="Bake annotations and form fields into the page."
       />
 
       <DragNDropRegion

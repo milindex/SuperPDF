@@ -20,8 +20,8 @@ export default function ContactPage() {
 
   return (
     <StaticPage
-      title="Contact Us"
-      intro="Questions, feedback, or support — we'd love to hear from you."
+      title="Contact"
+      intro="Questions, feedback, or a bug report. Send it here."
     >
       <div className={styles.grid}>
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -35,7 +35,7 @@ export default function ContactPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className={styles.input}
-              placeholder="Jane Doe"
+              placeholder="Your name"
             />
           </div>
           <div className={styles.field}>
@@ -48,7 +48,7 @@ export default function ContactPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={styles.input}
-              placeholder="jane@example.com"
+              placeholder="you@company.com"
               required
             />
           </div>
@@ -92,7 +92,7 @@ export default function ContactPage() {
           </p>
           <p className={styles.infoNote}>
             Tip: include the tool name and your browser version when reporting a
-            bug — it helps us fix it faster.
+            bug. It helps us fix it faster.
           </p>
         </div>
       </div>

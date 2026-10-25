@@ -5,18 +5,18 @@ import styles from "./page.module.scss";
 const LEGAL_PAGES = [
   {
     href: "/privacy",
-    title: "Privacy Policy",
+    title: "Privacy policy",
     description:
       "How we handle your documents and what little information we collect.",
   },
   {
     href: "/terms",
-    title: "Terms & Conditions",
+    title: "Terms and conditions",
     description: "The terms governing your use of SuperPDF.",
   },
   {
     href: "/cookies",
-    title: "Cookie Policy",
+    title: "Cookie policy",
     description: "How we use cookies and similar technologies.",
   },
   {
@@ -30,7 +30,7 @@ export default function LegalPage() {
   return (
     <StaticPage
       title="Legal"
-      intro="Legal information about SuperPDF — our policies and how we handle your data."
+      intro="Policies for SuperPDF. The short version: files stay on your device."
     >
       <div className={styles.grid}>
         {LEGAL_PAGES.map((p) => (

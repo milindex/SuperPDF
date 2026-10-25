@@ -48,7 +48,7 @@ export default function PdfToWordTool() {
     <ToolLayout>
       <ToolHeader
         title="PDF to Word"
-        description="Convert PDF text into an editable Word document — entirely in your browser."
+        description="Turn a PDF into an editable Word document."
       />
 
       <DragNDropRegion

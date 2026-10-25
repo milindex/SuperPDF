@@ -1,9 +1,9 @@
 "use client";
 
-import heic2any from "heic2any";
 import { imagesToPdf } from "@/lib/images-to-pdf";
 
 async function heicToPngBytes(file: File): Promise<Uint8Array> {
+  const heic2any = (await import("heic2any")).default;
   const blob = await heic2any({
     blob: file,
     toType: "image/png",

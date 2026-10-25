@@ -47,7 +47,7 @@ export default function PdfToMarkdownTool() {
     <ToolLayout>
       <ToolHeader
         title="PDF to Markdown"
-        description="Convert PDF text into clean Markdown — entirely in your browser."
+        description="Turn a PDF into Markdown with headings and lists."
       />
 
       <DragNDropRegion
@@ -64,7 +64,7 @@ export default function PdfToMarkdownTool() {
           <p className={styles.note}>
             Headings are detected from font sizes and simple multi-column
             layouts become tables. Scanned documents without a text layer
-            return no text — use PDF OCR for those.
+            return no text. Use PDF OCR for those.
           </p>
           <button
             type="button"

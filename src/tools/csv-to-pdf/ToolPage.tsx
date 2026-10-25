@@ -50,7 +50,7 @@ export default function CsvToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="CSV to PDF"
-        description="Convert a CSV file into a table PDF — entirely in your browser."
+        description="Lay out a CSV file as a PDF table."
       />
 
       <DragNDropRegion

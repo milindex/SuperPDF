@@ -1,5 +1,95 @@
 .layout {
-  max-width: var(--container-width);
+  width: 100%;
+  max-width: var(--tool-width);
   margin: 0 auto;
-  padding: 1.25rem 1rem 2.5rem;
+  padding: var(--space-8) var(--space-4) var(--space-16);
+  color: var(--color-ink);
+
+  @media (min-width: 768px) {
+    padding-inline: var(--space-6);
+  }
+}
+
+/* One control recipe for every tool, including the legacy per-tool modules. */
+.layout :global(input[type="text"]),
+.layout :global(input[type="number"]),
+.layout :global(input[type="password"]),
+.layout :global(input[type="search"]),
+.layout :global(input[type="email"]),
+.layout :global(input[type="url"]),
+.layout :global(select),
+.layout :global(textarea) {
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: var(--text-base);
+  transition: border-color var(--dur-micro) var(--ease-out);
+}
+
+.layout :global(input[type="text"]:hover),
+.layout :global(input[type="number"]:hover),
+.layout :global(input[type="password"]:hover),
+.layout :global(input[type="search"]:hover),
+.layout :global(input[type="email"]:hover),
+.layout :global(input[type="url"]:hover),
+.layout :global(select:hover),
+.layout :global(textarea:hover) {
+  border-color: var(--color-text-muted);
+}
+
+.layout :global(input::placeholder),
+.layout :global(textarea::placeholder) {
+  color: var(--color-text-muted);
+}
+
+.layout :global(textarea) {
+  min-height: 8rem;
+  padding: var(--space-3);
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.layout :global(select) {
+  padding-right: var(--space-8);
+  cursor: pointer;
+}
+
+.layout :global(input[type="range"]) {
+  accent-color: var(--color-brand-strong);
+}
+
+.layout :global(input[type="checkbox"]),
+.layout :global(input[type="radio"]) {
+  accent-color: var(--color-brand-strong);
+  width: 1rem;
+  height: 1rem;
+}
+
+.layout :global(label) {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-ink-2);
+}
+
+.layout :global(h2),
+.layout :global(h3) {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.layout :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.layout :global(th),
+.layout :global(td) {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  font-size: var(--text-sm);
 }

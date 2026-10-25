@@ -16,7 +16,7 @@
   padding: 1.25rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .caseIcon {
@@ -26,8 +26,8 @@
   width: 44px;
   height: 44px;
   margin-bottom: 0.75rem;
-  background: rgba(41, 209, 146, 0.12);
-  border-radius: 10px;
+  background: var(--color-brand-soft);
+  border-radius: var(--radius);
   color: var(--color-text-primary);
 }
 
@@ -76,7 +76,7 @@
   padding: 0.75rem 1rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: var(--radius);
   color: var(--color-text-primary);
   font-size: 0.9375rem;
 }

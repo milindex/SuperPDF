@@ -5,11 +5,14 @@ import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
 import { SuccessBanner } from "@/components/SuccessBanner/SuccessBanner";
+import { useToolMode } from "@/components/ToolModeScope/ToolModeScope";
 import { sendToSw } from "@/lib/sw-client";
 import { EDIT_METADATA_TYPE } from "@/lib/sw-contract";
 import styles from "./ToolPage.module.scss";
 
 export default function EditMetadataTool() {
+  const mode = useToolMode();
+  const easy = mode?.mode !== "advanced";
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -40,8 +43,7 @@ export default function EditMetadataTool() {
         buffer,
         title,
         author,
-        subject,
-        keywords,
+        ...(easy ? {} : { subject, keywords }),
       })) as Uint8Array;
       const blob = new Blob([result as Uint8Array<ArrayBuffer>], {
         type: "application/pdf",
@@ -66,7 +68,7 @@ export default function EditMetadataTool() {
     <ToolLayout>
       <ToolHeader
         title="Change PDF Info"
-        description="Edit document properties such as title, author, and keywords — entirely in your browser."
+        description="Edit the document title, author, and keywords."
       />
 
       <DragNDropRegion
@@ -81,7 +83,13 @@ export default function EditMetadataTool() {
         <div className={styles.panel}>
           <span className={styles.fileName}>{file.name}</span>
           {fields.map((f) => (
-            <div key={f.key} className={styles.field}>
+            <div
+              key={f.key}
+              className={styles.field}
+              data-advanced={
+                f.key === "subject" || f.key === "keywords" ? "true" : undefined
+              }
+            >
               <label className={styles.label} htmlFor={f.key}>
                 {f.label}
               </label>
@@ -94,6 +102,10 @@ export default function EditMetadataTool() {
               />
             </div>
           ))}
+          <p className={styles.hint}>
+            These values are stored in the PDF&apos;s document properties. They
+            are not printed on the page.
+          </p>
           <button
             type="button"
             onClick={edit}

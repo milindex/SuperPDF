@@ -1,10 +1,12 @@
 import { PDFDocument } from "pdf-lib";
 import {
+  PDFButton,
   PDFCheckBox,
   PDFDropdown,
   PDFForm,
   PDFOptionList,
   PDFRadioGroup,
+  PDFSignature,
   PDFTextField,
 } from "pdf-lib";
 import type { FillFormsField, FillFormsPayload } from "@/lib/sw-contract";
@@ -65,6 +67,83 @@ function applyFieldValue(form: PDFForm, name: string, value: string): void {
     return;
   }
   throw new Error(`Unsupported form field: ${name}`);
+}
+
+export type FormFieldType =
+  | "text"
+  | "checkbox"
+  | "radio"
+  | "dropdown"
+  | "option-list"
+  | "signature"
+  | "button"
+  | "unknown";
+
+export interface FormFieldInfo {
+  name: string;
+  type: FormFieldType;
+  value: string;
+  options?: string[];
+  required: boolean;
+  editable: boolean;
+}
+
+/** Read the AcroForm fields in a PDF before filling them. */
+export async function inspectFormFields(
+  buffer: ArrayBuffer,
+): Promise<FormFieldInfo[]> {
+  const pdf = await PDFDocument.load(buffer, { ignoreEncryption: true });
+  const form = pdf.getForm();
+  return form.getFields().map((field) => {
+    const base = {
+      name: field.getName(),
+      required: field.isRequired(),
+      editable: true,
+      value: "",
+    };
+
+    if (field instanceof PDFTextField) {
+      return { ...base, type: "text" as const, value: field.getText() ?? "" };
+    }
+    if (field instanceof PDFCheckBox) {
+      return {
+        ...base,
+        type: "checkbox" as const,
+        value: field.isChecked() ? "on" : "off",
+      };
+    }
+    if (field instanceof PDFRadioGroup) {
+      return {
+        ...base,
+        type: "radio" as const,
+        value: field.getSelected() ?? "",
+        options: field.getOptions(),
+      };
+    }
+    if (field instanceof PDFDropdown) {
+      return {
+        ...base,
+        type: "dropdown" as const,
+        value: field.getSelected()[0] ?? "",
+        options: field.getOptions(),
+      };
+    }
+    if (field instanceof PDFOptionList) {
+      return {
+        ...base,
+        type: "option-list" as const,
+        value: field.getSelected().join(", "),
+        options: field.getOptions(),
+      };
+    }
+    if (field instanceof PDFSignature) {
+      return { ...base, type: "signature" as const, editable: false };
+    }
+    if (field instanceof PDFButton) {
+      return { ...base, type: "button" as const, editable: false };
+    }
+    return { ...base, type: "unknown" as const, editable: false };
+  });
 }
 
 export type { FillFormsPayload };

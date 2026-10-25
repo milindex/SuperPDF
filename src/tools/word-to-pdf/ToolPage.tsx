@@ -47,7 +47,7 @@ export default function WordToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Word to PDF"
-        description="Convert Word documents to PDF — entirely in your browser."
+        description="Turn a Word document into a PDF that keeps its layout."
       />
 
       <DragNDropRegion

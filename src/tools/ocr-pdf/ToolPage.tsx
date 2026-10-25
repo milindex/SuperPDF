@@ -53,7 +53,7 @@ export default function OcrPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="PDF OCR"
-        description="Extract text from scanned PDFs using OCR — entirely in your browser."
+        description="Make a scanned PDF searchable by recognising its text."
       />
 
       <DragNDropRegion

@@ -80,7 +80,7 @@ export default function ScanToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Scan to PDF"
-        description="Scan documents with your camera and save as PDF — entirely in your browser."
+        description="Use the camera to make a PDF of paper."
       />
 
       <div className={styles.panel}>

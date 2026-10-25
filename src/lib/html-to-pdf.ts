@@ -1,12 +1,11 @@
 "use client";
 
-import html2pdf from "html2pdf.js";
-
 /**
  * Convert an HTML string to a PDF via html2pdf.js. The HTML is rendered into
  * an off-DOM container, converted, and torn down. Fully client-side.
  */
 export async function htmlToPdf(html: string, filename = "document.pdf"): Promise<Uint8Array> {
+  const html2pdf = (await import("html2pdf.js")).default;
   const container = document.createElement("div");
   container.innerHTML = html;
   container.style.position = "fixed";

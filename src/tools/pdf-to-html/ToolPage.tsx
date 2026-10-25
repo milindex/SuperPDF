@@ -48,7 +48,7 @@ export default function PdfToHtmlTool() {
     <ToolLayout>
       <ToolHeader
         title="PDF to HTML"
-        description="Convert PDF pages into a standalone HTML page — entirely in your browser."
+        description="Turn a PDF into a web page."
       />
 
       <DragNDropRegion

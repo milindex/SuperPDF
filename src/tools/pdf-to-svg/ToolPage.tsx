@@ -53,7 +53,7 @@ export default function PdfToSvgTool() {
     <ToolLayout>
       <ToolHeader
         title="PDF to SVG"
-        description="Convert PDF pages into SVG vector graphics — entirely in your browser."
+        description="Save each PDF page as an SVG graphic."
       />
 
       <DragNDropRegion
@@ -69,7 +69,7 @@ export default function PdfToSvgTool() {
           <span className={styles.fileName}>{file.name}</span>
           <p className={styles.note}>
             Each page is exported as an SVG container with the rendered content
-            embedded as an image — not fully vectorized text.
+            embedded as an image, not fully vectorised text.
           </p>
           <button
             type="button"

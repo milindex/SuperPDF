@@ -5,6 +5,7 @@ import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
 import { SuccessBanner } from "@/components/SuccessBanner/SuccessBanner";
+import { useToolMode } from "@/components/ToolModeScope/ToolModeScope";
 import { sendToSw } from "@/lib/sw-client";
 import { PAGE_SIZE_TYPE, type PageSizePreset } from "@/lib/sw-contract";
 import styles from "./ToolPage.module.scss";
@@ -24,11 +25,13 @@ const PRESET_PTS: Record<PageSizePreset, { width: number; height: number }> = {
 };
 
 export default function PageSizeTool() {
+  const mode = useToolMode();
   const [file, setFile] = useState<File | null>(null);
   const [preset, setPreset] = useState<PageSizePreset>("a4");
   const [custom, setCustom] = useState(false);
   const [customW, setCustomW] = useState("595");
   const [customH, setCustomH] = useState("842");
+  const customActive = mode?.mode === "advanced" && custom;
   const [processing, setProcessing] = useState(false);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [resultName, setResultName] = useState("resized.pdf");
@@ -51,7 +54,7 @@ export default function PageSizeTool() {
     try {
       let width: number;
       let height: number;
-      if (custom) {
+      if (customActive) {
         width = parseFloat(customW);
         height = parseFloat(customH);
         if (Number.isNaN(width) || Number.isNaN(height) || width <= 0 || height <= 0) {
@@ -85,7 +88,7 @@ export default function PageSizeTool() {
     <ToolLayout>
       <ToolHeader
         title="Change Page Size"
-        description="Resize PDF pages to standard or custom dimensions — entirely in your browser."
+        description="Resize pages to A4, Letter, or a custom size."
       />
 
       <DragNDropRegion
@@ -103,21 +106,24 @@ export default function PageSizeTool() {
           <div className={styles.optionTabs}>
             <button
               type="button"
+              aria-pressed={!customActive}
               onClick={() => setCustom(false)}
-              className={`${styles.optionTab} ${!custom ? styles.optionTabActive : ""}`}
+              className={`${styles.optionTab} ${!customActive ? styles.optionTabActive : ""}`}
             >
               Preset
             </button>
             <button
               type="button"
+              data-advanced="true"
+              aria-pressed={customActive}
               onClick={() => setCustom(true)}
-              className={`${styles.optionTab} ${custom ? styles.optionTabActive : ""}`}
+              className={`${styles.optionTab} ${customActive ? styles.optionTabActive : ""}`}
             >
               Custom
             </button>
           </div>
 
-          {custom ? (
+          {customActive ? (
             <div className={styles.customGrid}>
               <div className={styles.field}>
                 <label className={styles.label} htmlFor="cw">
@@ -165,6 +171,12 @@ export default function PageSizeTool() {
               </select>
             </div>
           )}
+
+          <p className={styles.hint}>
+            {customActive
+              ? "Measured in points: 72 points equal 1 inch. Pages scale proportionally to fit, so content is never cut off."
+              : "Pages are scaled proportionally to fit the new shape, so a different aspect ratio can leave extra margin."}
+          </p>
 
           <button
             type="button"

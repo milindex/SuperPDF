@@ -1,0 +1,75 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.release {
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.release:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.releaseHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+}
+
+.version {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.date {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.current {
+  padding: 0.1rem var(--space-2);
+  border: 1px solid var(--color-brand-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-soft);
+  color: var(--color-brand-strong);
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.releaseTitle {
+  margin-top: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-ink-2);
+}
+
+.changes {
+  margin: var(--space-3) 0 0;
+  padding-left: var(--space-5);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.changes li {
+  margin-bottom: var(--space-2);
+}
+
+.note {
+  margin-top: var(--space-8);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}

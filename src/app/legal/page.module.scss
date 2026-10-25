@@ -15,11 +15,11 @@
   border: 1px solid var(--color-border);
   border-radius: 14px;
   text-decoration: none;
-  transition: all 200ms;
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
 
   &:hover {
-    border-color: rgba(41, 209, 146, 0.4);
-    background: rgba(41, 209, 146, 0.06);
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
   }
 }
 

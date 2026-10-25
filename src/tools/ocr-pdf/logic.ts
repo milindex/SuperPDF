@@ -1,6 +1,5 @@
 "use client";
 
-import { createWorker } from "tesseract.js";
 import { dataUrlToBytes, loadPdf, renderPageToDataUrl } from "@/lib/pdfjs";
 
 /**
@@ -13,6 +12,7 @@ export async function ocrPdf(
   onProgress?: (page: number, total: number) => void,
 ): Promise<string> {
   const pdf = await loadPdf(buffer);
+  const { createWorker } = await import("tesseract.js");
   const worker = await createWorker();
   await worker.loadLanguage("eng");
   await worker.initialize("eng");

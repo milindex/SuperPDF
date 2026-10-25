@@ -11,11 +11,11 @@
   border: 1px solid var(--color-border);
   border-radius: 14px;
   text-decoration: none;
-  transition: all 200ms;
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
 
   &:hover {
-    border-color: rgba(41, 209, 146, 0.4);
-    background: rgba(41, 209, 146, 0.06);
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
   }
 }
 
@@ -50,7 +50,7 @@
   font-size: 0.6875rem;
   font-weight: 600;
   color: var(--color-brand);
-  background: rgba(41, 209, 146, 0.12);
+  background: var(--color-brand-soft);
   padding: 0.125rem 0.5rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }

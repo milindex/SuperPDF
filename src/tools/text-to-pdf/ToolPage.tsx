@@ -50,7 +50,7 @@ export default function TextToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Text to PDF"
-        description="Convert a plain text file into a PDF — entirely in your browser."
+        description="Turn plain text into a clean PDF."
       />
 
       <DragNDropRegion

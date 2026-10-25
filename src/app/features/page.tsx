@@ -1,27 +1,27 @@
 import Link from "next/link";
 import Icon from "@/components/Icon/Icon";
 import StaticPage from "@/components/StaticPage/StaticPage";
-import { toolsRegistry, type ToolCategory } from "@/registry/tools";
+import { TOOL_COUNT, toolsRegistry, type ToolCategory } from "@/registry/tools";
 import styles from "./page.module.scss";
 
 const CATEGORY_LABELS: Record<ToolCategory, string> = {
   Organize: "Organize",
-  "Convert To PDF": "Convert To PDF",
-  "Convert From PDF": "Convert From PDF",
-  Edit: "Edit & Review",
+  "Convert To PDF": "Convert to PDF",
+  "Convert From PDF": "Convert from PDF",
+  Edit: "Edit and review",
   Security: "Security",
   Optimization: "Optimize",
   Extraction: "Extraction",
-  "Create & Forms": "Create & Forms",
+  "Create & Forms": "Create and forms",
 };
 
 const CATEGORY_DESCRIPTIONS: Record<ToolCategory, string> = {
-  Organize: "Combine, split, reorder, and clean up your documents.",
-  "Convert To PDF": "Turn Office documents, images, text, and webpages into PDFs.",
-  "Convert From PDF": "Extract content and convert PDFs into other formats.",
-  Edit: "Sign, redact, watermark, resize, and fill in documents.",
+  Organize: "Combine, split, reorder, and clean up documents.",
+  "Convert To PDF": "Turn Office documents, images, text, and pages into PDFs.",
+  "Convert From PDF": "Pull content out and turn PDFs into other formats.",
+  Edit: "Sign, redact, watermark, resize, and fill documents.",
   Security: "Protect, unlock, and manage document metadata.",
-  Optimization: "Compress, repair, OCR, and prepare files for archiving.",
+  Optimization: "Compress, repair, run OCR, and prepare files for archiving.",
   Extraction: "Pull text and images out of PDFs.",
   "Create & Forms": "Scan with your camera and fill in digital forms.",
 };
@@ -29,27 +29,27 @@ const CATEGORY_DESCRIPTIONS: Record<ToolCategory, string> = {
 const PILLARS = [
   {
     icon: "security",
-    title: "Privacy-first by design",
+    title: "No upload",
     description:
-      "Every tool processes files locally in your browser. Documents never leave your device, so there is no server to trust, no upload to worry about, and no data to leak.",
+      "The file is read on your device. There is no server copy to leak, sell, or delete.",
   },
   {
     icon: "rocket",
-    title: "Fast, no upload latency",
+    title: "No waiting on a network",
     description:
-      "Because there is no network transfer, operations complete as fast as your device can compute. Large files often process faster than server-based alternatives.",
+      "Processing starts when you add the file. Most tasks finish in seconds, and large files often beat a server round trip.",
   },
   {
     icon: "check",
-    title: "Free, no accounts",
+    title: "Free, no account",
     description:
-      "No sign-up, no watermarks, no hidden limits. Open a tool, drop a file, and download the result.",
+      "No sign-up, no watermark, no file-count limit. Open a tool, add a file, download the result.",
   },
   {
     icon: "convert",
-    title: "Built on real engines",
+    title: "Real PDF engines",
     description:
-      "SuperPDF uses proven libraries compiled for the browser — pdf-lib, pdf.js, qpdf (WASM), tesseract.js, docx, xlsx, and more.",
+      "The PDF engines run in the browser: pdf-lib, pdf.js, qpdf in WebAssembly, tesseract.js, docx, and xlsx.",
   },
 ];
 
@@ -59,7 +59,7 @@ export default function FeaturesPage() {
   return (
     <StaticPage
       title="Features"
-      intro="A complete, privacy-first PDF toolkit — 44 tools that run entirely in your browser."
+      intro={`${TOOL_COUNT} PDF tools that run in the browser, on the file you chose.`}
     >
       <section className={styles.pillars}>
         {PILLARS.map((p) => (
@@ -88,6 +88,7 @@ export default function FeaturesPage() {
                     href={`/tools/${tool.slug}`}
                     className={styles.toolCard}
                   >
+                    {tool.wip && <span className={styles.wip}>WIP</span>}
                     <div className={styles.toolIcon}>
                       <Icon name={tool.icon} size={20} />
                     </div>

@@ -76,12 +76,12 @@ export default function ProtectPdfTool() {
       case "protectable":
         return {
           kind: "ok" as const,
-          text: `This PDF (${feasibility.pageCount} page${feasibility.pageCount === 1 ? "" : "s"}) can be password-protected entirely in your browser. No server upload needed.`,
+          text: `This PDF (${feasibility.pageCount} page${feasibility.pageCount === 1 ? "" : "s"}) can be password-protected in the browser. The file stays in this tab.`,
         };
       case "already-encrypted":
         return {
           kind: "error" as const,
-          text: "This PDF is already password-protected. Protecting it again requires unlocking it first, which cannot be done in your browser without sending it to a server.",
+          text: "This PDF already has a password. Remove it with Unlock PDF before adding a new one.",
         };
       case "invalid":
         return { kind: "error" as const, text: feasibility.error };
@@ -92,7 +92,7 @@ export default function ProtectPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Protect PDF"
-        description="Add password protection to your PDF files — entirely in your browser."
+        description="Add a password that opens the file."
       />
 
       <DragNDropRegion
@@ -141,6 +141,10 @@ export default function ProtectPdfTool() {
                   autoComplete="new-password"
                 />
               </div>
+              <p className={styles.note}>
+                The password is applied in this tab and is not stored anywhere.
+                Keep a copy: a lost password cannot be recovered.
+              </p>
               <button
                 type="button"
                 onClick={protect}

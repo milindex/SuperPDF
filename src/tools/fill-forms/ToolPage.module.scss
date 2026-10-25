@@ -2,7 +2,7 @@
   margin-top: 1.5rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
 }
 
@@ -34,7 +34,7 @@
   background: var(--color-surface-2);
   border: 1px dashed var(--color-border);
   color: var(--color-brand);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
@@ -42,7 +42,7 @@
   transition: border-color 200ms;
 
   &:hover {
-    border-color: rgba(41, 209, 146, 0.4);
+    border-color: var(--color-brand);
   }
 }
 
@@ -61,12 +61,11 @@
 
 .input {
   padding: 0.625rem 0.875rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
   background: var(--color-surface-2);
   color: var(--color-text-primary);
   font-size: 0.875rem;
-  outline: none;
   transition: border-color 200ms;
 
   &:focus {
@@ -95,7 +94,7 @@
   transition: color 200ms;
 
   &:hover {
-    color: var(--color-danger, #ef4444);
+    color: var(--color-danger, var(--color-danger));
   }
 }
 
@@ -116,9 +115,9 @@
   width: 100%;
   padding: 0.75rem 1.25rem;
   background: var(--color-brand);
-  color: #000000;
+  color: var(--color-on-brand);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -137,5 +136,79 @@
 .error {
   margin-top: 0.75rem;
   font-size: 0.875rem;
-  color: #dc2626;
+  color: var(--color-danger);
+}
+.status {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.detected {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.fieldInfo {
+  min-width: 0;
+}
+
+.fieldMeta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.fieldLabel {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.required {
+  padding: 0 var(--space-1);
+  border: 1px solid var(--color-warning-border);
+  border-radius: var(--radius-xs);
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.fieldType {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.notEditable {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.manual {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.input {
+  width: 100%;
 }

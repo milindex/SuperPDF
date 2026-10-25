@@ -48,7 +48,7 @@ export default function PdfToExcelTool() {
     <ToolLayout>
       <ToolHeader
         title="PDF to Excel"
-        description="Convert PDF text into an Excel workbook — entirely in your browser."
+        description="Turn PDF tables into a spreadsheet."
       />
 
       <DragNDropRegion

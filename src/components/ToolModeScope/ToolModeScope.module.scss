@@ -1,0 +1,8 @@
+.scope {
+  display: block;
+  min-width: 0;
+}
+
+.scope[data-tool-mode="easy"] [data-advanced] {
+  display: none !important;
+}

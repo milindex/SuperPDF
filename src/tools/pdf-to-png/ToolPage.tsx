@@ -53,7 +53,7 @@ export default function PdfToPngTool() {
     <ToolLayout>
       <ToolHeader
         title="PDF to PNG"
-        description="Convert PDF pages to PNG images — entirely in your browser."
+        description="Save each PDF page as a PNG image."
       />
 
       <DragNDropRegion

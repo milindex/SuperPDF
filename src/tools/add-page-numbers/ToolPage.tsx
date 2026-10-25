@@ -5,6 +5,7 @@ import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
 import { SuccessBanner } from "@/components/SuccessBanner/SuccessBanner";
+import { useToolMode } from "@/components/ToolModeScope/ToolModeScope";
 import { sendToSw } from "@/lib/sw-client";
 import {
   ADD_PAGE_NUMBERS_TYPE,
@@ -28,6 +29,8 @@ const POSITIONS: { value: PageNumberPosition; label: string }[] = [
 ];
 
 export default function AddPageNumbersTool() {
+  const mode = useToolMode();
+  const easy = mode?.mode !== "advanced";
   const [file, setFile] = useState<File | null>(null);
   const [format, setFormat] = useState<PageNumberFormat>("page-x-of-y");
   const [position, setPosition] = useState<PageNumberPosition>("bottom-center");
@@ -52,7 +55,7 @@ export default function AddPageNumbersTool() {
     setResultUrl(null);
     setError(null);
     try {
-      const start = parseInt(startNumber, 10);
+      const start = easy ? 1 : parseInt(startNumber, 10);
       if (Number.isNaN(start) || start < 1) {
         throw new Error("Enter a valid starting page number.");
       }
@@ -82,7 +85,7 @@ export default function AddPageNumbersTool() {
     <ToolLayout>
       <ToolHeader
         title="Add Page Numbers"
-        description="Insert page numbers at custom positions and styles — entirely in your browser."
+        description="Print page numbers where you want them."
       />
 
       <DragNDropRegion
@@ -98,12 +101,13 @@ export default function AddPageNumbersTool() {
           <span className={styles.fileName}>{file.name}</span>
 
           <div className={styles.field}>
-            <label className={styles.label}>Format</label>
+            <span className={styles.label}>Format</span>
             <div className={styles.optionTabs}>
               {FORMATS.map((f) => (
                 <button
                   key={f.value}
                   type="button"
+                  aria-pressed={format === f.value}
                   onClick={() => setFormat(f.value)}
                   className={`${styles.optionTab} ${
                     format === f.value ? styles.optionTabActive : ""
@@ -113,6 +117,10 @@ export default function AddPageNumbersTool() {
                 </button>
               ))}
             </div>
+            <p className={styles.hint}>
+              “Page X of Y” includes the total, so a reader can see how long the
+              document is. “Number only” prints just the current page.
+            </p>
           </div>
 
           <div className={styles.field}>
@@ -131,9 +139,13 @@ export default function AddPageNumbersTool() {
                 </option>
               ))}
             </select>
+            <p className={styles.hint}>
+              Where the number sits on every page. Margins are preserved, so
+              nothing is covered.
+            </p>
           </div>
 
-          <div className={styles.field}>
+          <div className={styles.field} data-advanced="true">
             <label className={styles.label} htmlFor="start">
               Starting page number
             </label>
@@ -145,7 +157,16 @@ export default function AddPageNumbersTool() {
               onChange={(e) => setStartNumber(e.target.value)}
               className={styles.input}
             />
+            <p className={styles.hint}>
+              The number printed on the first page. Use 1 to number from the
+              beginning, or another value to continue from an earlier chapter.
+            </p>
           </div>
+          {easy && (
+            <p className={styles.hint}>
+              Easy mode starts at page 1. Switch to Advanced to change it.
+            </p>
+          )}
 
           <button
             type="button"

@@ -5,10 +5,13 @@ import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
 import { SuccessBanner } from "@/components/SuccessBanner/SuccessBanner";
+import { useToolMode } from "@/components/ToolModeScope/ToolModeScope";
 import { compressPdf } from "./logic";
 import styles from "./ToolPage.module.scss";
 
 export default function CompressPdfTool() {
+  const mode = useToolMode();
+  const easy = mode?.mode !== "advanced";
   const [file, setFile] = useState<File | null>(null);
   const [quality, setQuality] = useState("0.7");
   const [processing, setProcessing] = useState(false);
@@ -34,7 +37,7 @@ export default function CompressPdfTool() {
     setResultSize(null);
     setError(null);
     try {
-      const q = parseFloat(quality);
+      const q = easy ? 0.7 : parseFloat(quality);
       if (Number.isNaN(q) || q < 0.1 || q > 1) {
         throw new Error("Quality must be between 0.1 and 1.");
       }
@@ -57,7 +60,7 @@ export default function CompressPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Compress PDF"
-        description="Reduce PDF size by recompressing pages — entirely in your browser."
+        description="Shrink a large PDF, with a quality setting you control."
       />
 
       <DragNDropRegion
@@ -71,12 +74,15 @@ export default function CompressPdfTool() {
       {file && (
         <div className={styles.panel}>
           <span className={styles.fileName}>
-            {file.name} · {(file.size / 1024).toFixed(0)} KB
+            {file.name}, {(file.size / 1024).toFixed(0)} KB
           </span>
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="quality">
-              Quality: {quality}
-            </label>
+          <div className={styles.field} data-advanced="true">
+            <div className={styles.labelRow}>
+              <label className={styles.label} htmlFor="quality">
+                Image quality
+              </label>
+              <span className={styles.value}>{Math.round(parseFloat(quality) * 100)}%</span>
+            </div>
             <input
               id="quality"
               type="range"
@@ -86,11 +92,25 @@ export default function CompressPdfTool() {
               value={quality}
               onChange={(e) => setQuality(e.target.value)}
               className={styles.range}
+              aria-describedby="quality-hint"
             />
+            <div className={styles.scale} aria-hidden="true">
+              <span>Smaller file</span>
+              <span>Better quality</span>
+            </div>
+            <p id="quality-hint" className={styles.hint}>
+              Lower values shrink the file more but soften images. Pages are
+              rasterised, so text becomes non-selectable at every setting.
+            </p>
           </div>
+          {easy && (
+            <p className={styles.note}>
+              Easy mode uses 70% quality. Switch to Advanced to change it.
+            </p>
+          )}
           <p className={styles.note}>
-            Compression rasterizes pages to images, so text becomes
-            non-selectable. Text-only PDFs may not shrink much.
+            Text-only PDFs may not shrink much, because the text has to be
+            redrawn as an image.
           </p>
           <button
             type="button"
@@ -108,7 +128,13 @@ export default function CompressPdfTool() {
         <SuccessBanner
           url={resultUrl}
           fileName={resultName}
-          successText={`Your document is ready to download. (${(resultSize / 1024).toFixed(0)} KB)`}
+          successText={
+            file && resultSize < file.size
+              ? `Your document is ready. It is ${Math.round(
+                  (1 - resultSize / file.size) * 100,
+                )}% smaller than the original.`
+              : "Your document is ready to download."
+          }
         />
       )}
     </ToolLayout>

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ToolsFilter from "../ToolsFilter";
-import { tools } from "@/data/homepage-tools";
+import { TOOL_COUNT } from "@/registry/tools";
 
 vi.mock("next/link", () => ({
   default: ({
@@ -20,31 +20,44 @@ vi.mock("next/link", () => ({
 }));
 
 describe("ToolsFilter", () => {
-  it("renders the default 'All' view with tool cards", () => {
-    render(<ToolsFilter tools={tools} />);
+  it("renders a short popular list by default", () => {
+    render(<ToolsFilter />);
     expect(screen.getByText("Merge PDF")).toBeInTheDocument();
     expect(screen.getByText("Split PDF")).toBeInTheDocument();
     expect(screen.getByText("Compress PDF")).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent(`${TOOL_COUNT} tools`);
   });
 
   it("filters tools by category", () => {
-    render(<ToolsFilter tools={tools} />);
+    render(<ToolsFilter />);
     fireEvent.click(screen.getByRole("button", { name: "Security" }));
     expect(screen.getByText("Protect PDF")).toBeInTheDocument();
     expect(screen.getByText("Unlock PDF")).toBeInTheDocument();
     expect(screen.queryByText("Merge PDF")).not.toBeInTheDocument();
   });
 
-  it("shows subcategory pills for the Convert category", () => {
-    render(<ToolsFilter tools={tools} />);
+  it("shows conversion direction filters for Convert", () => {
+    render(<ToolsFilter />);
     expect(screen.queryByText("To PDF")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Convert" }));
     expect(screen.getByText("To PDF")).toBeInTheDocument();
     expect(screen.getByText("From PDF")).toBeInTheDocument();
   });
 
+  it("searches names and descriptions", () => {
+    render(<ToolsFilter />);
+    fireEvent.change(screen.getByLabelText("Search tools"), {
+      target: { value: "markdown" },
+    });
+    expect(screen.getByText("PDF to Markdown")).toBeInTheDocument();
+    expect(screen.queryByText("Merge PDF")).not.toBeInTheDocument();
+  });
+
   it("shows a message when no tools match", () => {
-    render(<ToolsFilter tools={[]} />);
-    expect(screen.getByText("No tools found in this category.")).toBeInTheDocument();
+    render(<ToolsFilter />);
+    fireEvent.change(screen.getByLabelText("Search tools"), {
+      target: { value: "zzzz-no-match" },
+    });
+    expect(screen.getByText(/No tool matches/)).toBeInTheDocument();
   });
 });

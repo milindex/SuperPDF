@@ -71,7 +71,7 @@ export default function UnlockPdfTool() {
       case "encrypted":
         return {
           kind: "ok" as const,
-          text: "This PDF is password-protected. It can be unlocked entirely in your browser with the correct password. No server upload needed.",
+          text: "This PDF is password-protected. Enter the password to remove it; the file stays in this tab.",
         };
       case "invalid":
         return { kind: "error" as const, text: feasibility.error };
@@ -82,7 +82,7 @@ export default function UnlockPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Unlock PDF"
-        description="Remove password protection from your PDF files — entirely in your browser."
+        description="Remove a password you already know."
       />
 
       <DragNDropRegion
@@ -118,6 +118,10 @@ export default function UnlockPdfTool() {
                   className={styles.input}
                   autoComplete="off"
                 />
+                <p className={styles.hint}>
+                  Used only to open this file in the tab. It is not stored or
+                  sent anywhere.
+                </p>
               </div>
               <button
                 type="button"

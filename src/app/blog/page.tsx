@@ -5,13 +5,12 @@ import styles from "./page.module.scss";
 
 export default function BlogPage() {
   return (
-    <StaticPage title="Blog" intro="News, guides, and deep-dives from the SuperPDF team.">
+    <StaticPage title="Blog" intro="Notes on privacy, browsers, and the PDF work we do.">
       <div className={styles.list}>
         {blogPosts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className={styles.post}>
             <div className={styles.postMeta}>
               <span>{post.date}</span>
-              <span>·</span>
               <span>{post.readTime} read</span>
             </div>
             <h2 className={styles.postTitle}>{post.title}</h2>

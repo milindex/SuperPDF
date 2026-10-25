@@ -5,11 +5,14 @@ import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
 import { SuccessBanner } from "@/components/SuccessBanner/SuccessBanner";
+import { useToolMode } from "@/components/ToolModeScope/ToolModeScope";
 import { sendToSw } from "@/lib/sw-client";
 import { WATERMARK_PDF_TYPE } from "@/lib/sw-contract";
 import styles from "./ToolPage.module.scss";
 
 export default function WatermarkPdfTool() {
+  const mode = useToolMode();
+  const easy = mode?.mode !== "advanced";
   const [file, setFile] = useState<File | null>(null);
   const [text, setText] = useState("CONFIDENTIAL");
   const [opacity, setOpacity] = useState("0.2");
@@ -37,7 +40,7 @@ export default function WatermarkPdfTool() {
     setResultUrl(null);
     setError(null);
     try {
-      const parsedOpacity = parseFloat(opacity);
+      const parsedOpacity = easy ? 0.2 : parseFloat(opacity);
       if (Number.isNaN(parsedOpacity) || parsedOpacity < 0 || parsedOpacity > 1) {
         throw new Error("Opacity must be between 0 and 1.");
       }
@@ -64,7 +67,7 @@ export default function WatermarkPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Watermark PDF"
-        description="Apply a text watermark to your PDF — entirely in your browser."
+        description="Stamp a word or notice across every page."
       />
 
       <DragNDropRegion
@@ -91,9 +94,9 @@ export default function WatermarkPdfTool() {
               className={styles.input}
             />
           </div>
-          <div className={styles.field}>
+          <div className={styles.field} data-advanced="true">
             <label className={styles.label} htmlFor="opacity">
-              Opacity (0–1)
+              Opacity
             </label>
             <input
               id="opacity"
@@ -105,7 +108,19 @@ export default function WatermarkPdfTool() {
               onChange={(e) => setOpacity(e.target.value)}
               className={styles.input}
             />
+            <p className={styles.hint}>
+              0 is invisible and 1 is solid. Around 0.2 reads as a light stamp.
+            </p>
           </div>
+          {easy && (
+            <p className={styles.note}>
+              Easy mode uses 20% opacity. Switch to Advanced to change it.
+            </p>
+          )}
+          <p className={styles.note}>
+            The watermark is drawn across the centre of every page. It sits on
+            top of the content, so choose a value that keeps the page readable.
+          </p>
           <button
             type="button"
             onClick={watermark}

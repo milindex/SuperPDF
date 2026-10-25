@@ -17,17 +17,20 @@ export default function RotatePdfTool() {
   const [processing, setProcessing] = useState(false);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [resultName, setResultName] = useState("rotated.pdf");
+  const [error, setError] = useState<string | null>(null);
 
   const handleFiles = useCallback((accepted: File[]) => {
     if (!accepted.length) return;
     setFile(accepted[0]);
     setResultUrl(null);
+    setError(null);
   }, []);
 
   const rotate = async () => {
     if (!file || processing) return;
     setProcessing(true);
     setResultUrl(null);
+    setError(null);
     try {
       const buffer = await file.arrayBuffer();
       const result = (await sendToSw(ROTATE_PDF_TYPE, {
@@ -41,7 +44,7 @@ export default function RotatePdfTool() {
       setResultName(file.name.replace(/\.pdf$/i, "") + "_rotated.pdf");
     } catch (err) {
       console.error("Rotate failed:", err);
-      alert("Failed to rotate PDF. Please try again.");
+      setError("Failed to rotate the PDF. Please try again.");
     } finally {
       setProcessing(false);
     }
@@ -51,7 +54,7 @@ export default function RotatePdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Rotate PDF"
-        description="Rotate all pages of your PDF by 90, 180, or 270 degrees — entirely in your browser."
+        description="Turn every page to the right orientation."
       />
 
       <DragNDropRegion
@@ -72,6 +75,7 @@ export default function RotatePdfTool() {
                 <button
                   key={a}
                   type="button"
+                  aria-pressed={angle === a}
                   onClick={() => setAngle(a)}
                   className={`${styles.angleBtn} ${
                     angle === a ? styles.angleBtnActive : ""
@@ -81,6 +85,10 @@ export default function RotatePdfTool() {
                 </button>
               ))}
             </div>
+            <p className={styles.hint}>
+              Applies to every page. 90° turns clockwise; 270° turns
+              anticlockwise.
+            </p>
           </div>
           <button
             type="button"
@@ -90,6 +98,7 @@ export default function RotatePdfTool() {
           >
             {processing ? "Rotating…" : "Rotate PDF"}
           </button>
+          {error && <p className={styles.error}>{error}</p>}
         </div>
       )}
 

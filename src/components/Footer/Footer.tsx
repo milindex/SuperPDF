@@ -5,27 +5,22 @@ import styles from "./Footer.module.scss";
 
 const footerLinks: Record<string, { name: string; href: string }[]> = {
   Product: [
-    { name: "Home", href: "/" },
-    { name: "Features", href: "/features" },
-    { name: "Tools", href: "/tools" },
+    { name: "All tools", href: "/tools" },
+    { name: "Workflow", href: "/workflow" },
+    { name: "How it works", href: "/#how-it-works" },
     { name: "FAQ", href: "/faq" },
-  ],
-  Solutions: [
-    { name: "Business", href: "/business" },
-    { name: "Education", href: "/education" },
-    { name: "Legal", href: "/legal" },
-    { name: "Security", href: "/security-policy" },
-  ],
-  Legal: [
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms & Conditions", href: "/terms" },
-    { name: "Cookies", href: "/cookies" },
+    { name: "Changelog", href: "/changelog" },
   ],
   Company: [
-    { name: "About Us", href: "/about" },
-    { name: "Contact Us", href: "/contact" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
     { name: "Blog", href: "/blog" },
-    { name: "Press", href: "/press" },
+  ],
+  Legal: [
+    { name: "Privacy policy", href: "/privacy" },
+    { name: "Terms and conditions", href: "/terms" },
+    { name: "Cookies", href: "/cookies" },
+    { name: "Security", href: "/security-policy" },
   ],
 };
 
@@ -33,32 +28,40 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
-        <div className={styles.grid}>
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h3 className={styles.columnTitle}>{category}</h3>
-              <ul className={styles.columnList}>
-                {links.map((link) => (
-                  <li key={link.name}>
-                    <Link href={link.href} className={styles.columnLink}>
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div className={styles.bottom}>
-          <Link href="/" className={styles.logoLink} aria-label="SuperPDF home">
-            <SuperPDFLogo style={{ height: 40, width: "auto" }} />
-          </Link>
-          <div className={styles.legal}>
-            <span className={styles.version}>v{APP_VERSION}</span>
-            <span className={styles.copyright}>
-              &copy; 2026 Milind Sonawane
-            </span>
+        <div className={styles.top}>
+          <div className={styles.brand}>
+            <Link href="/" className={styles.logoLink} aria-label="SuperPDF home">
+              <SuperPDFLogo style={{ height: 32, width: "auto" }} />
+            </Link>
+            <p className={styles.statement}>
+              PDF tools for the files you would rather not upload. Everything
+              runs in this tab.
+            </p>
           </div>
+
+          <div className={styles.grid}>
+            {Object.entries(footerLinks).map(([category, links]) => (
+              <div key={category} className={styles.column}>
+                <h2 className={styles.columnTitle}>{category}</h2>
+                <ul className={styles.columnList}>
+                  {links.map((link) => (
+                    <li key={link.name}>
+                      <Link href={link.href} className={styles.columnLink}>
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.bottom}>
+          <span className={styles.copyright}>
+            &copy; 2026 Milind Sonawane
+          </span>
+          <span className={styles.version}>SuperPDF v{APP_VERSION}</span>
         </div>
       </div>
     </footer>

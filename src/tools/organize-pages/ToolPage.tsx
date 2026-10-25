@@ -149,7 +149,7 @@ export default function OrganizePagesTool() {
         pageOfFile.set(p.fileId, idx + 1);
         const f = fileLookup.get(p.fileId);
         const name = f ? f.file.name.replace(/\.pdf$/i, "") : "PDF";
-        return [p.uid, `Page ${idx + 1} — ${name}`];
+        return [p.uid, `Page ${idx + 1}: ${name}`];
       }),
     );
   }, [pages, files]);
@@ -203,7 +203,7 @@ export default function OrganizePagesTool() {
     <ToolLayout>
       <ToolHeader
         title="Organize Pages"
-        description="Reorder, remove, or combine pages across one or more PDFs — entirely in your browser."
+        description="Reorder, add, or remove pages in one pass."
       />
 
       <DragNDropRegion

@@ -53,7 +53,7 @@ export default function PdfToJpgTool() {
     <ToolLayout>
       <ToolHeader
         title="PDF to JPG"
-        description="Convert PDF pages to JPG images — entirely in your browser."
+        description="Save each PDF page as a JPG image."
       />
 
       <DragNDropRegion

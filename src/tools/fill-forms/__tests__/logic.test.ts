@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { PDFDocument } from "pdf-lib";
-import { fillForms } from "../logic";
+import { fillForms, inspectFormFields } from "../logic";
 
 async function makeFormPdf(): Promise<ArrayBuffer> {
   const doc = await PDFDocument.create();
@@ -38,5 +38,13 @@ describe("fillForms", () => {
     await expect(
       fillForms(buf, [{ name: "missing", value: "x" }], false),
     ).rejects.toThrow("Unknown form field");
+  });
+});
+describe("inspectFormFields", () => {
+  it("lists field names, types, and current values", async () => {
+    const fields = await inspectFormFields(await makeFormPdf());
+    expect(fields.map((field) => field.name)).toEqual(["name", "agree"]);
+    expect(fields[0]).toMatchObject({ type: "text", value: "", editable: true });
+    expect(fields[1]).toMatchObject({ type: "checkbox", value: "off", editable: true });
   });
 });

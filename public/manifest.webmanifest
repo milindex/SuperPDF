@@ -1,0 +1,35 @@
+{
+  "name": "SuperPDF",
+  "short_name": "SuperPDF",
+  "description": "PDF tools that run in your browser. Merge, split, compress, convert, and sign without uploading.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fbfaf6",
+  "theme_color": "#fbfaf6",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "All tools",
+      "url": "/tools"
+    },
+    {
+      "name": "Workflow",
+      "url": "/workflow"
+    }
+  ]
+}

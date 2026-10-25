@@ -59,7 +59,7 @@ export default function DeletePagesTool() {
     <ToolLayout>
       <ToolHeader
         title="Delete Pages"
-        description="Remove unwanted pages from your PDF — entirely in your browser."
+        description="Remove the pages you do not need and keep the rest."
       />
 
       <DragNDropRegion
@@ -85,6 +85,10 @@ export default function DeletePagesTool() {
               placeholder="1,3,5"
               className={styles.input}
             />
+            <p className={styles.hint}>
+              Pages are removed from the copy you download. The original file on
+              your device is not changed.
+            </p>
           </div>
           <button
             type="button"

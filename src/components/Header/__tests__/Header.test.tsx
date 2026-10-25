@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, within, fireEvent } from "@testing-library/react";
 import Header from "../Header";
+import { TOOL_COUNT } from "@/registry/tools";
 
 vi.mock("next/link", () => ({
   default: ({
@@ -27,27 +28,39 @@ describe("Header", () => {
     );
   });
 
-  it("renders primary navigation links", () => {
+  it("renders the primary navigation", () => {
     render(<Header />);
     const primary = within(screen.getByRole("navigation", { name: "Primary" }));
-    expect(primary.getByRole("link", { name: "Split PDF" })).toHaveAttribute(
+    expect(primary.getByRole("link", { name: "Tools" })).toHaveAttribute(
       "href",
-      "/tools/split-pdf",
+      "/tools",
     );
-    expect(primary.getByRole("link", { name: "Compress PDF" })).toHaveAttribute(
+    expect(primary.getByRole("link", { name: "Workflow" })).toHaveAttribute(
       "href",
-      "/tools/compress",
+      "/workflow",
     );
-    expect(primary.getByRole("link", { name: "Merge PDF" })).toHaveAttribute(
+    expect(primary.getByRole("link", { name: "How it works" })).toHaveAttribute(
       "href",
-      "/tools/merge-pdf",
+      "/#how-it-works",
+    );
+    expect(primary.getByRole("link", { name: "FAQ" })).toHaveAttribute(
+      "href",
+      "/faq",
     );
   });
 
-  it("renders the mega menu trigger", () => {
+  it("opens search and lists tools", () => {
     render(<Header />);
-    expect(
-      screen.getByRole("button", { name: /All PDF Tools/ }),
-    ).toBeInTheDocument();
+    const trigger = screen.getByRole("button", { name: "Search tools" });
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(trigger);
+    expect(screen.getByRole("dialog", { name: "Search tools" })).toBeVisible();
+    expect(screen.getByLabelText(`Search ${TOOL_COUNT} PDF tools`)).toBeInTheDocument();
+    expect(screen.getByText("Merge PDF")).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText(`Search ${TOOL_COUNT} PDF tools`), {
+      target: { value: "markdown" },
+    });
+    expect(screen.getByText("PDF to Markdown")).toBeInTheDocument();
+    expect(screen.queryByText("Merge PDF")).not.toBeInTheDocument();
   });
 });

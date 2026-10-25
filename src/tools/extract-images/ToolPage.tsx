@@ -54,7 +54,7 @@ export default function ExtractImagesTool() {
     <ToolLayout>
       <ToolHeader
         title="Extract Images"
-        description="Extract and download images embedded in a PDF — entirely in your browser."
+        description="Pull the images out of a PDF."
       />
 
       <DragNDropRegion

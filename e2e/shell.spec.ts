@@ -7,107 +7,117 @@ test.describe("global shell", () => {
     const header = page.getByRole("banner");
     const footer = page.getByRole("contentinfo");
 
-    // Header logo + nav
     await expect(
       header.getByRole("link", { name: "SuperPDF home" }),
     ).toBeVisible();
+    await expect(header.getByRole("link", { name: "Tools" })).toBeVisible();
+    await expect(header.getByRole("link", { name: "Workflow" })).toBeVisible();
     await expect(
-      header.getByRole("link", { name: "Split PDF" }),
-    ).toBeVisible();
-    await expect(
-      header.getByRole("button", { name: /All PDF Tools/ }),
+      header.getByRole("button", { name: "Search tools" }),
     ).toBeVisible();
 
-    // Footer logo + links
     await expect(
       footer.getByRole("link", { name: "SuperPDF home" }),
     ).toBeVisible();
     await expect(
-      footer.getByRole("link", { name: "Privacy Policy" }),
+      footer.getByRole("link", { name: "Privacy policy" }),
     ).toBeVisible();
   });
 
-  test("opens the All PDF Tools mega menu and navigates", async ({ page }) => {
+  test("opens search and finds a tool", async ({ page }) => {
     await page.goto("/");
 
-    const header = page.getByRole("banner");
-    await header.getByRole("button", { name: /All PDF Tools/ }).hover();
-
-    // Mega menu shows popular tools and category columns
-    await expect(page.getByRole("heading", { name: "Popular" })).toBeVisible();
+    await page.getByRole("button", { name: "Search tools" }).click();
+    await page.getByLabel(/Search \d+ PDF tools/).fill("markdown");
     await expect(
-      page.getByRole("link", { name: "PDF to Word" }).first(),
-    ).toBeVisible();
-    await expect(
-      header.getByRole("link", { name: "Protect PDF" }),
+      page.getByRole("link", { name: /^PDF to Markdown/ }),
     ).toBeVisible();
   });
 });
 
 test.describe("homepage sections", () => {
-  test("renders tools, hero, features, testimonials, FAQ, and CTA", async ({
+  test("renders the hero, tool finder, workflow, how it works, options, and FAQ", async ({
     page,
   }) => {
     await page.goto("/");
 
-    const toolsSection = page.locator("section").filter({
-      has: page.getByRole("heading", { name: "Powerful PDF Tools" }),
-    });
-
-    // Tools section
     await expect(
-      page.getByRole("heading", { name: "Powerful PDF Tools" }),
+      page.getByRole("heading", {
+        name: "Your PDFs never leave this tab.",
+      }),
     ).toBeVisible();
     await expect(
-      toolsSection.getByRole("link", { name: /^Merge PDF/ }),
-    ).toBeVisible();
-
-    // Hero
-    await expect(
-      page.getByRole("heading", { name: "SuperPDF", exact: true }),
+      page.getByRole("link", { name: "Find a tool" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("link", { name: /Start Using Tools/ }),
+      page.getByRole("heading", { name: "Chain the steps you repeat." }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Open the workflow builder" }),
     ).toBeVisible();
 
-    // Features
     await expect(
-      page.getByRole("heading", { name: "Why Choose SuperPDF?" }),
+      page.getByRole("heading", { name: /^All \d+ tools$/ }),
     ).toBeVisible();
-
-    // Testimonials
     await expect(
-      page.getByRole("heading", { name: "Trusted by Professionals" }),
+      page.getByRole("heading", { name: "How it works" }),
     ).toBeVisible();
-
-    // FAQ
     await expect(
-      page.getByRole("heading", { name: "Frequently Asked Questions" }),
+      page.getByRole("heading", { name: "Every option, explained" }),
     ).toBeVisible();
-
-    // CTA
     await expect(
-      page.getByRole("heading", { name: /Ready to Transform Your PDFs/ }),
+      page.getByRole("heading", { name: "Common questions" }),
     ).toBeVisible();
   });
 
   test("filters tools by category on the homepage", async ({ page }) => {
     await page.goto("/");
 
-    const toolsSection = page.locator("section").filter({
-      has: page.getByRole("heading", { name: "Powerful PDF Tools" }),
-    });
-
-    await page.getByRole("button", { name: "Security" }).click();
+    await page
+      .getByRole("group", { name: "Filter by category" })
+      .getByRole("button", { name: "Security" })
+      .click();
 
     await expect(
-      toolsSection.getByRole("link", { name: /^Protect PDF/ }),
+      page.getByRole("link", { name: /^Protect PDF/ }),
     ).toBeVisible();
     await expect(
-      toolsSection.getByRole("link", { name: /^Unlock PDF/ }),
+      page.getByRole("link", { name: /^Unlock PDF/ }),
     ).toBeVisible();
     await expect(
-      toolsSection.getByRole("link", { name: /^Merge PDF/ }),
+      page.getByRole("link", { name: /^Merge PDF/ }),
     ).not.toBeVisible();
+  });
+
+  test("shows a recently used tool after visiting it", async ({ page }) => {
+    await page.goto("/tools/merge-pdf");
+    await page.goto("/");
+
+    await expect(
+      page.getByRole("heading", { name: "Recently used" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /Tool.*Merge PDF/ }),
+    ).toBeVisible();
+  });
+});
+
+test.describe("workflow builder", () => {
+  test("starts an example chain and lists its steps", async ({ page }) => {
+    await page.goto("/workflow");
+
+    await expect(
+      page.getByRole("heading", { name: "Workflow" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Use the example chain" }).click();
+
+    await expect(page.getByRole("heading", { name: "Compress" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Add page numbers" }),
+    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Watermark" })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Run 3 steps" }),
+    ).toBeDisabled();
   });
 });

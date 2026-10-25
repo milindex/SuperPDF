@@ -7,8 +7,8 @@ import styles from "./page.module.scss";
 export default function EducationPage() {
   return (
     <StaticPage
-      title="SuperPDF for Education"
-      intro="Free, privacy-first PDF tools for students, teachers, and researchers. Every file is processed on the device — no student data is ever uploaded."
+      title="SuperPDF for education"
+      intro="Free PDF tools for students, teachers, and researchers. Files are read on the device, so student work does not go to a server."
     >
       <section className={styles.useCases}>
         {educationUseCases.map((u) => (
@@ -23,7 +23,7 @@ export default function EducationPage() {
       </section>
 
       <section className={styles.benefits}>
-        <h2 className={styles.sectionTitle}>Why classrooms trust SuperPDF</h2>
+        <h2 className={styles.sectionTitle}>What it means for a classroom</h2>
         <ul className={styles.benefitList}>
           {educationBenefits.map((b) => (
             <li key={b} className={styles.benefit}>
@@ -37,10 +37,9 @@ export default function EducationPage() {
       <section className={styles.note}>
         <h2 className={styles.sectionTitle}>A note for administrators</h2>
         <p>
-          Because SuperPDF performs all processing in the browser, it aligns
-          with data-protection requirements for student information. There are
-          no accounts to manage, no data stores to audit, and nothing to
-          configure — teachers and students simply open a tool and use it.
+          Because the work happens in the browser, there is no student file
+          store to review. There are no accounts to manage and nothing to
+          configure. Teachers and students open a tool and use it.
         </p>
         <p>
           Questions about using SuperPDF in your institution?{" "}

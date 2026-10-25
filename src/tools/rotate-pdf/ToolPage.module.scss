@@ -2,7 +2,7 @@
   margin-top: 1.5rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
 }
 
@@ -35,29 +35,30 @@
 
 .angleBtn {
   padding: 0.5rem 1.25rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   font-size: 0.875rem;
   font-weight: 500;
   background: var(--color-surface-2);
   border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
   cursor: pointer;
-  transition: all 200ms;
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
   min-height: 0;
 
   &:hover {
-    border-color: rgba(41, 209, 146, 0.4);
+    border-color: var(--color-brand);
     color: var(--color-brand);
   }
 }
 
 .angleBtnActive {
-  background: var(--color-brand);
-  border-color: var(--color-brand);
-  color: #000000;
+  background: var(--color-brand-soft);
+  border-color: var(--color-brand-strong);
+  color: var(--color-brand-strong);
 
   &:hover {
-    color: #000000;
+    border-color: var(--color-brand-strong);
+    color: var(--color-brand-strong);
   }
 }
 
@@ -65,9 +66,9 @@
   width: 100%;
   padding: 0.75rem 1.25rem;
   background: var(--color-brand);
-  color: #000000;
+  color: var(--color-on-brand);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -81,4 +82,16 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+}
+.hint {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.error {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-danger);
 }

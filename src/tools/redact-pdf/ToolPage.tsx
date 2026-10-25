@@ -96,7 +96,7 @@ export default function RedactPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Redact PDF"
-        description="Hide sensitive information by covering regions with solid black — entirely in your browser."
+        description="Cover sensitive areas before you share the file."
       />
 
       <DragNDropRegion
@@ -144,6 +144,10 @@ export default function RedactPdfTool() {
               </div>
             ))}
           </div>
+          <p className={styles.hint}>
+            Coordinates are a percentage of the page, measured from the top-left.
+            Add one region for each area to hide.
+          </p>
 
           <button
             type="button"
@@ -171,7 +175,7 @@ export default function RedactPdfTool() {
                 {regions.map((r) => (
                   <li key={r.key} className={styles.regionRow}>
                     <span className={styles.regionLabel}>
-                      Page {r.pageIndex + 1} — ({r.xPct}%, {r.yPct}%) {r.widthPct}×{r.heightPct}%
+                      Page {r.pageIndex + 1}, {r.xPct}% / {r.yPct}%, {r.widthPct}×{r.heightPct}%
                     </span>
                     <button
                       type="button"

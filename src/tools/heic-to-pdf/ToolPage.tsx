@@ -47,7 +47,7 @@ export default function HeicToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="HEIC to PDF"
-        description="Convert HEIC images into a PDF — entirely in your browser."
+        description="Put one or more HEIC images into a single PDF."
       />
 
       <DragNDropRegion

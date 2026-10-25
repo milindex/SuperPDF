@@ -1,77 +1,84 @@
 .categories {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: var(--space-10);
 }
 
 .categoryTitle {
-  font-size: 1.25rem;
+  margin-bottom: var(--space-3);
+  font-size: var(--text-xl);
   font-weight: 700;
-  color: var(--color-text-primary);
-  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
 }
 
 .faqList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  border-top: 1px solid var(--color-border);
 }
 
 .faqItem {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 0 1.25rem;
-
-  &[open] {
-    border-color: rgba(41, 209, 146, 0.4);
-  }
+  border-bottom: 1px solid var(--color-border);
+  background: transparent;
 }
 
 .faqQuestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-1);
   cursor: pointer;
-  padding: 1rem 0;
+  font-size: var(--text-md);
   font-weight: 600;
-  color: var(--color-text-primary);
-  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
   list-style: none;
+  transition: color var(--dur-micro) var(--ease-out);
+}
 
-  &::-webkit-details-marker {
-    display: none;
-  }
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
 
-  &::before {
-    content: "▸";
-    display: inline-block;
-    margin-right: 0.5rem;
-    color: var(--color-brand);
-    transition: transform 200ms;
-  }
+.faqQuestion::after {
+  content: "+";
+  flex-shrink: 0;
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-text-muted);
+  transition: transform var(--dur-short) var(--ease-out);
+}
 
-  .faqItem[open] &::before {
-    transform: rotate(90deg);
-  }
+.faqItem[open] .faqQuestion::after {
+  transform: rotate(45deg);
+}
+
+.faqQuestion:hover {
+  color: var(--color-brand-strong);
 }
 
 .faqAnswer {
+  max-width: 65ch;
+  margin: 0;
+  padding: 0 var(--space-1) var(--space-5);
+  font-size: var(--text-sm);
+  line-height: 1.6;
   color: var(--color-text-secondary);
-  line-height: 1.7;
-  margin: 0 0 1rem;
-  font-size: 0.875rem;
 }
 
 .footerNote {
-  margin-top: 2.5rem;
+  margin-top: var(--space-10);
+  font-size: var(--text-sm);
   color: var(--color-text-secondary);
-  font-size: 0.9375rem;
 }
 
 .link {
-  color: var(--color-brand);
-  text-decoration: none;
-  font-weight: 600;
+  color: var(--color-brand-strong);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
 
-  &:hover {
-    color: var(--color-brand-hover);
-  }
+.link:hover {
+  color: var(--color-brand-strong-hover);
 }

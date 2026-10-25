@@ -51,7 +51,7 @@ export default function RemoveMetadataTool() {
     <ToolLayout>
       <ToolHeader
         title="Remove Metadata"
-        description="Strip hidden metadata (title, author, keywords, etc.) from your PDF — entirely in your browser."
+        description="Strip the author, title, and hidden properties."
       />
 
       <DragNDropRegion

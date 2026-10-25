@@ -4,6 +4,7 @@ import { useMemo, useState, useCallback } from "react";
 import {
   DndContext,
   closestCenter,
+  KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
@@ -12,6 +13,7 @@ import {
 import {
   arrayMove,
   SortableContext,
+  sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
@@ -51,16 +53,29 @@ function SortableItem({
   };
 
   return (
-    <li
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className={styles.fileRow}
-    >
-      <span className={styles.dragHandle} aria-hidden="true">
-        ⋮⋮
-      </span>
+    <li ref={setNodeRef} style={style} className={styles.fileRow}>
+      <button
+        type="button"
+        className={styles.dragHandle}
+        {...attributes}
+        {...listeners}
+        aria-label={`Reorder ${item.file.name}. Use the arrow keys to move it.`}
+      >
+        <svg
+          viewBox="0 0 16 16"
+          width="16"
+          height="16"
+          aria-hidden="true"
+          fill="currentColor"
+        >
+          <circle cx="5" cy="3" r="1.4" />
+          <circle cx="11" cy="3" r="1.4" />
+          <circle cx="5" cy="8" r="1.4" />
+          <circle cx="11" cy="8" r="1.4" />
+          <circle cx="5" cy="13" r="1.4" />
+          <circle cx="11" cy="13" r="1.4" />
+        </svg>
+      </button>
       <div className={styles.fileInfo}>
         <span className={styles.fileName}>{item.file.name}</span>
         <span className={styles.fileMeta}>
@@ -73,7 +88,18 @@ function SortableItem({
         className={styles.removeBtn}
         aria-label={`Remove ${item.file.name}`}
       >
-        ✕
+        <svg
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        >
+          <path d="m6 6 12 12M18 6 6 18" />
+        </svg>
       </button>
     </li>
   );
@@ -84,8 +110,14 @@ export default function MergePdfTool() {
   const [processing, setProcessing] = useState(false);
   const [mergedUrl, setMergedUrl] = useState<string | null>(null);
   const [mergedName, setMergedName] = useState("merged.pdf");
+  const [error, setError] = useState<string | null>(null);
 
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
 
   const handleFiles = useCallback((accepted: File[]) => {
     if (!accepted.length) return;
@@ -119,6 +151,7 @@ export default function MergePdfTool() {
     if (!canMerge) return;
     setProcessing(true);
     setMergedUrl(null);
+    setError(null);
     try {
       const buffers = await Promise.all(files.map((f) => f.file.arrayBuffer()));
       const result = (await sendToSw(MERGE_PDF_TYPE, { buffers })) as Uint8Array;
@@ -132,7 +165,7 @@ export default function MergePdfTool() {
       );
     } catch (err) {
       console.error("Merge failed:", err);
-      alert("Failed to merge PDFs. Please try again.");
+      setError("Failed to merge the PDFs. Please try again.");
     } finally {
       setProcessing(false);
     }
@@ -150,7 +183,7 @@ export default function MergePdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Merge PDFs"
-        description="Combine multiple PDFs in your browser. Drag to reorder, then merge and download. Private, fast, and client-side."
+        description="Combine several PDFs into one document, in the order you choose."
       />
 
       <DragNDropRegion
@@ -171,6 +204,10 @@ export default function MergePdfTool() {
               Clear all
             </button>
           </div>
+          <p className={styles.panelHelp}>
+            Files merge in the order shown. Drag a handle to reorder, or use the
+            arrow keys while it is focused.
+          </p>
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -202,6 +239,7 @@ export default function MergePdfTool() {
           {files.length === 1 && (
             <p className={styles.hint}>Add at least one more PDF to merge.</p>
           )}
+          {error && <p className={styles.error}>{error}</p>}
         </div>
       )}
 

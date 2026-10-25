@@ -47,7 +47,7 @@ export default function PdfToTextTool() {
     <ToolLayout>
       <ToolHeader
         title="PDF to Text"
-        description="Extract text content from a PDF — entirely in your browser."
+        description="Pull the text out of a PDF."
       />
 
       <DragNDropRegion
@@ -62,7 +62,7 @@ export default function PdfToTextTool() {
         <div className={styles.panel}>
           <span className={styles.fileName}>{file.name}</span>
           <p className={styles.note}>
-            Scanned documents without a text layer return no text — use PDF OCR
+            Scanned documents without a text layer return no text. Use PDF OCR
             for those.
           </p>
           <button

@@ -50,7 +50,7 @@ export default function WebpageToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="Webpage to PDF"
-        description="Convert a webpage URL to a PDF — entirely in your browser."
+        description="Save a webpage as a PDF when the site allows it."
       />
 
       <div className={styles.panel}>

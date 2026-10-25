@@ -29,13 +29,12 @@
 .input,
 .textarea {
   padding: 0.75rem 0.875rem;
-  border-radius: 10px;
+  border-radius: var(--radius);
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text-primary);
   font-family: inherit;
   font-size: 0.9375rem;
-  outline: none;
   transition: border-color 200ms;
 
   &:focus {
@@ -50,9 +49,9 @@
 .submit {
   padding: 0.75rem 1.25rem;
   background: var(--color-brand);
-  color: #000000;
+  color: var(--color-on-brand);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 1rem;
   font-weight: 600;
   font-family: inherit;

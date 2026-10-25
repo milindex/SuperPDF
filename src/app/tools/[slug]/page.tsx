@@ -54,6 +54,12 @@ const toolLoaders: Record<string, () => Promise<ToolPageModule>> = {
   "ocr-pdf": () => import("@/tools/ocr-pdf/ToolPage"),
   "pdf-to-pdfa": () => import("@/tools/pdf-to-pdfa/ToolPage"),
   "scan-to-pdf": () => import("@/tools/scan-to-pdf/ToolPage"),
+  "bmp-to-pdf": () => import("@/tools/bmp-to-pdf/ToolPage"),
+  "html-to-pdf": () => import("@/tools/html-to-pdf/ToolPage"),
+  "inspect-metadata": () => import("@/tools/inspect-metadata/ToolPage"),
+  "export-thumbnails": () => import("@/tools/export-thumbnails/ToolPage"),
+  "remove-restrictions": () => import("@/tools/remove-restrictions/ToolPage"),
+  "create-pdf": () => import("@/tools/create-pdf/ToolPage"),
 };
 
 export default async function ToolRoute({
@@ -68,10 +74,10 @@ export default async function ToolRoute({
   const loader = toolLoaders[tool.id];
   if (!loader) {
     return (
-      <main>
+      <div>
         <h1>{tool.name}</h1>
         <p>This tool is not implemented yet (status: {tool.status}).</p>
-      </main>
+      </div>
     );
   }
 

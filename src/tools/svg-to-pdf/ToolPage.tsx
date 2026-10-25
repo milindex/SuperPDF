@@ -47,7 +47,7 @@ export default function SvgToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="SVG to PDF"
-        description="Convert SVG vector graphics into a PDF — entirely in your browser."
+        description="Put one or more SVG graphics into a single PDF."
       />
 
       <DragNDropRegion

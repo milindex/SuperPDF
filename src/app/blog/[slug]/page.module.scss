@@ -1,5 +1,4 @@
 .main {
-  padding-top: 64px;
   min-height: 60vh;
 }
 
@@ -53,7 +52,7 @@
   font-size: 0.6875rem;
   font-weight: 600;
   color: var(--color-brand);
-  background: rgba(41, 209, 146, 0.12);
+  background: var(--color-brand-soft);
   padding: 0.125rem 0.5rem;
   border-radius: 999px;
 }

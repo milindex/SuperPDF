@@ -47,7 +47,7 @@ export default function PngToPdfTool() {
     <ToolLayout>
       <ToolHeader
         title="PNG to PDF"
-        description="Convert PNG images into a PDF — entirely in your browser."
+        description="Put one or more PNG images into a single PDF."
       />
 
       <DragNDropRegion

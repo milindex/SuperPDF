@@ -33,7 +33,7 @@ export default function StaticPage({
   children?: React.ReactNode;
 }) {
   return (
-    <main className={styles.main}>
+    <div className={styles.main}>
       <div className={styles.container}>
         <nav className={styles.crumb}>
           <Link href="/">Home</Link>
@@ -65,12 +65,14 @@ export default function StaticPage({
                 <div className={styles.cardGrid}>
                   {section.cards.map((card, j) => (
                     <div key={j} className={styles.card}>
-                      {card.icon && (
-                        <div className={styles.cardIcon}>
-                          <Icon name={card.icon} size={24} />
-                        </div>
-                      )}
-                      <h3 className={styles.cardTitle}>{card.title}</h3>
+                      <div className={styles.cardHead}>
+                        {card.icon && (
+                          <span className={styles.cardIcon} aria-hidden="true">
+                            <Icon name={card.icon} size={18} />
+                          </span>
+                        )}
+                        <h3 className={styles.cardTitle}>{card.title}</h3>
+                      </div>
                       <p className={styles.cardDesc}>{card.description}</p>
                     </div>
                   ))}
@@ -81,6 +83,6 @@ export default function StaticPage({
           {children}
         </div>
       </div>
-    </main>
+    </div>
   );
 }
