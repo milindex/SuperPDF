@@ -4,10 +4,21 @@ import styles from "./changelog.module.scss";
 
 const RELEASES = [
   {
+    version: "v2.1.1",
+    date: "25 October 2026",
+    title: "Discovery, policies, and a smaller site",
+    current: true,
+    changes: [
+      "Added a generated sitemap and robots.txt, with canonical URLs and unique titles and descriptions on every page.",
+      "Removed the blog for now; its routes, data, and links are gone from the site.",
+      "Rewrote the privacy, terms, cookie, and security policies to match what the app actually does, each with a last-updated date.",
+      "Linked the footer copyright credit to milinds.dev.",
+    ],
+  },
+  {
     version: "v2.1.0",
     date: "25 October 2026",
     title: "Redesign, workflows, and offline use",
-    current: true,
     changes: [
       "New paper palette, two typefaces, and a quieter layout across every page, plus six more tools and automatic form-field detection.",
       "A workflow builder that chains PDF tools and reruns the same steps on one file.",
