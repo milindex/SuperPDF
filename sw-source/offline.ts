@@ -42,7 +42,12 @@ export async function precacheRoutes(routes: string[]): Promise<number> {
   }
 
   await Promise.allSettled(
-    ["/manifest.webmanifest", "/icon.svg"].map(async (asset) => {
+    [
+      "/manifest.webmanifest",
+      "/icon.svg",
+      "/icon-192.png",
+      "/icon-512.png",
+    ].map(async (asset) => {
       if (await cache.match(asset)) return;
       const response = await fetch(asset);
       if (response.ok) await cache.put(asset, response);
