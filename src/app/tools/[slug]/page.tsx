@@ -62,6 +62,10 @@ const toolLoaders: Record<string, () => Promise<ToolPageModule>> = {
   "create-pdf": () => import("@/tools/create-pdf/ToolPage"),
 };
 
+export function generateStaticParams() {
+  return toolsRegistry.map((tool) => ({ slug: tool.slug }));
+}
+
 export default async function ToolRoute({
   params,
 }: {

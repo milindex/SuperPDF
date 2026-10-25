@@ -3,6 +3,10 @@ import { notFound } from "next/navigation";
 import { blogPosts } from "@/data/page-content";
 import styles from "./page.module.scss";
 
+export function generateStaticParams() {
+  return blogPosts.map((post) => ({ slug: post.slug }));
+}
+
 export default async function BlogPostPage({
   params,
 }: {
