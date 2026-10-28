@@ -10,8 +10,8 @@ export const privacySections = [
   {
     heading: "1. Who we are",
     body: [
-      "SuperPDF is a browser-based PDF toolkit published at superpdf.com and operated by Milind Sonawane. In this policy, “we” and “us” mean that operator, and “you” means the person using the site.",
-      "For any privacy question, write to support@superpdf.com.",
+      "SuperPDF is a browser-based PDF toolkit published at superpdf.milinds.dev and operated by Milind Sonawane. In this policy, “we” and “us” mean that operator, and “you” means the person using the site.",
+      "For any privacy question, write to connect@milinds.dev.",
     ],
   },
   {
@@ -76,7 +76,7 @@ export const privacySections = [
     body: [
       "Depending on where you live, you may have rights to access, correct, or delete personal information we hold about you. In practice that information is limited to any email you have sent us.",
       "You can clear all locally stored data at any time from the settings dialog or your browser settings. Blocking local storage does not stop the PDF tools from working; it only means preferences are not remembered.",
-      "To make a request, email support@superpdf.com.",
+      "To make a request, email connect@milinds.dev.",
     ],
   },
   {
@@ -91,7 +91,7 @@ export const termsSections = [
   {
     heading: "1. Agreement",
     body: [
-      "These Terms and Conditions govern your use of SuperPDF at superpdf.com. By using the site, you agree to them. If you do not agree, please stop using the service.",
+      "These Terms and Conditions govern your use of SuperPDF at superpdf.milinds.dev. By using the site, you agree to them. If you do not agree, please stop using the service.",
     ],
   },
   {
@@ -163,7 +163,7 @@ export const termsSections = [
   {
     heading: "12. Contact",
     body: [
-      "Questions about these terms can go to support@superpdf.com.",
+      "Questions about these terms can go to connect@milinds.dev.",
     ],
   },
 ];
@@ -202,7 +202,7 @@ export const cookieSections = [
     heading: "5. Managing and clearing data",
     body: [
       "Use Clear local data in the settings dialog to remove saved preferences, recent items, and workflows from this browser.",
-      "Your browser's site-data settings can also clear local storage and cached files for superpdf.com. Clearing them does not stop the PDF tools from working.",
+      "Your browser's site-data settings can also clear local storage and cached files for superpdf.milinds.dev. Clearing them does not stop the PDF tools from working.",
     ],
   },
   {
@@ -252,7 +252,7 @@ export const securitySections = [
   {
     heading: "6. Reporting a vulnerability",
     body: [
-      "If you believe you have found a security issue, email security@superpdf.com with the details and steps to reproduce it. Please do not test against other people's files or run disruptive attacks.",
+      "If you believe you have found a security issue, email connect@milinds.dev with the details and steps to reproduce it. Please do not test against other people's files or run disruptive attacks.",
       "We will acknowledge a report as soon as we can and keep you informed while it is investigated.",
     ],
   },

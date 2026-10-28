@@ -1,7 +1,8 @@
 import Link from "next/link";
 import StaticPage from "@/components/StaticPage/StaticPage";
+import { JsonLd } from "@/components/JsonLd/JsonLd";
 import { fullFaqs } from "@/data/page-content";
-import { pageMetadata } from "@/lib/seo";
+import { faqJsonLd, pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
 
 export const metadata = pageMetadata({
@@ -16,9 +17,11 @@ export default function FaqPage() {
 
   return (
     <StaticPage
+      path="/faq"
       title="Frequently Asked Questions"
       intro="Answers on privacy, formats, limits, and how the browser does the work."
     >
+      <JsonLd data={faqJsonLd(fullFaqs)} />
       <div className={styles.categories}>
         {categories.map((cat) => (
           <section key={cat} className={styles.category}>

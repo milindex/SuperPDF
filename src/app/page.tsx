@@ -4,9 +4,10 @@ import ToolsFilter from "@/components/ToolsFilter/ToolsFilter";
 import FAQSection from "@/components/FAQSection/FAQSection";
 import RecentBanner from "@/components/RecentBanner/RecentBanner";
 import FeatureSlider from "@/components/FeatureSlider/FeatureSlider";
+import { JsonLd } from "@/components/JsonLd/JsonLd";
 import { faqs } from "@/data/homepage-content";
 import { toolsRegistry } from "@/registry/tools";
-import { pageMetadata } from "@/lib/seo";
+import { OG_IMAGE, SITE_URL, absoluteUrl, pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
 
 export const metadata = pageMetadata({
@@ -68,12 +69,18 @@ const optionNotes = [
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
+  "@id": `${SITE_URL}/#webapp`,
   name: "SuperPDF",
   description:
     "PDF tools that run in the browser. Merge, split, compress, convert, and sign files without uploading them.",
-  url: "https://superpdf.com",
+  url: SITE_URL,
+  image: absoluteUrl(OG_IMAGE.url),
+  screenshot: absoluteUrl(OG_IMAGE.url),
   applicationCategory: "ProductivityApplication",
   operatingSystem: "Web Browser",
+  browserRequirements: "Requires JavaScript. Requires HTML5.",
+  isAccessibleForFree: true,
+  publisher: { "@id": `${SITE_URL}/#organization` },
   offers: {
     "@type": "Offer",
     price: "0",
@@ -96,10 +103,7 @@ const structuredData = {
 export default function HomePage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <JsonLd data={structuredData} />
 
       <section className={styles.hero}>
         <div className={styles.container}>

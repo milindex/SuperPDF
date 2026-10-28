@@ -13,6 +13,7 @@ export const metadata = pageMetadata({
 export default function SecurityPolicyPage() {
   return (
     <StaticPage
+      path="/security-policy"
       title="Security"
       intro="How the browser processing works, and what it means for your files."
       updated={LEGAL_LAST_UPDATED}
@@ -23,7 +24,7 @@ export default function SecurityPolicyPage() {
         <Link href="/contact" style={{ color: "var(--color-brand-strong)", textDecoration: "underline" }}>
           Contact us
         </Link>{" "}
-        or email security@superpdf.com.
+        or email connect@milinds.dev.
       </p>
     </StaticPage>
   );

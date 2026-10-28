@@ -65,6 +65,10 @@
   gap: var(--space-4);
 }
 
+.questionWrap {
+  margin: 0;
+}
+
 .question {
   font-family: var(--font-display);
   font-size: var(--text-md);
@@ -93,6 +97,10 @@
 
 .answer {
   padding: 0 var(--space-1) var(--space-5);
+}
+
+.answer[hidden] {
+  display: none;
 }
 
 .answer p {

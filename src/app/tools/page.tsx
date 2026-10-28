@@ -1,7 +1,12 @@
 import Link from "next/link";
 import ToolsFilter from "@/components/ToolsFilter/ToolsFilter";
+import { JsonLd } from "@/components/JsonLd/JsonLd";
 import { toolsRegistry } from "@/registry/tools";
-import { pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbJsonLd,
+  itemListJsonLd,
+  pageMetadata,
+} from "@/lib/seo";
 import styles from "./page.module.scss";
 
 export const metadata = pageMetadata({
@@ -16,6 +21,21 @@ export default function ToolsPage() {
 
   return (
     <div className={styles.main}>
+      <JsonLd
+        data={itemListJsonLd({
+          name: "PDF tools",
+          items: toolsRegistry.map((tool) => ({
+            name: tool.name,
+            path: `/tools/${tool.slug}`,
+          })),
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "All tools", path: "/tools" },
+        ])}
+      />
       <div className={styles.container}>
         <nav className={styles.crumb} aria-label="Breadcrumb">
           <Link href="/">Home</Link>

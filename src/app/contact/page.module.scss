@@ -65,7 +65,7 @@
 
 .note {
   font-size: 0.875rem;
-  color: var(--color-brand);
+  color: var(--color-brand-strong);
 }
 
 .info {
@@ -89,11 +89,11 @@
   margin: 0 0 0.75rem;
 
   a {
-    color: var(--color-brand);
+    color: var(--color-brand-strong);
     text-decoration: none;
 
     &:hover {
-      color: var(--color-brand-hover);
+      color: var(--color-brand-strong-hover);
     }
   }
 }

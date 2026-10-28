@@ -65,6 +65,7 @@ export default function FeaturesPage() {
 
   return (
     <StaticPage
+      path="/features"
       title="Features"
       intro={`${TOOL_COUNT} PDF tools that run in the browser, on the file you chose.`}
     >

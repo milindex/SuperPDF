@@ -14,6 +14,7 @@ export const metadata = pageMetadata({
 export default function PressPage() {
   return (
     <StaticPage
+      path="/press"
       title="Press"
       intro="Press information and a short fact sheet."
       updated={LEGAL_LAST_UPDATED}
@@ -41,7 +42,7 @@ export default function PressPage() {
         <h2 className={styles.sectionTitle}>Press contact</h2>
         <p className={styles.contact}>
           For media inquiries, email{" "}
-          <a href="mailto:press@superpdf.com">press@superpdf.com</a>.
+          <a href="mailto:connect@milinds.dev">connect@milinds.dev</a>.
         </p>
       </section>
 

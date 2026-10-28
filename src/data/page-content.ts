@@ -179,7 +179,7 @@ export const fullFaqs: Faq[] = [
     category: "Support",
     question: "How do I report a bug or request a feature?",
     answer:
-      "Use the contact page or email support@superpdf.com. Include the tool name, browser version, and what happened.",
+      "Use the contact page or email connect@milinds.dev. Include the tool name, browser version, and what happened.",
   },
   {
     category: "Support",

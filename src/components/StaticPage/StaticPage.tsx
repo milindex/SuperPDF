@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Icon from "@/components/Icon/Icon";
+import { JsonLd } from "@/components/JsonLd/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/seo";
 import styles from "./StaticPage.module.scss";
 
 export interface StaticCard {
@@ -25,17 +27,28 @@ export default function StaticPage({
   updated,
   sections,
   children,
+  path,
 }: {
   title: string;
   intro?: string;
   updated?: string;
   sections?: StaticSection[];
   children?: React.ReactNode;
+  /** Route path, used to emit a BreadcrumbList. */
+  path?: `/${string}`;
 }) {
   return (
     <div className={styles.main}>
+      {path && (
+        <JsonLd
+          data={breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: title, path },
+          ])}
+        />
+      )}
       <div className={styles.container}>
-        <nav className={styles.crumb}>
+        <nav className={styles.crumb} aria-label="Breadcrumb">
           <Link href="/">Home</Link>
           <span aria-hidden="true">/</span>
           <span>{title}</span>

@@ -82,7 +82,7 @@
 }
 
 .benefitCheck {
-  color: var(--color-brand);
+  color: var(--color-brand-strong);
   font-weight: 700;
 }
 
@@ -103,11 +103,11 @@
 }
 
 .link {
-  color: var(--color-brand);
+  color: var(--color-brand-strong);
   text-decoration: none;
   font-weight: 600;
 
   &:hover {
-    color: var(--color-brand-hover);
+    color: var(--color-brand-strong-hover);
   }
 }

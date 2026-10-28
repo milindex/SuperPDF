@@ -13,6 +13,7 @@ export const metadata = pageMetadata({
 export default function PrivacyPage() {
   return (
     <StaticPage
+      path="/privacy"
       title="Privacy policy"
       intro="What SuperPDF collects, what it does not collect, and what happens to your files."
       updated={LEGAL_LAST_UPDATED}
@@ -23,7 +24,7 @@ export default function PrivacyPage() {
         <Link href="/contact" style={{ color: "var(--color-brand-strong)", textDecoration: "underline" }}>
           Contact us
         </Link>{" "}
-        or email support@superpdf.com.
+        or email connect@milinds.dev.
       </p>
     </StaticPage>
   );

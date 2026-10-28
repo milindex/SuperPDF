@@ -13,6 +13,7 @@ export const metadata = pageMetadata({
 export default function TermsPage() {
   return (
     <StaticPage
+      path="/terms"
       title="Terms & Conditions"
       intro="The terms that govern your use of SuperPDF."
       updated={LEGAL_LAST_UPDATED}
@@ -23,7 +24,7 @@ export default function TermsPage() {
         <Link href="/contact" style={{ color: "var(--color-brand-strong)", textDecoration: "underline" }}>
           Contact us
         </Link>{" "}
-        or email support@superpdf.com.
+        or email connect@milinds.dev.
       </p>
     </StaticPage>
   );

@@ -1,7 +1,12 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { toolsRegistry } from "@/registry/tools";
-import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/JsonLd/JsonLd";
+import {
+  breadcrumbJsonLd,
+  pageMetadata,
+  softwareApplicationJsonLd,
+} from "@/lib/seo";
 
 type ToolPageModule = { default: React.ComponentType<{ toolId: string }> };
 
@@ -103,6 +108,26 @@ export default async function ToolRoute({
     );
   }
 
+  const path: `/${string}` = `/tools/${tool.slug}`;
   const ToolPage = (await loader()).default;
-  return <ToolPage toolId={tool.id} />;
+
+  return (
+    <>
+      <JsonLd
+        data={softwareApplicationJsonLd({
+          name: tool.name,
+          description: tool.description,
+          path,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "All tools", path: "/tools" },
+          { name: tool.name, path },
+        ])}
+      />
+      <ToolPage toolId={tool.id} />
+    </>
+  );
 }

@@ -15,6 +15,7 @@ export const metadata = pageMetadata({
 export default function EducationPage() {
   return (
     <StaticPage
+      path="/education"
       title="SuperPDF for education"
       intro="Free PDF tools for students, teachers, and researchers. Files are read on the device, so student work does not go to a server."
     >
@@ -35,7 +36,9 @@ export default function EducationPage() {
         <ul className={styles.benefitList}>
           {educationBenefits.map((b) => (
             <li key={b} className={styles.benefit}>
-              <span className={styles.benefitCheck}>✓</span>
+              <span className={styles.benefitCheck} aria-hidden="true">
+                ✓
+              </span>
               {b}
             </li>
           ))}

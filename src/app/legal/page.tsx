@@ -37,6 +37,7 @@ const LEGAL_PAGES = [
 export default function LegalPage() {
   return (
     <StaticPage
+      path="/legal"
       title="Legal"
       intro="Policies for SuperPDF. The short version: files stay on your device."
       updated={LEGAL_LAST_UPDATED}

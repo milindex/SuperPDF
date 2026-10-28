@@ -14,12 +14,13 @@ export default function ContactPage() {
     e.preventDefault();
     const subject = encodeURIComponent(`Contact from ${name || "a visitor"}`);
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:support@superpdf.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:connect@milinds.dev?subject=${subject}&body=${body}`;
     setSent(true);
   };
 
   return (
     <StaticPage
+      path="/contact"
       title="Contact"
       intro="Questions, feedback, or a bug report. Send it here."
     >
@@ -79,12 +80,8 @@ export default function ContactPage() {
         <div className={styles.info}>
           <h2 className={styles.infoTitle}>Other ways to reach us</h2>
           <p className={styles.infoText}>
-            <strong>Support:</strong>{" "}
-            <a href="mailto:support@superpdf.com">support@superpdf.com</a>
-          </p>
-          <p className={styles.infoText}>
-            <strong>Press:</strong>{" "}
-            <a href="mailto:press@superpdf.com">press@superpdf.com</a>
+            <strong>Email:</strong>{" "}
+            <a href="mailto:connect@milinds.dev">connect@milinds.dev</a>
           </p>
           <p className={styles.infoText}>
             <strong>Response time:</strong> we aim to reply within 2 business

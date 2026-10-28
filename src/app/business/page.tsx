@@ -15,6 +15,7 @@ export const metadata = pageMetadata({
 export default function BusinessPage() {
   return (
     <StaticPage
+      path="/business"
       title="SuperPDF for business"
       intro="Handle client documents without sending them to another company. Every tool runs in the browser, on the device."
     >
@@ -35,7 +36,9 @@ export default function BusinessPage() {
         <ul className={styles.benefitList}>
           {businessBenefits.map((b) => (
             <li key={b} className={styles.benefit}>
-              <span className={styles.benefitCheck}>✓</span>
+              <span className={styles.benefitCheck} aria-hidden="true">
+                ✓
+              </span>
               {b}
             </li>
           ))}

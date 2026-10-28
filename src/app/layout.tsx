@@ -4,7 +4,15 @@ import { SwProvider } from "@/components/SwProvider";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import RecentTracker from "@/components/RecentTracker/RecentTracker";
-import { SITE_NAME, SITE_URL } from "@/lib/seo";
+import { JsonLd } from "@/components/JsonLd/JsonLd";
+import {
+  OG_IMAGE,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+  organizationJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo";
 import "./globals.scss";
 
 const schibsted = Schibsted_Grotesk({
@@ -27,8 +35,7 @@ export const metadata: Metadata = {
     default: "SuperPDF | PDF work without the upload",
     template: "%s | SuperPDF",
   },
-  description:
-    "Merge, split, compress, convert, and sign PDFs in your browser. Files stay on your device, with no account and no upload.",
+  description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   robots: {
     index: true,
@@ -61,12 +68,15 @@ export const metadata: Metadata = {
     type: "website",
     siteName: SITE_NAME,
     url: "/",
+    locale: "en_US",
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "SuperPDF | PDF work without the upload",
     description:
       "PDF tools that run in the browser. No upload, no account, no server copy.",
+    images: [OG_IMAGE.url],
   },
 };
 
@@ -79,6 +89,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${schibsted.variable} ${instrument.variable}`}>
       <body>
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
         <SwProvider>
           <RecentTracker />
           <div className="app-shell">

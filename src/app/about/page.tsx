@@ -12,6 +12,7 @@ export const metadata = pageMetadata({
 export default function AboutPage() {
   return (
     <StaticPage
+      path="/about"
       title="About"
       intro="SuperPDF is a PDF toolkit for people who would rather not upload the file. The work happens in the browser, on your device."
       sections={[

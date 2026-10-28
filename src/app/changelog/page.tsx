@@ -73,6 +73,7 @@ export const metadata = pageMetadata({
 export default function ChangelogPage() {
   return (
     <StaticPage
+      path="/changelog"
       title="Changelog"
       intro="What changed, from the first scaffold to the current release."
     >

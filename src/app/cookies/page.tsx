@@ -13,6 +13,7 @@ export const metadata = pageMetadata({
 export default function CookiesPage() {
   return (
     <StaticPage
+      path="/cookies"
       title="Cookie Policy"
       intro="How SuperPDF uses cookies and similar technologies."
       updated={LEGAL_LAST_UPDATED}
@@ -23,7 +24,7 @@ export default function CookiesPage() {
         <Link href="/contact" style={{ color: "var(--color-brand-strong)", textDecoration: "underline" }}>
           Contact us
         </Link>{" "}
-        or email support@superpdf.com.
+        or email connect@milinds.dev.
       </p>
     </StaticPage>
   );
