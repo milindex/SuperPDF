@@ -4,6 +4,28 @@ SuperPDF is a **private, browser-native PDF workbench** built with Next.js
 (App Router), React, TypeScript, and SCSS Modules. Processing happens entirely on
 your device — files are never uploaded, stored, or sent to a server.
 
+<p align="center">
+  <a href="https://superpdf.milinds.dev">
+    <img src="https://img.shields.io/website?url=https%3A%2F%2Fsuperpdf.milinds.dev&amp;label=live%20site&amp;up_message=online&amp;down_message=offline&amp;color=DC143C" alt="Live site status" />
+  </a>
+  <a href="https://github.com/milindex/SuperPDF/actions/workflows/ci.yml">
+    <img src="https://github.com/milindex/SuperPDF/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI build status" />
+  </a>
+  <img src="https://img.shields.io/github/last-commit/milindex/SuperPDF?branch=main&amp;color=DC143C" alt="Last commit" />
+  <img src="https://img.shields.io/github/stars/milindex/SuperPDF?color=DC143C" alt="GitHub stars" />
+  <img src="https://img.shields.io/github/issues/milindex/SuperPDF?color=DC143C" alt="Open issues" />
+  <img src="https://img.shields.io/badge/license-MIT-DC143C" alt="MIT license" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&amp;logoColor=white" alt="Next.js 16" />
+  <img src="https://img.shields.io/badge/React-19-087EA4?logo=react&amp;logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&amp;logoColor=white" alt="TypeScript 5" />
+  <img src="https://img.shields.io/badge/no%20uploads-ever-DC143C" alt="No uploads" />
+  <img src="https://img.shields.io/badge/PRs-welcome-DC143C" alt="Pull requests welcome" />
+  <img src="https://api.visitorbadge.io/api/daily?path=https%3A%2F%2Fgithub.com%2Fmilindex%2FSuperPDF&amp;label=visitors%20today&amp;countColor=%23DC143C" alt="Visitors today" />
+</p>
+
 **Live:** [superpdf.milinds.dev](https://superpdf.milinds.dev)  
 **Status:** Public Beta · **Release:** `3.0.1.20261029`  
 **Source:** [github.com/milindex/SuperPDF](https://github.com/milindex/SuperPDF)
