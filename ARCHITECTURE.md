@@ -14,6 +14,8 @@
 | Status | <!-- GENERATED:START:status -->
 51
 <!-- GENERATED:END:status --> |
+| Public surface | Public Beta |
+| Release | v3.0.0.20261029 |
 
 ## 2. Processing model
 
@@ -29,7 +31,37 @@ change modes without an ADR.
 
 No third mode without an ADR in `docs/adr/`.
 
-## 3. Tool registry
+## 3. Presentation layer
+
+- **Root layout** (`src/app/layout.tsx`) loads Instrument Sans, Instrument Serif
+  and Geist Mono, applies the stored theme before first paint, and mounts the
+  service-worker provider, scroll choreography, ruler, recent tracker, header
+  and footer.
+- **Design tokens** live in `src/app/globals.scss` (paper/ink, crimson `--app`,
+  light/dark sets). Legacy `--color-*` aliases keep older tool modules working.
+- **Home page**: numbered `Section` frames supply the sticky folio, rules and
+  ticks; `Choreography` reveals content with an IntersectionObserver and
+  respects `prefers-reduced-motion`. The hero pairs an asymmetric copy column
+  with a `DocumentStack` plate; highlights are a ledger, not a card grid.
+- **Scroll ruler** (`components/ScrollRuler`): desktop only (≥ 1024px). Hides
+  the native scrollbar, reserves a 60px gutter, draws ticks at 1% of document
+  height with labels every 5%, and tracks scroll with a live percentage and
+  section markers. Click and keyboard scrolling are supported.
+- **Tool shell** (`components/ToolLayout`): wraps `ToolModeScope` and
+  `FilePreviewProvider`. The workspace becomes two columns while a file is
+  present. `FilePreviewRail` lazily renders the first PDF page with pdf.js;
+  `DragNDropRegion` accepts `file`/`fileCount` and collapses after selection.
+  Every drag-and-drop tool page passes its current file state.
+- **FAQ search** (`src/lib/faq-search.ts` + `app/faq/FaqBrowser.tsx`): wildcard
+  (`*`, `?`) matching, edit-distance tolerance, ranked results and
+  nearest-question suggestions.
+- **Tools catalogue**: `ToolsFilter` renders the 51 registry tools and appends
+  Workflow as a 52nd card; Workflow is a builder, not a registry tool.
+- **Theme**: the header toggle writes `data-theme` and
+  `localStorage["superpdf-theme"]`; the inline boot script applies the stored
+  choice before first paint.
+
+## 4. Tool registry
 
 <!-- GENERATED:START:tool-table -->
 | id | category | status | mode |
@@ -87,9 +119,9 @@ No third mode without an ADR in `docs/adr/`.
 | create-pdf | Create & Forms | implemented | client-direct |
 <!-- GENERATED:END:tool-table -->
 
-## 4. Per-tool spec format
+## 5. Per-tool spec format
 
-Each tool gets a short spec (not a full product doc — see §7 for where
+Each tool gets a short spec (not a full product doc — see §8 for where
 personas/SEO/monetization content lives instead). Template:
 
 ```markdown
@@ -106,39 +138,43 @@ personas/SEO/monetization content lives instead). Template:
 Keep each spec under ~15 lines. If you're writing more, it belongs in code
 comments or a separate product doc, not here.
 
-## 5. Directory structure
+## 6. Directory structure
 
 ```
 src/tools/{tool-id}/       logic.ts, ToolPage.tsx, __tests__/
+src/components/            shell, Section, ScrollRuler, FilePreview, FAQ, tools UI
+src/app/faq/               FAQ page + FaqBrowser search UI
+src/lib/faq-search.ts      wildcard/fuzzy FAQ scoring and suggestions
+src/app/globals.scss       design tokens, themes, choreography, ruler gutter
 sw-source/                 index.ts (router), processors/*.ts
 src/lib/sw-contract.ts     shared message types
 src/registry/tools.ts      single source of truth for status/metadata
 docs/adr/                  architecture decisions, append-only
 ```
 
-## 6. Build & CI invariants
+## 7. Build & CI invariants
 
 - `public/sw.js` is generated from `sw-source/` via `npm run build:sw`. CI
   fails if it's stale relative to source.
 - Docs regenerate via `npm run docs:gen`. CI fails (`--check` mode) if
   generated sections don't match current source.
 - Every SW-routed tool's `sendToSw()` calls are checked against router-handled
-  types in CI (see `CLAUDE.md` §5).
+  types in CI (see `Agent.md` §5).
 
-## 7. What's deliberately NOT in this doc
+## 8. What's deliberately NOT in this doc
 
 Personas, search intent, SEO strategy, and monetization details live in a
 separate `docs/product/` doc, not here. This file is for anyone (human or
 agent) implementing or debugging processing logic — keep it about how the
 system works, not why it's marketed the way it is.
 
-## 8. Current gaps
+## 9. Current gaps
 
 <!-- GENERATED:START:gaps -->
 _(no known gaps)_
 <!-- GENERATED:END:gaps -->
 
-## 9. ADR index
+## 10. ADR index
 
 See `docs/adr/`. Any change to the processing model, routing strategy, or
 execution-mode assignment requires a new ADR here before implementation.

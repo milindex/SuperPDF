@@ -1,8 +1,10 @@
-# CLAUDE.md — Agent Instructions for SuperPDF
+# Agent Instructions for SuperPDF
 
 This file governs how any AI coding agent (Claude Code or otherwise) works in this
 repo. Read it before writing any code. When in doubt, follow this file over your
 own judgment — it encodes hard lessons from a prior build of this exact project.
+
+**Current release:** `3.0.0.20261029` · **Public Beta** · `https://superpdf.milinds.dev`
 
 ---
 
@@ -31,11 +33,11 @@ own judgment — it encodes hard lessons from a prior build of this exact projec
    `npm run build:sw` in the same commit. This must also be enforced by CI (see
    §5) — do not rely on memory.
 
-4. **Docs are generated, not hand-maintained.** `tools.md` and the tool tables in
-   `ARCHITECTURE.md` are generated from `src/registry/tools.ts` via
-   `npm run docs:gen`. Never hand-edit generated sections (marked with
-   `<!-- GENERATED:START -->` / `<!-- GENERATED:END -->`). If a doc and the
-   registry disagree, the registry is correct — fix the doc.
+4. **Docs are generated, not hand-maintained.** The generated blocks in
+   `ARCHITECTURE.md` (implemented status, tool table and known gaps) are produced
+   from `src/registry/tools.ts` via `npm run docs:gen`. Never hand-edit generated
+   sections (marked with `<!-- GENERATED:START -->` / `<!-- GENERATED:END -->`).
+   If a doc and the registry disagree, the registry is correct — fix the doc.
 
 5. **A tool is not "implemented" until it passes the Definition of Done** (§4).
    Marking `hasModule: true` or `status: "implemented"` in the registry without
@@ -46,17 +48,16 @@ own judgment — it encodes hard lessons from a prior build of this exact projec
 
 ## 1. Architecture (source of truth)
 
-- **Framework:** Next.js (App Router), React, TypeScript, Tailwind
+- **Framework:** Next.js (App Router), React, TypeScript, SCSS Modules
 - **Processing split:**
-  - pdf-lib–based tools (merge, split, watermark, rotate, delete, extract,
-    reorder, organize, fill-forms, metadata, redact, sign, flatten, protect,
-    unlock, remove-restrictions, remove-metadata, repair, text-to-pdf,
-    csv-to-pdf) run **inside the Service Worker** via `sw-source/processors/core.ts`
-  - WASM/DOM-dependent tools (pdfjs-dist rendering, tesseract OCR, docx/xlsx/pptx
-    generation, html2pdf) run **client-direct**, imported straight into
-    `ToolPage.tsx`
-  - This split is decided **once**, per tool, at spec time (§2) — not
-    improvised during implementation
+  - pdf-lib–based tools (merge, split, rotate, watermark, page operations,
+    metadata, redaction, signing, text/CSV input) run **inside the Service
+    Worker** via `sw-source/processors/*.ts`.
+  - WASM/DOM-dependent tools (pdf.js rendering, tesseract OCR, docx/xlsx/pptx
+    generation, html2pdf, image conversion, encryption via qpdf) run
+    **client-direct**, imported straight into `ToolPage.tsx`.
+  - The registry's `mode` field is authoritative. This split is decided once,
+    per tool, at spec time (§2) — not improvised during implementation.
 - **Message contract:** every SW-routed tool has its message `type` and payload
   shape defined in `src/lib/sw-contract.ts` (generated types, shared by both the
   UI sender and the SW router — see §2, Phase 0)
@@ -87,8 +88,11 @@ tested. Input/output types come from the contract in Phase 0.
 
 **Phase 3 — UI**
 Build `ToolPage.tsx` using the shared components (`ToolLayout`, `ToolHeader`,
-`DragNDropRegion`, `SuccessBanner`). Do not invent new layout patterns without
-checking `STYLEGUIDE.md`.
+`DragNDropRegion`, `SuccessBanner`). Pass the current file state to the drop
+zone (`file={file}` or `file={files[0] ?? null}` plus `fileCount`) so the
+drop zone collapses and the sticky `FilePreview` rail renders. Do not add a
+second preview panel. Do not invent new layout patterns without checking
+`STYLEGUIDE.md`.
 
 **Phase 4 — Tests**
 - Unit test for `logic.ts` (required)
@@ -150,16 +154,22 @@ If any box is unchecked, the status is `"planned"` or `"in-progress"` — never
   ADR instead
 - Don't scaffold more than one tool's UI before its predecessor is fully done
   (DoD-complete)
+- Don't hard-code colours/radii or remove the theme boot script, ruler, scroll
+  choreography or file-preview provider
+- Don't add a second file preview inside a tool page; the shared rail owns it
 
 ---
 
 ## 7. File/dir conventions
-
 ```
 src/tools/{tool-id}/
   logic.ts              # pure processing function, unit tested
   ToolPage.tsx           # UI, uses shared components
   __tests__/logic.test.ts
+
+src/components/          # shell + Section, ScrollRuler, FilePreview, FAQ UI
+src/app/faq/             # FAQ route and FaqBrowser search
+src/lib/faq-search.ts    # wildcard/fuzzy FAQ scoring and suggestions
 
 sw-source/
   index.ts               # router — every SW-routed tool has a case here
@@ -169,3 +179,26 @@ src/lib/sw-contract.ts   # shared message types (UI + SW import this)
 src/registry/tools.ts    # single source of truth for tool status/metadata
 docs/adr/                # architecture decisions (append-only)
 ```
+
+---
+
+## 8. UI and design system
+
+- **Tokens first.** Use the semantic tokens in `src/app/globals.scss`
+  (`--bg`, `--ink`, `--muted`, `--line`, `--app`, `--app-ink`, `--invert-*`).
+  The brand accent is crimson `#DC143C`; on-colour text is white. Never hard-code
+  a brand colour or border radius.
+- **Type.** Instrument Sans for display and body, Instrument Serif for editorial
+  accents, Geist Mono for `.hud-label`. Do not reintroduce Archivo/Inter.
+- **Shell.** The root layout owns `Choreography`, `ScrollRuler`, the theme boot
+  script and `ScrollRuler`'s reserved gutter. Do not remove or bypass them when
+  adding a page.
+- **Tool pages.** `ToolLayout` supplies `ToolModeScope` and
+  `FilePreviewProvider`; the preview rail is part of the shell. Keep the drop
+  zone's `file`/`fileCount` props in sync with the tool's state.
+- **FAQ.** Search behaviour lives in `src/lib/faq-search.ts` and is covered by
+  unit tests. Keep wildcard and fuzzy behaviour intact.
+- **Status.** The site is in **Public Beta**; the hero links “Report issues here”
+  to the GitHub issue tracker. Keep that link.
+- **Accessibility.** Respect `prefers-reduced-motion`, keep the ruler
+  keyboard-scrollable, and preserve visible focus states in new controls.

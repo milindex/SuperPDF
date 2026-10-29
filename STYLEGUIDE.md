@@ -65,6 +65,29 @@ Shape is squared: `--radius-*` tokens are `0`. Use hairline borders (1px
 `--line`) and `gap: 1px` grids on a `--line` background instead of shadows.
 Mono HUD labels use `.hud-label`; display headings use Instrument Sans.
 
+### Typography
+
+- **Display + body:** Instrument Sans (variable, `font-stretch: 100%`).
+- **Editorial accents:** Instrument Serif, italic, one phrase at most (for
+  example the closing “Keep the file.”).
+- **HUD / labels:** Geist Mono via `.hud-label`, uppercase with wide tracking.
+- Do not reintroduce Archivo or Inter. Use weights 560/620 for display and keep
+  negative tracking around `-0.03em`.
+
+### Accent and contrast
+
+- Brand accent: `--app: #DC143C`. Text on solid crimson is white.
+- Accent text on paper is `--app-ink` (`#B01030` light, `#FF8098` dark).
+- On inverted surfaces use `--invert-accent`, not `--app-ink`.
+- Body copy stays `--muted`; never put muted text on a crimson fill.
+
+### Spacing
+
+Use a consistent rhythm for stacked meta lines: at least `1.25rem` between a
+status/platform line and the next block, `1.6–1.8` line-height for small
+uppercase rows, and `2rem` between section heads and their content. Mobile
+footer link groups use a two-column grid, not a single stacked column.
+
 Scroll choreography is opt-in with `data-choreo`, `data-reveal`,
 `data-reveal-group`, `data-draw-rule`, `data-draw-tick`, and
 `data-draw-eyebrow`; `components/Choreography` wires them with an
@@ -94,11 +117,34 @@ IntersectionObserver and respects `prefers-reduced-motion`.
 - Logos: `SuperPDFLogo` is a static server component. `SuperPDFIcon` takes an
   optional `title`; pass `title=""` when the mark sits next to the wordmark so
   screen readers do not hear the name twice.
+- `Choreography`, `ScrollRuler`, `ThemeToggle`, `ShareRow`, `FilePreview` and
+  `FaqBrowser` are client components. `Section` and `DocumentStack` are static
+  and can stay on the server.
 
-## 6. Conventions to avoid
+## 6. Shared UI, ruler and preview
+
+- **`Section`** supplies the numbered sticky folio, hairlines, corner ticks and
+  the `data-*` hooks used by the choreography. Do not rebuild this per page.
+- **`ScrollRuler`** is desktop-only. It hides the native scrollbar, reserves the
+  `--ruler-rail` gutter, maps ticks to document height, and renders the live
+  progress needle and section markers. Keep it out of the content column and
+  respect reduced motion/keyboard access.
+- **`FilePreview`** is the single source of truth for the sticky file rail.
+  `ToolLayout` provides the context; `DragNDropRegion` accepts `file` and
+  `fileCount` and collapses once a file exists. On mobile the rail stacks below
+  the tool controls.
+- **`DocumentStack`** is the hero plate. Keep it decorative (`aria-hidden`) and
+  use CSS paper colours, not theme surfaces, for the sheets.
+- **Footer** uses a four-column grid on desktop and a two-column grid on mobile;
+  the brand band spans the full width. Do not return to a single stacked column.
+- **Homepage hero** is asymmetric: copy left, document plate right, workbench
+  figure below. Do not restore the centered icon/wordmark hero.
+
+## 7. Conventions to avoid
 
 - No inline `style=` for layout except where dynamic values are required
   (e.g. the logo height custom property, animation delays).
 - No Tailwind-style utility class strings.
 - No global class overrides leaking between components.
 - No hard-coded brand colours or border radii; use tokens.
+- No second preview panel inside a tool page; the shared rail owns it.
