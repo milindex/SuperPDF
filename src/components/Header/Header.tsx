@@ -104,7 +104,7 @@ export default function Header() {
               aria-label="SuperPDF home"
               onClick={closeAll}
             >
-              <SuperPDFIcon title="SuperPDF" className={styles.logoMark} />
+              <SuperPDFIcon title="" className={styles.logoMark} />
               <span className={styles.brandWord}>
                 Super<span className={styles.brandAccent}>PDF</span>
               </span>

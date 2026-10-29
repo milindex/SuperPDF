@@ -27,8 +27,9 @@ your device — files are never uploaded, stored, or sent to a server.
 
 ## What's new in v3
 
-- A distinct **crimson SuperPDF identity** (`#DC143C`) with new icons, favicon,
-  manifest and social card.
+- A distinct **crimson SuperPDF identity** (`#DC143C`) with a new **animated
+  shield monogram**, favicon, manifest and social card. The shield draws its
+  outline and S on load, then catches a soft periodic shine.
 - **Instrument Sans** for display and body copy, **Instrument Serif** for
   editorial accents, and **Geist Mono** for HUD labels.
 - An asymmetric homepage hero with a **document-stack plate**, ledger-style

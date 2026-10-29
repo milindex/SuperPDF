@@ -1,9 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="SuperPDF">
   <rect width="512" height="512" fill="#101014"/>
-  <path d="M128 104h192l64 64v240H128z" fill="#f2f1ee"/>
-  <path d="M320 104l64 64h-64z" fill="#DC143C"/>
-  <rect x="176" y="216" width="160" height="16" fill="#DC143C"/>
-  <rect x="176" y="256" width="120" height="12" fill="#101014" opacity="0.38"/>
-  <rect x="176" y="288" width="160" height="12" fill="#101014" opacity="0.2"/>
-  <rect x="176" y="320" width="100" height="12" fill="#101014" opacity="0.2"/>
+  <defs>
+    <linearGradient id="shield" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e11b42"/>
+      <stop offset="0.55" stop-color="#b01030"/>
+      <stop offset="1" stop-color="#dc143c"/>
+    </linearGradient>
+  </defs>
+  <path d="M256 30 L476 86 L446 296 C422 382 342 440 256 488 C170 440 90 382 66 296 L36 86 Z" fill="url(#shield)"/>
+  <path d="M256 30 L476 86 L446 296 C422 382 342 440 256 488 C170 440 90 382 66 296 L36 86 Z" fill="none" stroke="#f2f1ee" stroke-width="12" stroke-opacity="0.92" stroke-linejoin="round"/>
+  <path d="M336 152 C312 122 266 116 226 134 C184 153 174 196 208 220 C242 244 308 236 336 264 C364 292 350 338 306 356 C264 374 212 360 184 328" fill="none" stroke="#f2f1ee" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

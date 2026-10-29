@@ -190,6 +190,9 @@ docs/adr/                # architecture decisions (append-only)
   a brand colour or border radius.
 - **Type.** Instrument Sans for display and body, Instrument Serif for editorial
   accents, Geist Mono for `.hud-label`. Do not reintroduce Archivo/Inter.
+- **Mark.** `SuperPDFIcon` is the animated crimson shield; keep its CSS
+  draw-in/shine and reduced-motion fallback. Use the static `public/icon.svg`
+  only for favicons, PWA icons and the social card.
 - **Shell.** The root layout owns `Choreography`, `ScrollRuler`, the theme boot
   script and `ScrollRuler`'s reserved gutter. Do not remove or bypass them when
   adding a page.

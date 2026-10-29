@@ -114,9 +114,11 @@ IntersectionObserver and respects `prefers-reduced-motion`.
   `"use client"` at the top of the `.tsx` file.
 - Everything else stays a server component. Import the client component into
   server parents where needed.
-- Logos: `SuperPDFLogo` is a static server component. `SuperPDFIcon` takes an
-  optional `title`; pass `title=""` when the mark sits next to the wordmark so
-  screen readers do not hear the name twice.
+- Logos: `SuperPDFLogo` is a static server component. `SuperPDFIcon` is the
+  animated shield monogram (CSS draw-in outline/S, periodic shine, hover glow).
+  It takes an optional `title`; pass `title=""` when the mark sits next to the
+  wordmark so screen readers do not hear the name twice. Animations are disabled
+  under `prefers-reduced-motion`; do not replace the mark with a bitmap.
 - `Choreography`, `ScrollRuler`, `ThemeToggle`, `ShareRow`, `FilePreview` and
   `FaqBrowser` are client components. `Section` and `DocumentStack` are static
   and can stay on the server.
