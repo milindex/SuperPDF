@@ -52,6 +52,7 @@ export default function WordToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={file}
         accept={{ "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"] }}
         multiple={false}
         text="Drag & drop a Word document here"

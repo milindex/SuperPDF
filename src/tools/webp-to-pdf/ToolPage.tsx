@@ -52,6 +52,8 @@ export default function WebpToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={files[0] ?? null}
+        fileCount={files.length}
         accept={{ "image/webp": [".webp"] }}
         multiple={true}
         text="Drag & drop WEBP images here"

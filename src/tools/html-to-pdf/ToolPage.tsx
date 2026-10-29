@@ -52,6 +52,7 @@ export default function HtmlToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={file}
         accept={{ "text/html": [".html", ".htm"] }}
         multiple={false}
         text="Drop an HTML file here"

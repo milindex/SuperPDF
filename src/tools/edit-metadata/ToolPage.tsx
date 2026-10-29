@@ -73,6 +73,7 @@ export default function EditMetadataTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={file}
         accept={{ "application/pdf": [] }}
         multiple={false}
         text="Drag & drop a PDF file here"

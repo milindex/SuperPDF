@@ -52,6 +52,8 @@ export default function HeicToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={files[0] ?? null}
+        fileCount={files.length}
         accept={{ "image/heic": [".heic"], "image/heif": [".heif"] }}
         multiple={true}
         text="Drag & drop HEIC images here"

@@ -14,14 +14,15 @@ writing UI.
     Name.module.scss
     __tests__/Name.test.tsx
   ```
-- **No Tailwind, no global utility classes.** Import the module and use its
-  hashed class names:
+- **No Tailwind.** Import the module and use its hashed class names:
   ```tsx
   import styles from "./Card.module.scss";
   <div className={styles.card}>…</div>
   ```
 - Global, non-module styles live only in `src/app/globals.scss` (design tokens,
-  resets, the app-shell sticky-footer layout). Everything else is scoped.
+  resets, the app-shell sticky-footer layout, scroll choreography). A small set
+  of global primitives is shared: `.hud-label`, `.tick`, `.invert-block`,
+  `.visually-hidden`, `.skip-link`. Everything else is scoped.
 
 ## 2. Design tokens
 
@@ -32,28 +33,42 @@ them inside modules:
 :root {
   color-scheme: light;
 
-  --color-brand: #29d192;          /* accent */
-  --color-brand-hover: #20b67f;
-  --color-brand-light: #4be0a7;
+  --bg: #f2f1ee;             /* paper */
+  --bg-raised: #faf9f7;
+  --bg-sunken: #e9e8e4;
+  --ink: #101014;
+  --ink-strong: #000;
+  --muted: #1010149e;
+  --faint: #1010146b;
+  --line: #10101429;
+  --line-strong: #10101466;
 
-  --color-bg: #ffffff;
-  --color-surface: #f7f7f7;
-  --color-surface-2: #efefef;
-  --color-surface-3: #e7e7e7;
-
-  --color-border: #e2e2e2;
-  --color-border-light: #d9d9d9;
-  --color-border-active: #29d192;
-
-  --color-text-primary: #111111;
-  --color-text-secondary: #4a4a4a;
-  --color-text-muted: #6b6b6b;
+  --app: #DC143C;            /* SuperPDF crimson */
+  --app-ink: #B01030;        /* accent text on paper */
+  --invert-bg: #101014;      /* primary button / hover inversion */
+  --invert-fg: #f2f1ee;
+  --invert-accent: #ff8098;  /* accent on inverted surfaces */
 }
 ```
 
-Use `var(--color-*)` in modules. Do not hard-code colors. Text on solid
-brand-green buttons should be black (`#000000`); text on green-tinted surfaces
-should use `--color-text-primary`/`--color-brand`, never white.
+`globals.scss` also maps the legacy `--color-*` names onto these tokens so
+older tool modules keep working. New code should use the semantic tokens
+(`--bg`, `--ink`, `--muted`, `--line`, `--app`, `--app-ink`).
+
+Dark mode is a first-class theme: `:root[data-theme="dark"]` and
+`prefers-color-scheme: dark` both switch the token set. The header's theme
+toggle writes `data-theme` and `localStorage["superpdf-theme"]`; an inline boot
+script applies the stored choice before first paint. Never hard-code a light
+colour in a new component.
+
+Shape is squared: `--radius-*` tokens are `0`. Use hairline borders (1px
+`--line`) and `gap: 1px` grids on a `--line` background instead of shadows.
+Mono HUD labels use `.hud-label`; display headings use Instrument Sans.
+
+Scroll choreography is opt-in with `data-choreo`, `data-reveal`,
+`data-reveal-group`, `data-draw-rule`, `data-draw-tick`, and
+`data-draw-eyebrow`; `components/Choreography` wires them with an
+IntersectionObserver and respects `prefers-reduced-motion`.
 
 ## 3. Component structure
 
@@ -76,12 +91,14 @@ should use `--color-text-primary`/`--color-brand`, never white.
   `"use client"` at the top of the `.tsx` file.
 - Everything else stays a server component. Import the client component into
   server parents where needed.
-- Logos: `AnimatedLogo` is a client component (hover animation). Static
-  `SuperPDFLogo` / `SuperPDFIcon` can be used in server components.
+- Logos: `SuperPDFLogo` is a static server component. `SuperPDFIcon` takes an
+  optional `title`; pass `title=""` when the mark sits next to the wordmark so
+  screen readers do not hear the name twice.
 
 ## 6. Conventions to avoid
 
 - No inline `style=` for layout except where dynamic values are required
-  (e.g. animation state in `AnimatedLogo`).
+  (e.g. the logo height custom property, animation delays).
 - No Tailwind-style utility class strings.
 - No global class overrides leaking between components.
+- No hard-coded brand colours or border radii; use tokens.

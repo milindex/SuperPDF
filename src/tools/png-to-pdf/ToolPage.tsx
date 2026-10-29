@@ -52,6 +52,8 @@ export default function PngToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={files[0] ?? null}
+        fileCount={files.length}
         accept={{ "image/png": [".png"] }}
         multiple={true}
         text="Drag & drop PNG images here"

@@ -4,10 +4,24 @@ import styles from "./changelog.module.scss";
 
 const RELEASES = [
   {
+    version: "v3.0.0",
+    date: "29 October 2026",
+    title: "SuperPDF 3.0",
+    current: true,
+    changes: [
+      "Kept the SuperPDF name after the PdfCraft name turned out to be taken, and moved the site back to superpdf.milinds.dev with a crimson identity.",
+      "Rebuilt the homepage around an asymmetric hero, a document-stack plate, ledger-style highlights, and a dark cover-sheet closing band.",
+      "New type stack: Instrument Sans for display and body, Instrument Serif for accents, and Geist Mono for HUD labels.",
+      "Added the light/dark theme toggle, a custom document ruler scrollbar, and numbered section markers.",
+      "Tool pages now collapse the drop zone after a file is chosen and show a sticky preview rail with the first page, size, and page count.",
+      "Added wildcard and fuzzy search to the FAQ, with nearest-question suggestions.",
+      "Refined mobile spacing and moved the footer to a compact two-column layout.",
+    ],
+  },
+  {
     version: "v2.1.1",
     date: "25 October 2026",
     title: "Discovery, policies, and a smaller site",
-    current: true,
     changes: [
       "Added a generated sitemap and robots.txt, with canonical URLs and unique titles and descriptions on every page.",
       "Removed the blog for now; its routes, data, and links are gone from the site.",

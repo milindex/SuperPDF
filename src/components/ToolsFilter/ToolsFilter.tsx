@@ -44,6 +44,13 @@ const allTools = toolsRegistry.map((tool) => ({
   wip: tool.wip ?? false,
 }));
 
+const WORKFLOW_CARD = {
+  name: "Workflow",
+  description:
+    "Chain several PDF tools into one repeatable run on the same file.",
+  href: "/workflow",
+};
+
 export default function ToolsFilter({ limit = 1000 }: { limit?: number }) {
   const searchId = useId();
   const [query, setQuery] = useState("");
@@ -82,6 +89,17 @@ export default function ToolsFilter({ limit = 1000 }: { limit?: number }) {
         return (aIndex === -1 ? 99 : aIndex) - (bIndex === -1 ? 99 : bIndex);
       }).slice(0, limit)
     : matches;
+
+  const showWorkflow = useMemo(() => {
+    if (activeCategory !== "all") return false;
+    const term = query.trim().toLowerCase();
+    if (!term) return true;
+    return `${WORKFLOW_CARD.name} ${WORKFLOW_CARD.description}`
+      .toLowerCase()
+      .includes(term);
+  }, [query, activeCategory]);
+
+  const cardCount = visible.length + (showWorkflow ? 1 : 0);
 
   const chooseCategory = (value: string) => {
     setActiveCategory(value);
@@ -150,11 +168,11 @@ export default function ToolsFilter({ limit = 1000 }: { limit?: number }) {
 
       <div className={styles.statusRow}>
         <p className={styles.count} role="status">
-          {visible.length === 0
+          {cardCount === 0
             ? "No tools match"
             : isBrowsingAll
-              ? `${allTools.length} tools`
-              : `${visible.length} ${visible.length === 1 ? "tool" : "tools"} found`}
+              ? `${allTools.length} tools · workflow`
+              : `${cardCount} ${cardCount === 1 ? "match" : "matches"} found`}
         </p>
         {isBrowsingAll && visible.length < allTools.length && (
           <Link href="/tools" className={styles.seeAll}>
@@ -163,7 +181,7 @@ export default function ToolsFilter({ limit = 1000 }: { limit?: number }) {
         )}
       </div>
 
-      {visible.length === 0 ? (
+      {cardCount === 0 ? (
         <div className={styles.empty}>
           <p>
             No tool matches{" "}
@@ -184,6 +202,20 @@ export default function ToolsFilter({ limit = 1000 }: { limit?: number }) {
               </Link>
             </li>
           ))}
+          {showWorkflow && (
+            <li>
+              <Link
+                href={WORKFLOW_CARD.href}
+                className={`${styles.card} ${styles.cardWorkflow}`}
+              >
+                <span className={styles.builder}>Builder</span>
+                <span className={styles.cardName}>{WORKFLOW_CARD.name}</span>
+                <span className={styles.cardDesc}>
+                  {WORKFLOW_CARD.description}
+                </span>
+              </Link>
+            </li>
+          )}
         </ul>
       )}
     </div>

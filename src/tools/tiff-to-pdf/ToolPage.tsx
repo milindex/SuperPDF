@@ -52,6 +52,8 @@ export default function TiffToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={files[0] ?? null}
+        fileCount={files.length}
         accept={{ "image/tiff": [".tiff", ".tif"] }}
         multiple={true}
         text="Drag & drop TIFF images here"

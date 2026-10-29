@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import AnimatedLogo from "@/components/logos/AnimatedLogo";
+import SuperPDFIcon from "@/components/logos/SuperPDFIcon";
 import SettingsDialog from "@/components/SettingsDialog/SettingsDialog";
+import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 import { toolsRegistry } from "@/registry/tools";
 import styles from "./Header.module.scss";
 
@@ -19,6 +20,7 @@ const primaryNav = [
   { name: "Workflow", href: "/workflow" },
   { name: "How it works", href: "/#how-it-works" },
   { name: "FAQ", href: "/faq" },
+  { name: "About", href: "/about" },
 ];
 
 export default function Header() {
@@ -26,17 +28,9 @@ export default function Header() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
   const searchButtonRef = useRef<HTMLButtonElement>(null);
   const searchPanelRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 4);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -101,31 +95,61 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className={`${styles.header} ${isScrolled ? styles.headerScrolled : ""}`}
-      >
+      <header className={styles.header}>
         <div className={styles.bar}>
-          <Link
-            href="/"
-            className={styles.logo}
-            aria-label="SuperPDF home"
-            onClick={closeAll}
-          >
-            <AnimatedLogo height={34} autoHide={false} />
-          </Link>
+          <div className={styles.left}>
+            <Link
+              href="/"
+              className={styles.logo}
+              aria-label="SuperPDF home"
+              onClick={closeAll}
+            >
+              <SuperPDFIcon title="SuperPDF" className={styles.logoMark} />
+              <span className={styles.brandWord}>
+                Super<span className={styles.brandAccent}>PDF</span>
+              </span>
+            </Link>
 
-          <nav className={styles.desktopNav} aria-label="Primary">
-            {primaryNav.map((item) => (
-              <Link key={item.href} href={item.href} className={styles.navLink}>
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+            <nav className={styles.desktopNav} aria-label="Primary">
+              {primaryNav.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={styles.navLink}
+                >
+                  <span>{item.name}</span>
+                </Link>
+              ))}
+            </nav>
+          </div>
 
           <div className={styles.actions}>
             <button
+              ref={searchButtonRef}
               type="button"
               className={styles.iconButton}
+              aria-label="Search tools"
+              aria-expanded={searchOpen}
+              aria-controls="tool-search"
+              onClick={toggleSearch}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-4-4" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className={`${styles.iconButton} ${styles.settingsButton}`}
               aria-label="Settings"
               aria-haspopup="dialog"
               onClick={() => {
@@ -143,43 +167,58 @@ export default function Header() {
                 strokeLinejoin="round"
                 aria-hidden="true"
               >
-                <circle cx="12" cy="12" r="3" />
-                <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1.11 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6h.08a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9v.08a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z" />
+                <path d="M4 6h10" />
+                <path d="M18 6h2" />
+                <circle cx="16" cy="6" r="2" />
+                <path d="M4 12h2" />
+                <path d="M10 12h10" />
+                <circle cx="8" cy="12" r="2" />
+                <path d="M4 18h10" />
+                <path d="M18 18h2" />
+                <circle cx="16" cy="18" r="2" />
               </svg>
             </button>
 
-            <button
-              ref={searchButtonRef}
-              type="button"
-              className={styles.iconButton}
-              aria-label="Search tools"
-              aria-expanded={searchOpen}
-              aria-controls="tool-search"
-              onClick={toggleSearch}
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                aria-hidden="true"
-              >
-                <circle cx="11" cy="11" r="7" />
-                <path strokeLinecap="round" d="m20 20-4-4" />
-              </svg>
-            </button>
+            <ThemeToggle />
+
+            <Link href="/tools" className={styles.cta} onClick={closeAll}>
+              Open workbench
+            </Link>
 
             <button
               type="button"
-              className={`${styles.menuToggle} ${
-                mobileOpen ? styles.menuToggleOpen : ""
-              }`}
+              className={styles.menuToggle}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
+              aria-controls="mobile-nav"
               onClick={() => setMobileOpen((open) => !open)}
             >
-              <span aria-hidden="true" />
-              <span aria-hidden="true" />
+              {mobileOpen ? (
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 6l12 12" />
+                  <path d="M18 6l-12 12" />
+                </svg>
+              ) : (
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 5h16" />
+                  <path d="M4 12h16" />
+                  <path d="M4 19h16" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
@@ -201,7 +240,7 @@ export default function Header() {
               id="tool-search-input"
               type="search"
               className={styles.searchInput}
-              placeholder="Try “merge”, “compress”, or “Word”"
+              placeholder="Try merge, compress, or Word"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               autoFocus
@@ -251,23 +290,30 @@ export default function Header() {
       />
 
       <div
+        id="mobile-nav"
         className={`${styles.mobilePanel} ${
           mobileOpen ? styles.mobilePanelOpen : ""
         }`}
         aria-hidden={!mobileOpen}
       >
         <nav className={styles.mobileNav} aria-label="Mobile">
-          {primaryNav.map((item) => (
+          {primaryNav.map((item, index) => (
             <Link
               key={item.href}
               href={item.href}
               className={styles.mobileLink}
               onClick={closeAll}
             >
+              <span className={styles.mobileNumber}>
+                {String(index + 1).padStart(2, "0")}
+              </span>
               {item.name}
             </Link>
           ))}
         </nav>
+        <Link href="/tools" className={styles.mobileCta} onClick={closeAll}>
+          Open workbench
+        </Link>
       </div>
     </>
   );

@@ -58,6 +58,7 @@ export default function OcrPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={file}
         accept={{ "application/pdf": [] }}
         multiple={false}
         text="Drag & drop a scanned PDF here"

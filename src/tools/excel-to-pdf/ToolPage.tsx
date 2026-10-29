@@ -52,6 +52,7 @@ export default function ExcelToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={file}
         accept={{ "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"], "application/vnd.ms-excel": [".xls"] }}
         multiple={false}
         text="Drag & drop an Excel file here"

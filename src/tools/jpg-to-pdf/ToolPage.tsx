@@ -52,6 +52,8 @@ export default function JpgToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={files[0] ?? null}
+        fileCount={files.length}
         accept={{ "image/jpeg": [".jpg", ".jpeg"] }}
         multiple={true}
         text="Drag & drop JPG images here"

@@ -7,17 +7,25 @@ const footerLinks: Record<string, { name: string; href: string }[]> = {
   Product: [
     { name: "All tools", href: "/tools" },
     { name: "Workflow", href: "/workflow" },
+    { name: "Features", href: "/features" },
+    { name: "Offline", href: "/offline" },
+    { name: "Changelog", href: "/changelog" },
+  ],
+  Resources: [
     { name: "How it works", href: "/#how-it-works" },
     { name: "FAQ", href: "/faq" },
-    { name: "Changelog", href: "/changelog" },
+    { name: "Press kit", href: "/press" },
+    { name: "Support", href: "/contact" },
   ],
   Company: [
     { name: "About", href: "/about" },
+    { name: "Business", href: "/business" },
+    { name: "Education", href: "/education" },
     { name: "Contact", href: "/contact" },
   ],
   Legal: [
-    { name: "Privacy policy", href: "/privacy" },
-    { name: "Terms and conditions", href: "/terms" },
+    { name: "Privacy", href: "/privacy" },
+    { name: "Terms", href: "/terms" },
     { name: "Cookies", href: "/cookies" },
     { name: "Security", href: "/security-policy" },
   ],
@@ -26,39 +34,44 @@ const footerLinks: Record<string, { name: string; href: string }[]> = {
 export default function Footer() {
   return (
     <footer className={styles.footer}>
-      <div className={styles.container}>
-        <div className={styles.top}>
+      <div className={styles.frame}>
+        <div className={styles.grid}>
           <div className={styles.brand}>
             <Link href="/" className={styles.logoLink} aria-label="SuperPDF home">
-              <SuperPDFLogo style={{ height: 32, width: "auto" }} />
+              <SuperPDFLogo height={30} />
             </Link>
             <p className={styles.statement}>
-              PDF tools for the files you would rather not upload. Everything
-              runs in this tab.
+              A private, browser-native PDF workbench. The file never leaves
+              your device.
             </p>
+            <a className={styles.email} href="mailto:connect@milinds.dev">
+              connect@milinds.dev
+            </a>
           </div>
 
-          <div className={styles.grid}>
-            {Object.entries(footerLinks).map(([category, links]) => (
-              <div key={category} className={styles.column}>
-                <h2 className={styles.columnTitle}>{category}</h2>
-                <ul className={styles.columnList}>
-                  {links.map((link) => (
-                    <li key={link.name}>
-                      <Link href={link.href} className={styles.columnLink}>
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <nav
+              key={category}
+              className={styles.column}
+              aria-label={category}
+            >
+              <p className={`hud-label ${styles.columnTitle}`}>{category}</p>
+              <ul className={styles.columnList}>
+                {links.map((link) => (
+                  <li key={link.name}>
+                    <Link href={link.href} className={styles.columnLink}>
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
 
         <div className={styles.bottom}>
-          <span className={styles.copyright}>
-            &copy; 2026{" "}
+          <p className={`hud-label ${styles.legal}`}>
+            © 2026 SuperPDF ·{" "}
             <a
               href="https://milinds.dev"
               className={styles.author}
@@ -67,8 +80,10 @@ export default function Footer() {
             >
               Milind Sonawane
             </a>
-          </span>
-          <span className={styles.version}>SuperPDF v{APP_VERSION}</span>
+          </p>
+          <p className={`hud-label ${styles.legal}`}>
+            Open source · v{APP_VERSION} · No uploads, ever
+          </p>
         </div>
       </div>
     </footer>

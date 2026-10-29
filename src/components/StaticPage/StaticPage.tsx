@@ -28,6 +28,7 @@ export default function StaticPage({
   sections,
   children,
   path,
+  centered = false,
 }: {
   title: string;
   intro?: string;
@@ -36,6 +37,8 @@ export default function StaticPage({
   children?: React.ReactNode;
   /** Route path, used to emit a BreadcrumbList. */
   path?: `/${string}`;
+  /** Center the article column instead of spanning the full frame. */
+  centered?: boolean;
 }) {
   return (
     <div className={styles.main}>
@@ -47,7 +50,7 @@ export default function StaticPage({
           ])}
         />
       )}
-      <div className={styles.container}>
+      <div className={`${styles.container} ${centered ? styles.centered : ""}`}>
         <nav className={styles.crumb} aria-label="Breadcrumb">
           <Link href="/">Home</Link>
           <span aria-hidden="true">/</span>
@@ -56,7 +59,7 @@ export default function StaticPage({
         <h1 className={styles.title}>{title}</h1>
         {intro && <p className={styles.intro}>{intro}</p>}
         {updated && <p className={styles.updated}>Last updated: {updated}</p>}
-        <div className={styles.body}>
+        <div className={`${styles.body} ${centered ? styles.bodyCentered : ""}`}>
           {sections?.map((section, i) => (
             <section key={i} className={styles.section}>
               {section.heading && (

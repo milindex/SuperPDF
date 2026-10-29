@@ -1,7 +1,13 @@
 {
   "name": "superpdf",
-  "version": "0.2.0",
+  "version": "3.0.0",
   "private": true,
+  "description": "A private, browser-native PDF workbench. Merge, split, compress, convert and sign without uploading.",
+  "homepage": "https://superpdf.milinds.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/milindex/SuperPDF.git"
+  },
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",

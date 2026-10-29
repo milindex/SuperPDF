@@ -1,0 +1,105 @@
+.section {
+  position: relative;
+}
+
+.rule {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  transform: scaleX(1);
+  transform-origin: left center;
+  background: var(--line);
+}
+
+.frame {
+  position: relative;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  border-inline: 1px solid var(--line);
+}
+
+.tickLeft {
+  z-index: 31;
+  top: -5px;
+  left: -6px;
+}
+
+.tickRight {
+  z-index: 31;
+  top: -5px;
+  right: -5px;
+}
+
+.eyebrow {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-block: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.eyebrowLabel,
+.eyebrowMeta {
+  display: flex;
+  align-items: center;
+  padding-block: 0.75rem;
+  padding-inline: 1.5rem;
+}
+
+.eyebrowLabel {
+  color: var(--muted);
+}
+
+.eyebrowMeta {
+  display: none;
+  color: var(--faint);
+}
+
+.eyebrowMeta::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 0.5rem;
+  background: var(--app);
+}
+
+.number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 17px;
+  margin-right: 0.5rem;
+  padding: 0 0.3rem;
+  background: var(--app);
+  color: #fff;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.slash {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .eyebrowMeta {
+    display: flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .eyebrowLabel,
+  .eyebrowMeta {
+    padding-inline: 2.5rem;
+  }
+}

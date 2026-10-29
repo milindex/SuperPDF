@@ -63,22 +63,25 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  min-height: 44px;
+  min-height: 48px;
   padding: 0 var(--space-5);
-  border: 1px solid var(--color-brand);
-  border-radius: var(--radius);
-  background: var(--color-brand);
-  color: var(--color-on-brand);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  border: 1px solid transparent;
+  background: var(--invert-bg);
+  color: var(--invert-fg);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   white-space: nowrap;
-  transition: background var(--dur-micro) var(--ease-out);
+  transition: opacity var(--dur-micro) var(--ease-out);
 }
 
 .download:hover {
-  background: var(--color-brand-hover);
-  border-color: var(--color-brand-hover);
-  color: var(--color-on-brand);
+  background: var(--invert-bg);
+  border-color: transparent;
+  color: var(--invert-fg);
+  opacity: 0.8;
   text-decoration: none;
 }
 

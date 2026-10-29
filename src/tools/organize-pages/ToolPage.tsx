@@ -208,6 +208,8 @@ export default function OrganizePagesTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={files[0]?.file ?? null}
+        fileCount={files.length}
         accept={{ "application/pdf": [] }}
         multiple={true}
         text="Drag & drop one or more PDF files here"

@@ -21,7 +21,45 @@ interface ToolModeContextValue {
 const ToolModeContext = createContext<ToolModeContextValue | null>(null);
 
 export function useToolMode(): ToolModeContextValue | null {
-  return useContext(ToolModeContext);
+  const context = useContext(ToolModeContext);
+  const pathname = usePathname();
+  const [domMode, setDomMode] = useState<ToolMode | null>(null);
+
+  /*
+   * Tool pages call this hook in the same component that renders
+   * <ToolLayout>, so they sit above the provider and cannot read its context.
+   * The scope element exposes the live value as `data-tool-mode`; mirror it
+   * for those callers. Components rendered inside the provider (ToolHeader)
+   * still get the context directly.
+   */
+  useEffect(() => {
+    if (context || typeof document === "undefined") return;
+    const scope = document.querySelector<HTMLElement>("[data-tool-mode]");
+    if (!scope) return;
+    const read = () => {
+      setDomMode(scope.dataset.toolMode === "advanced" ? "advanced" : "easy");
+    };
+    read();
+    const observer = new MutationObserver(read);
+    observer.observe(scope, {
+      attributes: true,
+      attributeFilter: ["data-tool-mode"],
+    });
+    return () => observer.disconnect();
+  }, [context]);
+
+  if (context) return context;
+  if (!domMode) return null;
+
+  return {
+    mode: domMode,
+    setMode: (next) => {
+      const toolId = pathname.startsWith("/tools/")
+        ? pathname.replace(/^\/tools\//, "").replace(/\/$/, "")
+        : "";
+      if (toolId) setToolMode(toolId, next);
+    },
+  };
 }
 
 export default function ToolModeScope({

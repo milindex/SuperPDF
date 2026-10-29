@@ -62,6 +62,7 @@ export default function ExportThumbnailsTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={file}
         accept={{ "application/pdf": [] }}
         multiple={false}
         text="Drop a PDF here"

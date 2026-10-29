@@ -6,18 +6,18 @@ export const SITE_NAME = "SuperPDF";
 export const SITE_EMAIL = "connect@milinds.dev";
 
 export const SITE_DESCRIPTION =
-  "Merge, split, compress, convert, and sign PDFs in your browser. Files stay on your device, with no account and no upload.";
+  "A private, browser-native PDF workbench. Merge, split, compress, convert, sign and protect files without uploading them.";
 
 /** Social card served from `public/og-image.png` (1200×630). */
 export const OG_IMAGE = {
   url: "/og-image.png",
   width: 1200,
   height: 630,
-  alt: "SuperPDF — Do the PDF work. Skip the upload.",
+  alt: "SuperPDF — The open PDF workbench.",
 };
 
 /** Shown on every legal page; bump when the policies change. */
-export const LEGAL_LAST_UPDATED = "25 October 2026";
+export const LEGAL_LAST_UPDATED = "29 October 2026";
 
 /** Absolute URL for a site-relative path. */
 export function absoluteUrl(path = "/"): string {

@@ -52,6 +52,8 @@ export default function BmpToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={files[0] ?? null}
+        fileCount={files.length}
         accept={{ "image/bmp": [".bmp"] }}
         multiple
         text="Drop BMP images here"

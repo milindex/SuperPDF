@@ -1,68 +1,62 @@
 .section {
-  padding: var(--space-16) 0;
-  background: var(--color-paper);
-  border-top: 1px solid var(--color-border);
+  width: 100%;
 }
 
 .container {
   width: 100%;
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding-inline: var(--space-4);
-
-  @media (min-width: 768px) {
-    padding-inline: var(--space-6);
-  }
 }
 
 .head {
   max-width: 44rem;
-  margin-bottom: var(--space-8);
+  margin-bottom: 2rem;
 }
 
 .heading {
-  font-size: var(--text-section);
-  font-weight: 700;
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  color: var(--color-ink);
+  color: var(--ink-strong);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.6rem + 1.8vw, 3rem);
+  font-weight: 500;
+  font-stretch: 100%;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  text-wrap: balance;
 }
 
 .subheading {
-  margin-top: var(--space-3);
-  font-size: var(--text-md);
-  color: var(--color-text-secondary);
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 1.0625rem;
+  line-height: 1.6;
 }
 
 .list {
-  max-width: 52rem;
-  border-top: 1px solid var(--color-border);
+  max-width: 56rem;
+  border-top: 1px solid var(--line);
 }
 
 .item {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--line);
 }
 
 .itemBtn {
   display: block;
   width: 100%;
   min-height: 56px;
-  padding: var(--space-4) var(--space-1);
+  padding: 1rem 0.25rem;
   border: 0;
-  border-radius: var(--radius-xs);
   background: transparent;
   text-align: left;
 }
 
 .itemBtn:hover .question {
-  color: var(--color-brand-strong);
+  color: var(--app-ink);
 }
 
 .itemHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
+  gap: 1rem;
 }
 
 .questionWrap {
@@ -70,19 +64,20 @@
 }
 
 .question {
+  color: var(--ink);
   font-family: var(--font-display);
-  font-size: var(--text-md);
-  font-weight: 600;
+  font-size: 1.0625rem;
+  font-weight: 560;
+  font-stretch: 100%;
   letter-spacing: -0.015em;
   line-height: 1.3;
-  color: var(--color-ink);
   transition: color var(--dur-micro) var(--ease-out);
 }
 
 .chevron {
   display: inline-flex;
   flex-shrink: 0;
-  color: var(--color-text-muted);
+  color: var(--faint);
   transition: transform var(--dur-short) var(--ease-out);
 }
 
@@ -96,7 +91,7 @@
 }
 
 .answer {
-  padding: 0 var(--space-1) var(--space-5);
+  padding: 0 0.25rem 1.25rem;
 }
 
 .answer[hidden] {
@@ -105,12 +100,7 @@
 
 .answer p {
   max-width: 65ch;
-  font-size: var(--text-sm);
-  line-height: 1.6;
-  color: var(--color-text-secondary);
-}
-
-:focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 2px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
 }

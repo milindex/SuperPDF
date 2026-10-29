@@ -52,6 +52,8 @@ export default function SvgToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={files[0] ?? null}
+        fileCount={files.length}
         accept={{ "image/svg+xml": [".svg"] }}
         multiple={true}
         text="Drag & drop SVG images here"

@@ -1,0 +1,31 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: var(--header-height);
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  transition:
+    background-color 0.12s linear,
+    color 0.12s linear;
+}
+
+.toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.toggle:hover {
+  background: var(--invert-bg);
+  color: var(--invert-fg);
+}
+
+@media (max-width: 820px) {
+  .toggle {
+    width: 44px;
+  }
+}

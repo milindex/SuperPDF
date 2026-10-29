@@ -1,12 +1,17 @@
 # SuperPDF
 
-SuperPDF is a **privacy-first, browser-native PDF toolkit** built with Next.js
+SuperPDF is a **private, browser-native PDF workbench** built with Next.js
 (App Router), React, TypeScript, and SCSS Modules. All processing happens
-client-side — your files never leave your device.
+client-side — your files never leave your device. It runs at
+[superpdf.milinds.dev](https://superpdf.milinds.dev).
 
-> v2 is a from-scratch rebuild that fixes the architectural debt of v1: a single
-> processing architecture, mandatory wiring/tests, and no scope creep
+> A from-scratch rebuild of the PDF toolkit with a single processing
+> architecture, mandatory wiring/tests, and no scope creep
 > (no auth, no payments, no server-side processing — it is entirely free).
+> The interface borrows the Craft Apps design language — squared frames,
+> hairline rules, HUD labels and scroll choreography — but keeps its own
+> identity: an asymmetric document-stack hero, a crimson accent, Instrument
+> Sans, ledger-style highlights and a custom document ruler.
 
 ## Stack
 
@@ -20,14 +25,14 @@ client-side — your files never leave your device.
 
 ```bash
 npm install
-npm run dev        # http://localhost:3080
+npm run dev        # http://localhost:3000
 ```
 
 ## Scripts
 
 | Command              | Description                                          |
 | -------------------- | ---------------------------------------------------- |
-| `npm run dev`        | Start the dev server on port 3080                    |
+| `npm run dev`        | Start the dev server on port 3000                    |
 | `npm run build`      | Production build                                     |
 | `npm test`           | Run Vitest unit tests                                |
 | `npm run test:e2e`   | Run Playwright E2E tests                             |

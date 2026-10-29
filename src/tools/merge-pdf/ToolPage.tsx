@@ -188,6 +188,8 @@ export default function MergePdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={files[0]?.file ?? null}
+        fileCount={files.length}
         accept={{ "application/pdf": [] }}
         multiple={true}
         text="Drag & drop PDF files here"

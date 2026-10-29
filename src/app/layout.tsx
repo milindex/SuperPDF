@@ -1,6 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Sans, Schibsted_Grotesk } from "next/font/google";
+import {
+  Geist_Mono,
+  Instrument_Sans,
+  Instrument_Serif,
+} from "next/font/google";
 import { SwProvider } from "@/components/SwProvider";
+import Choreography from "@/components/Choreography/Choreography";
+import ScrollRuler from "@/components/ScrollRuler/ScrollRuler";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import RecentTracker from "@/components/RecentTracker/RecentTracker";
@@ -15,24 +21,31 @@ import {
 } from "@/lib/seo";
 import "./globals.scss";
 
-const schibsted = Schibsted_Grotesk({
-  variable: "--font-schibsted",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
   display: "swap",
 });
 
-const instrument = Instrument_Sans({
-  variable: "--font-instrument",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: "400",
   display: "swap",
 });
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const bootScript = `(function(){try{var t=localStorage.getItem("superpdf-theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("choreo");}}catch(e){}try{if(matchMedia("(min-width: 1024px)").matches){document.documentElement.setAttribute("data-ruler","on");}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "SuperPDF | PDF work without the upload",
+    default: "SuperPDF | The open PDF workbench",
     template: "%s | SuperPDF",
   },
   description: SITE_DESCRIPTION,
@@ -62,9 +75,9 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
   openGraph: {
-    title: "SuperPDF | PDF work without the upload",
+    title: "SuperPDF | The open PDF workbench",
     description:
-      "PDF tools that run in the browser. No upload, no account, no server copy.",
+      "A private, browser-native PDF workbench. Merge, split, compress, convert and sign without uploading.",
     type: "website",
     siteName: SITE_NAME,
     url: "/",
@@ -73,25 +86,35 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SuperPDF | PDF work without the upload",
+    title: "SuperPDF | The open PDF workbench",
     description:
-      "PDF tools that run in the browser. No upload, no account, no server copy.",
+      "A private, browser-native PDF workbench. Merge, split, compress, convert and sign without uploading.",
     images: [OG_IMAGE.url],
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fbfaf6",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f2f1ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#121316" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${schibsted.variable} ${instrument.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${instrumentSans.variable} ${instrumentSerif.variable} ${geistMono.variable}`}
+    >
       <body>
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
         <SwProvider>
+          <Choreography />
+          <ScrollRuler />
           <RecentTracker />
           <div className="app-shell">
             <a href="#main-content" className="skip-link">

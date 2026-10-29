@@ -20,7 +20,7 @@ test.describe("global shell", () => {
       footer.getByRole("link", { name: "SuperPDF home" }),
     ).toBeVisible();
     await expect(
-      footer.getByRole("link", { name: "Privacy policy" }),
+      footer.getByRole("link", { name: "Privacy" }),
     ).toBeVisible();
   });
 
@@ -30,43 +30,36 @@ test.describe("global shell", () => {
     await page.getByRole("button", { name: "Search tools" }).click();
     await page.getByLabel(/Search \d+ PDF tools/).fill("markdown");
     await expect(
-      page.getByRole("link", { name: /^PDF to Markdown/ }),
+      page
+        .locator("#tool-search")
+        .getByRole("link", { name: /^PDF to Markdown/ }),
     ).toBeVisible();
   });
 });
 
 test.describe("homepage sections", () => {
-  test("renders the hero, tool finder, workflow, how it works, options, and FAQ", async ({
+  test("renders the hero, tool finder, steps, FAQ, and closing CTA", async ({
     page,
   }) => {
     await page.goto("/");
 
     await expect(
-      page.getByRole("heading", {
-        name: "Your PDFs never leave this tab.",
-      }),
+      page.getByRole("heading", { name: /The PDF workbench you already/ }),
     ).toBeVisible();
     await expect(
       page.getByRole("link", { name: "Find a tool" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "Chain the steps you repeat." }),
+      page.getByRole("heading", { name: /Every tool, one place/ }),
     ).toBeVisible();
     await expect(
-      page.getByRole("link", { name: "Open the workflow builder" }),
-    ).toBeVisible();
-
-    await expect(
-      page.getByRole("heading", { name: /^All \d+ tools$/ }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("heading", { name: "How it works" }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("heading", { name: "Every option, explained" }),
+      page.getByRole("heading", { name: /Three steps, and the file/ }),
     ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Common questions" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Open the workbench" }).first(),
     ).toBeVisible();
   });
 

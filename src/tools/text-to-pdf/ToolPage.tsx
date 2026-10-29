@@ -55,6 +55,7 @@ export default function TextToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={file}
         accept={{ "text/plain": [".txt", ".md", ".log"] }}
         multiple={false}
         text="Drag & drop a text file here"

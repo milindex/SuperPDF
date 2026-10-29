@@ -40,7 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# superpdf check artifacts (transient)
+# pdfcraft check artifacts (transient)
 public/.sw-check.js
 public/sw-check.js
 

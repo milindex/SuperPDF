@@ -55,6 +55,7 @@ export default function CsvToPdfTool() {
 
       <DragNDropRegion
         onDrop={handleFiles}
+        file={file}
         accept={{ "text/csv": [".csv"], "text/plain": [".csv"] }}
         multiple={false}
         text="Drag & drop a CSV file here"

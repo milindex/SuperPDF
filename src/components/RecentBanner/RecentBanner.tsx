@@ -21,6 +21,8 @@ export default function RecentBanner() {
 
   const visible = items.slice(0, 4);
 
+  if (visible.length === 0) return null;
+
   return (
     <section className={styles.banner} aria-labelledby="recent-heading">
       <div className={styles.inner}>
@@ -28,34 +30,26 @@ export default function RecentBanner() {
           <h2 id="recent-heading" className={styles.heading}>
             Recently used
           </h2>
-          {visible.length > 0 && (
-            <button type="button" className={styles.clear} onClick={clearRecent}>
-              Clear history
-            </button>
-          )}
+          <button type="button" className={styles.clear} onClick={clearRecent}>
+            Clear history
+          </button>
         </div>
 
-        {visible.length > 0 ? (
-          <ul className={styles.list}>
-            {visible.map((item) => (
-              <li key={`${item.kind}-${item.id}`}>
-                <Link href={item.href} className={styles.item}>
-                  <span className={styles.kind}>
-                    {item.kind === "workflow" ? "Workflow" : "Tool"}
-                  </span>
-                  <span className={styles.name}>{item.name}</span>
-                  {item.kind === "workflow" && item.meta ? (
-                    <span className={styles.meta}>{item.meta}</span>
-                  ) : null}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className={styles.empty}>
-            Tools and workflows you open will appear here.
-          </p>
-        )}
+        <ul className={styles.list}>
+          {visible.map((item) => (
+            <li key={`${item.kind}-${item.id}`}>
+              <Link href={item.href} className={styles.item}>
+                <span className={styles.kind}>
+                  {item.kind === "workflow" ? "Workflow" : "Tool"}
+                </span>
+                <span className={styles.name}>{item.name}</span>
+                {item.kind === "workflow" && item.meta ? (
+                  <span className={styles.meta}>{item.meta}</span>
+                ) : null}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

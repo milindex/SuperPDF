@@ -1,0 +1,198 @@
+.zone {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  width: 300px;
+  pointer-events: none;
+}
+
+.rail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--ruler-rail, 60px);
+  overflow: hidden;
+  cursor: crosshair;
+  pointer-events: auto;
+  isolation: isolate;
+}
+
+.rail::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  mask-image: linear-gradient(
+    to left,
+    #000 40%,
+    rgb(0 0 0 / 74.5%) 47.5%,
+    rgb(0 0 0 / 53%) 55%,
+    rgb(0 0 0 / 35.7%) 62.5%,
+    rgb(0 0 0 / 22%) 70%,
+    rgb(0 0 0 / 11.8%) 77.5%,
+    rgb(0 0 0 / 4.7%) 85%,
+    rgb(0 0 0 / 1%) 92.5%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to left,
+    #000 40%,
+    rgb(0 0 0 / 74.5%) 47.5%,
+    rgb(0 0 0 / 53%) 55%,
+    rgb(0 0 0 / 35.7%) 62.5%,
+    rgb(0 0 0 / 22%) 70%,
+    rgb(0 0 0 / 11.8%) 77.5%,
+    rgb(0 0 0 / 4.7%) 85%,
+    rgb(0 0 0 / 1%) 92.5%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.rail:focus-visible {
+  outline: 2px solid var(--app-ink);
+  outline-offset: -4px;
+}
+
+.layer {
+  position: absolute;
+  inset-inline: 0;
+  top: 60px;
+  z-index: 1;
+  will-change: transform;
+}
+
+.tick {
+  position: absolute;
+  right: 0;
+  display: block;
+  width: 10px;
+  height: 1px;
+  background: var(--ink);
+  opacity: 0.38;
+}
+
+.major {
+  width: 20px;
+  opacity: 0.78;
+}
+
+.label {
+  position: absolute;
+  right: 25px;
+  display: block;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  opacity: 0.5;
+  transform: translateY(-50%);
+}
+
+.needle {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.needle::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 22px;
+  height: 1px;
+  background: var(--app);
+}
+
+.sectionMark {
+  position: absolute;
+  left: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--faint);
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 560;
+  font-stretch: 100%;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.sectionMarkActive {
+  color: var(--app-ink);
+}
+
+.sectionMarkNumber {
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+}
+
+.currentSection {
+  position: absolute;
+  left: 5px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--app-ink);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 560;
+  font-stretch: 100%;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.currentNumber {
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+}
+
+.needleLabel {
+  position: absolute;
+  right: 26px;
+  top: 0;
+  padding: 2px 3px;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  color: var(--app-ink);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 1023px) {
+  .zone {
+    display: none;
+  }
+}

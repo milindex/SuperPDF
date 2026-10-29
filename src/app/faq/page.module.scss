@@ -1,3 +1,186 @@
+.searchPanel {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--ink) 2.5%, var(--bg));
+}
+
+.searchHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.searchLabel {
+  color: var(--faint);
+}
+
+.searchCount {
+  color: var(--app-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 48px;
+  padding-inline: 0.75rem;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  transition: border-color var(--dur-micro) var(--ease-out);
+}
+
+.searchBox:focus-within {
+  border-color: var(--app-ink);
+}
+
+.searchIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--faint);
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1rem;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: var(--faint);
+}
+
+.searchInput::-webkit-search-cancel-button {
+  display: none;
+}
+
+.clearButton {
+  height: 100%;
+  padding: 0 0.25rem;
+  border: 0;
+  background: transparent;
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.clearButton:hover {
+  color: var(--ink);
+}
+
+.hint {
+  margin-top: 0.5rem;
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+}
+
+.kbd {
+  padding: 0 0.2rem;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+}
+
+.noResults {
+  padding: 1.5rem;
+  border: 1px dashed var(--line-strong);
+}
+
+.noResultsTitle {
+  color: var(--ink-strong);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 560;
+  font-stretch: 100%;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.noResultsBody {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.inlineCode {
+  padding: 0.1em 0.35em;
+  background: var(--bg-sunken);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.suggestionsLabel {
+  margin-top: 1.25rem;
+  color: var(--faint);
+}
+
+.suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.suggestionButton {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--app-ink);
+  font-size: 0.875rem;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.suggestionButton:hover {
+  color: var(--ink);
+}
+
+.resetSearch {
+  min-height: 36px;
+  margin-top: 1.25rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.resetSearch:hover {
+  border-color: transparent;
+  background: var(--invert-bg);
+  color: var(--invert-fg);
+}
+
+.mark {
+  padding: 0 0.05em;
+  background: color-mix(in srgb, var(--app) 24%, transparent);
+  color: inherit;
+}
+
 .categories {
   display: flex;
   flex-direction: column;
@@ -6,10 +189,12 @@
 
 .categoryTitle {
   margin-bottom: var(--space-3);
-  font-size: var(--text-xl);
-  font-weight: 700;
+  color: var(--ink-strong);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 560;
+  font-stretch: 100%;
   letter-spacing: -0.02em;
-  color: var(--color-ink);
 }
 
 .faqList {
@@ -28,10 +213,12 @@
   gap: var(--space-4);
   padding: var(--space-4) var(--space-1);
   cursor: pointer;
-  font-size: var(--text-md);
-  font-weight: 600;
-  letter-spacing: -0.01em;
   color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 560;
+  font-stretch: 100%;
+  letter-spacing: -0.01em;
   list-style: none;
   transition: color var(--dur-micro) var(--ease-out);
 }
@@ -43,10 +230,11 @@
 .faqQuestion::after {
   content: "+";
   flex-shrink: 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
   font-size: var(--text-lg);
   font-weight: 400;
   line-height: 1;
-  color: var(--color-text-muted);
   transition: transform var(--dur-short) var(--ease-out);
 }
 
@@ -62,15 +250,15 @@
   max-width: 65ch;
   margin: 0;
   padding: 0 var(--space-1) var(--space-5);
-  font-size: var(--text-sm);
-  line-height: 1.6;
   color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.65;
 }
 
 .footerNote {
   margin-top: var(--space-10);
-  font-size: var(--text-sm);
   color: var(--color-text-secondary);
+  font-size: var(--text-sm);
 }
 
 .link {

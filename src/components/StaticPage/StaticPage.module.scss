@@ -57,6 +57,14 @@
   margin-top: var(--space-10);
 }
 
+.centered {
+  max-width: calc(70ch + 3rem);
+}
+
+.bodyCentered {
+  max-width: 100%;
+}
+
 .section {
   margin-bottom: var(--space-10);
 }

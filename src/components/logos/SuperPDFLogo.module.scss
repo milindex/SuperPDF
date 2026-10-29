@@ -1,0 +1,28 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--logo-height) * 0.28);
+  min-width: 0;
+  color: var(--ink-strong);
+}
+
+.icon {
+  display: block;
+  flex-shrink: 0;
+  width: var(--logo-height);
+  height: var(--logo-height);
+}
+
+.word {
+  font-family: var(--font-display);
+  font-weight: 620;
+  font-stretch: 100%;
+  font-size: calc(var(--logo-height) * 0.72);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.accent {
+  color: var(--app-ink);
+}
