@@ -3,9 +3,9 @@ import WorkflowBuilder from "./WorkflowBuilder";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Workflow",
+  title: "PDF workflow builder",
   description:
-    "Chain PDF tools into one workflow and run every step on a single file, in your browser.",
+    "Chain PDF tools into one repeatable run: compress, number pages, protect, without uploading the file.",
   path: "/workflow",
 });
 

@@ -392,12 +392,16 @@ a:hover {
 
 button:focus-visible,
 a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
 summary:focus-visible {
   outline: 2px solid var(--app-ink);
   outline-offset: 2px;
+}
+
+/* Form fields use their border for focus instead of a boxy outline. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
 }
 
 /* --------------------------------------------------------------------------

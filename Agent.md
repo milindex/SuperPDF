@@ -4,7 +4,7 @@ This file governs how any AI coding agent (Claude Code or otherwise) works in th
 repo. Read it before writing any code. When in doubt, follow this file over your
 own judgment — it encodes hard lessons from a prior build of this exact project.
 
-**Current release:** `3.0.0.20261029` · **Public Beta** · `https://superpdf.milinds.dev`
+**Current release:** `3.0.1.20261029` · **Public Beta** · `https://superpdf.milinds.dev`
 
 ---
 

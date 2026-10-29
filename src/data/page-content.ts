@@ -11,13 +11,13 @@ export const fullFaqs: Faq[] = [
     category: "Privacy and files",
     question: "Do my files leave my device?",
     answer:
-      "No. The tool runs in your browser. The file is read on your device, the work happens there, and the result is downloaded there. Nothing is uploaded or stored.",
+      "No. You choose the file, and it is read in this tab, on your device. Nothing is uploaded, stored, or sent to us.",
   },
   {
     category: "Privacy and files",
     question: "How can a PDF be processed without a server?",
     answer:
-      "The browser has the engines: pdf-lib for editing, pdf.js for rendering, and WebAssembly builds such as qpdf for encryption. They run in the tab, on the file you chose.",
+      "The browser can do the work now. The tools read and change the file in the tab, using PDF engines that run on your device. There is no server round trip.",
   },
   {
     category: "Privacy and files",
@@ -29,7 +29,13 @@ export const fullFaqs: Faq[] = [
     category: "Privacy and files",
     question: "Is my data secure?",
     answer:
-      "The file is only as exposed as your device. Password protection uses AES-256, applied in the browser with qpdf.",
+      "The file stays on your device, so it is as safe as your device. For sensitive documents, keep your browser updated and use a password when you share the result.",
+  },
+  {
+    category: "Privacy and files",
+    question: "Is SuperPDF safe for contracts and medical records?",
+    answer:
+      "The file never goes to us. It is read and changed on your device, so there is no server copy to leak. Your device and browser still need to be secure — use a password for anything you send onward.",
   },
   {
     category: "Privacy and files",
@@ -41,13 +47,31 @@ export const fullFaqs: Faq[] = [
     category: "Using the tools",
     question: "Is SuperPDF free?",
     answer:
-      "Yes. The tools are free, with no account, no watermark from us, and no file-count limit.",
+      "Yes. Every tool is free, with no account, no watermark from us, and no daily limit.",
   },
   {
     category: "Using the tools",
     question: "Do I need an account?",
     answer:
-      "No. Open a tool, add a file, download the result.",
+      "No. No email, no sign-up, no login. Open a tool, add a file, download the result.",
+  },
+  {
+    category: "Using the tools",
+    question: "Why use SuperPDF instead of another PDF site?",
+    answer:
+      "Most PDF sites upload your document before they do anything. We don't. The file stays on your device, so there is no upload wait and no server copy. You also get all the everyday tools in one place.",
+  },
+  {
+    category: "Using the tools",
+    question: "Does SuperPDF work on a phone or tablet?",
+    answer:
+      "Yes. The tools work in a current mobile browser. Very large files are easier on a computer because they need more memory.",
+  },
+  {
+    category: "Using the tools",
+    question: "What does Public Beta mean?",
+    answer:
+      "The tools work, and we are still smoothing the edges. If something feels wrong, tell us on GitHub. It genuinely helps.",
   },
   {
     category: "Using the tools",
@@ -71,7 +95,7 @@ export const fullFaqs: Faq[] = [
     category: "Using the tools",
     question: "Does it work offline?",
     answer:
-      "Most tools work offline once the page and its engines have loaded. OCR downloads a language model on first use.",
+      "Yes, after the first load. Add SuperPDF to your home screen and the installed tools keep working without a connection. OCR downloads a language model the first time.",
   },
   {
     category: "Formats",
@@ -293,7 +317,7 @@ export const aboutMilestones = [
   {
     title: "The approach",
     description:
-      "The browser can do the work. SuperPDF uses pdf-lib, pdf.js, qpdf (WebAssembly), and other engines to read and change the file in the tab.",
+      "The browser can do the work now. SuperPDF reads and changes the file in this tab, using PDF engines that run on your device.",
   },
   {
     title: "The result",

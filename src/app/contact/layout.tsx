@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Contact",
   description:
-    "Questions, feedback, or a bug report for SuperPDF. Reach the maintainer by email.",
+    "Questions, feedback or a bug report for SuperPDF. Reach the maintainer by email or GitHub.",
   path: "/contact",
 });
 

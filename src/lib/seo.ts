@@ -1,19 +1,23 @@
 import type { Metadata } from "next";
-
+import { APP_VERSION } from "@/lib/version";
 /** Canonical origin for the site. Keep in sync with `metadataBase`. */
 export const SITE_URL = "https://superpdf.milinds.dev";
 export const SITE_NAME = "SuperPDF";
 export const SITE_EMAIL = "connect@milinds.dev";
+export const SITE_GITHUB = "https://github.com/milindex/SuperPDF";
+export const SITE_ISSUES = `${SITE_GITHUB}/issues`;
+
+export const SITE_TITLE = "SuperPDF — PDF tools that never upload your files";
 
 export const SITE_DESCRIPTION =
-  "A private, browser-native PDF workbench. Merge, split, compress, convert, sign and protect files without uploading them.";
+  "Merge, split, compress, convert, sign and protect PDFs without uploading them. No account, no tracking, no daily limits — your files stay on your device.";
 
 /** Social card served from `public/og-image.png` (1200×630). */
 export const OG_IMAGE = {
   url: "/og-image.png",
   width: 1200,
   height: 630,
-  alt: "SuperPDF — The open PDF workbench.",
+  alt: "SuperPDF — private PDF tools that keep your files on your device.",
 };
 
 /** Shown on every legal page; bump when the policies change. */
@@ -42,7 +46,21 @@ export function pageMetadata({
     title,
     description,
     alternates: { canonical: path },
-    robots: { index: true, follow: true },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+    authors: [{ name: "Milind Sonawane", url: "https://milinds.dev" }],
+    creator: "Milind Sonawane",
+    publisher: SITE_NAME,
+    category: "PDF tools",
     openGraph: {
       title,
       description,
@@ -72,15 +90,23 @@ export function organizationJsonLd() {
     name: SITE_NAME,
     url: SITE_URL,
     email: SITE_EMAIL,
+    description: SITE_DESCRIPTION,
+    sameAs: [SITE_GITHUB],
     logo: {
       "@type": "ImageObject",
       url: absoluteUrl("/icon-512.png"),
       width: 512,
       height: 512,
     },
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: SITE_EMAIL,
+      contactType: "customer support",
+    },
     founder: {
       "@type": "Person",
       name: "Milind Sonawane",
+      url: "https://milinds.dev",
     },
   };
 }
@@ -92,6 +118,7 @@ export function websiteJsonLd() {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
     name: SITE_NAME,
+    alternateName: "Super PDF",
     url: SITE_URL,
     description: SITE_DESCRIPTION,
     inLanguage: "en",
@@ -118,10 +145,12 @@ export function softwareApplicationJsonLd({
   name,
   description,
   path,
+  featureList,
 }: {
   name: string;
   description: string;
   path: `/${string}`;
+  featureList?: string[];
 }) {
   return {
     "@context": "https://schema.org",
@@ -130,9 +159,13 @@ export function softwareApplicationJsonLd({
     description,
     url: absoluteUrl(path),
     applicationCategory: "UtilitiesApplication",
-    operatingSystem: "Web Browser",
-    browserRequirements: "Requires JavaScript. Requires HTML5.",
+    operatingSystem: "Any (web browser)",
+    browserRequirements: "Requires JavaScript and HTML5.",
+    softwareVersion: APP_VERSION,
     isAccessibleForFree: true,
+    sameAs: [SITE_GITHUB],
+    license: "https://opensource.org/licenses/MIT",
+    ...(featureList && featureList.length > 0 ? { featureList } : {}),
     offers: {
       "@type": "Offer",
       price: "0",

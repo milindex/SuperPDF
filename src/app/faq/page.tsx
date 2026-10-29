@@ -7,9 +7,9 @@ import FaqBrowser from "./FaqBrowser";
 import styles from "./page.module.scss";
 
 export const metadata = pageMetadata({
-  title: "Frequently asked questions",
+  title: "PDF questions, answered",
   description:
-    "Answers on privacy, supported formats, limits, and how SuperPDF does the work in your browser.",
+    "Straight answers about privacy, formats, limits and why your files never leave this tab.",
   path: "/faq",
 });
 
@@ -18,7 +18,7 @@ export default function FaqPage() {
     <StaticPage
       path="/faq"
       title="Frequently Asked Questions"
-      intro="Answers on privacy, formats, limits, and how the browser does the work."
+      intro="Straight answers about privacy, formats, limits and keeping your files on your device."
       centered
     >
       <JsonLd data={faqJsonLd(fullFaqs)} />

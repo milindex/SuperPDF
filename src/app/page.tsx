@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Section from "@/components/Section/Section";
 import ShareRow from "@/components/ShareRow/ShareRow";
-import WorkbenchPreview from "@/components/WorkbenchPreview/WorkbenchPreview";
+// Hidden with the hero figure for now.
+// import WorkbenchPreview from "@/components/WorkbenchPreview/WorkbenchPreview";
 import SuperPDFIcon from "@/components/logos/SuperPDFIcon";
 import DocumentStack from "@/components/DocumentStack/DocumentStack";
 import ToolsFilter from "@/components/ToolsFilter/ToolsFilter";
@@ -10,57 +12,93 @@ import FAQSection from "@/components/FAQSection/FAQSection";
 import { JsonLd } from "@/components/JsonLd/JsonLd";
 import { faqs } from "@/data/homepage-content";
 import { toolsRegistry } from "@/registry/tools";
-import { OG_IMAGE, SITE_URL, absoluteUrl, pageMetadata } from "@/lib/seo";
+import { APP_VERSION } from "@/lib/version";
+import {
+  OG_IMAGE,
+  SITE_DESCRIPTION,
+  SITE_GITHUB,
+  SITE_URL,
+  absoluteUrl,
+  faqJsonLd,
+  pageMetadata,
+} from "@/lib/seo";
 import styles from "./page.module.scss";
 
-export const metadata = pageMetadata({
-  title: "The open PDF workbench",
-  description:
-    "Merge, split, compress, convert, sign and protect PDFs in your browser. Files stay on your device, with no account and no upload.",
-  path: "/",
-});
+export const metadata: Metadata = {
+  ...pageMetadata({
+    title: "PDF tools that never upload your files",
+    description: SITE_DESCRIPTION,
+    path: "/",
+  }),
+  title: { absolute: "PDF tools that never upload your files | SuperPDF" },
+};
 
 const toolCount = toolsRegistry.length;
 
+function GalleryShot({ name, alt }: { name: string; alt: string }) {
+  return (
+    <div className={styles.shotMedia}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className={styles.shotLight}
+        src={`/images/screenshots/${name}.webp`}
+        alt={alt}
+        width={1440}
+        height={900}
+        loading="lazy"
+      />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className={styles.shotDark}
+        src={`/images/screenshots/${name}-dark.webp`}
+        alt={alt}
+        width={1440}
+        height={900}
+        loading="lazy"
+      />
+    </div>
+  );
+}
+
 const highlights = [
   {
-    title: "Private by default",
-    body: "There is no document server. Every tool runs in this tab, so the file never leaves your device.",
+    title: "Your file stays yours",
+    body: "The document opens in this tab and stays on your device. There is no server copy, no upload wait, and nothing to delete afterwards.",
   },
   {
-    title: "Every format",
-    body: `Word, Excel, PowerPoint, JPG, PNG, SVG, HTML and more. ${toolCount} tools, one workbench.`,
+    title: "Nothing to sign up for",
+    body: "No account, no email, no daily cap and no watermark. Open the tool you need and get on with your day.",
   },
   {
-    title: "Real page work",
-    body: "Reorder, rotate, delete, merge and split with drag and drop, live previews and a deep undo stack.",
+    title: "Everyday PDF jobs",
+    body: `Merge, split, compress, convert, sign, redact and more — ${toolCount} tools in one calm place.`,
   },
   {
-    title: "Built-in security",
-    body: "Protect, unlock, redact and sign without handing the document to anyone else's server.",
+    title: "Kind to sensitive files",
+    body: "Contracts, invoices, client files and medical records do not need a detour through someone else's server.",
   },
   {
-    title: "No account, no limits",
-    body: "No sign-up wall, no watermark and no daily quota. Free and open source, all the way down.",
+    title: "Works when the signal drops",
+    body: "Install it once and the tools keep working offline. OCR downloads its language pack on first use.",
   },
   {
-    title: "Works offline",
-    body: "Install SuperPDF once and the tools keep opening with the network off. Your files stay local.",
+    title: "Free, with no catch",
+    body: "Open source, no ads and no upsell. The only real limit is your device's memory.",
   },
 ];
 
 const steps = [
   {
     title: "Pick the job",
-    body: "Merge, split, compress, convert, sign, or chain several steps into a workflow.",
+    body: "Merge, split, compress, convert, sign, or line up a few steps in a workflow.",
   },
   {
     title: "Add the file",
-    body: "It is read in this tab, on your device. Nothing is sent to a server.",
+    body: "Choose it from your device. Nothing is sent to a server.",
   },
   {
     title: "Take the result",
-    body: "Download the finished file. Reload the page and the working copy is gone.",
+    body: "Download the finished file. Close the tab and the working copy is gone.",
   },
 ];
 
@@ -76,15 +114,17 @@ const structuredData = {
   "@type": "WebApplication",
   "@id": `${SITE_URL}/#webapp`,
   name: "SuperPDF",
-  description:
-    "A private, browser-native PDF workbench. Merge, split, compress, convert and sign files without uploading them.",
+  description: SITE_DESCRIPTION,
   url: SITE_URL,
   image: absoluteUrl(OG_IMAGE.url),
   screenshot: absoluteUrl(OG_IMAGE.url),
   applicationCategory: "ProductivityApplication",
-  operatingSystem: "Web Browser",
-  browserRequirements: "Requires JavaScript. Requires HTML5.",
+  operatingSystem: "Any (web browser)",
+  browserRequirements: "Requires JavaScript and HTML5.",
+  softwareVersion: APP_VERSION,
   isAccessibleForFree: true,
+  sameAs: [SITE_GITHUB],
+  license: "https://opensource.org/licenses/MIT",
   publisher: { "@id": `${SITE_URL}/#organization` },
   offers: {
     "@type": "Offer",
@@ -92,15 +132,17 @@ const structuredData = {
     priceCurrency: "USD",
   },
   featureList: [
-    "PDF Merge",
-    "PDF Split",
-    "PDF Compression",
-    "PDF to Word Conversion",
-    "PDF to Excel Conversion",
-    "PDF Signing",
-    "PDF Protection",
-    "PDF OCR",
-    "PDF workflows",
+    "Merge PDF",
+    "Split PDF",
+    "Compress PDF",
+    "PDF to Word",
+    "PDF to Excel",
+    "Sign PDF",
+    "Protect PDF",
+    "Redact PDF",
+    "OCR",
+    "Offline use",
+    "No upload",
     `${toolCount} browser-based PDF tools`,
   ],
 };
@@ -109,12 +151,13 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={structuredData} />
+      <JsonLd data={faqJsonLd(faqs)} />
 
       <Section
         id="superpdf"
         number="01"
         label="SuperPDF"
-        meta="PDF workbench · Public Beta"
+        meta="Private PDF tools · Public Beta"
         bodyClassName={styles.heroWrap}
       >
         <div className={styles.heroIntro} data-reveal-group>
@@ -125,20 +168,17 @@ export default function HomePage() {
                 Super<span className={styles.accent}>PDF</span>
               </span>
               <span className={styles.kickerRule} aria-hidden="true" />
-              <span className={`hud-label ${styles.kickerMeta}`}>
-                PDF workbench · v3
-              </span>
             </div>
 
             <h1 className={styles.heroTitle} data-reveal>
-              The PDF workbench you already{" "}
-              <span className={styles.accent}>know</span> how to use.
+              Your PDFs <span className={styles.accent}>never leave</span> this
+              tab.
             </h1>
 
             <p className={styles.heroLede} data-reveal>
-              Merge, split, compress, convert, sign and protect PDFs in a fast,
-              private workbench that runs entirely in your browser. No account,
-              no telemetry, no cloud.
+              Merge, split, compress, convert, sign and protect PDFs without
+              sending them anywhere. No account, no tracking, no cloud — just the
+              work, done on your device.
             </p>
 
             <div className={styles.heroActions} data-reveal>
@@ -213,6 +253,9 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/*
+          Hidden for now, kept for reference. Re-enable the WorkbenchPreview
+          import above when this figure is turned back on.
         <figure className={styles.heroFigure} data-reveal>
           <div className={styles.figureCaption}>
             <figcaption className={`hud-label ${styles.captionLabel}`}>
@@ -224,6 +267,8 @@ export default function HomePage() {
             <WorkbenchPreview variant="hero" />
           </div>
         </figure>
+        */}
+
       </Section>
 
       <Section
@@ -235,7 +280,7 @@ export default function HomePage() {
       >
         <div className={styles.sectionHead}>
           <h2 className={styles.sectionTitle} data-reveal>
-            What&apos;s <span className={styles.accent}>inside</span>.
+            PDF work without the <span className={styles.accent}>worry</span>.
           </h2>
         </div>
         <ol className={styles.highlightList} data-reveal-group>
@@ -252,6 +297,8 @@ export default function HomePage() {
         </ol>
       </Section>
 
+      {/*
+        Screenshots are hidden for now, kept for reference.
       <Section
         id="gallery"
         number="03"
@@ -261,40 +308,50 @@ export default function HomePage() {
       >
         <div className={styles.galleryGrid} data-reveal-group>
           <figure className={styles.shotWide} data-reveal>
-            <WorkbenchPreview variant="organize" />
+            <GalleryShot
+              name="split-report"
+              alt="Split PDF with a page-range field and a live preview of a Northwind annual report"
+            />
             <figcaption className={styles.shotCaption}>
               <span className={`hud-label ${styles.captionLabel}`}>
-                Organize pages like cards
+                Split a report into the pages you need
               </span>
               <span className={`hud-label ${styles.captionMeta}`}>01</span>
             </figcaption>
           </figure>
           <figure className={styles.shot} data-reveal>
-            <WorkbenchPreview variant="palette" />
+            <GalleryShot
+              name="tool-search"
+              alt="Searching the SuperPDF tool list for compress and seeing matching tools"
+            />
             <figcaption className={styles.shotCaption}>
               <span className={`hud-label ${styles.captionLabel}`}>
-                A command palette for every tool
+                Search every tool by the job
               </span>
               <span className={`hud-label ${styles.captionMeta}`}>02</span>
             </figcaption>
           </figure>
           <figure className={styles.shot} data-reveal>
-            <WorkbenchPreview variant="reader" />
+            <GalleryShot
+              name="merge-files"
+              alt="Merging three sample PDFs with reorder handles and a file preview"
+            />
             <figcaption className={styles.shotCaption}>
               <span className={`hud-label ${styles.captionLabel}`}>
-                Two-up read mode, dark theme
+                Merge a client pack in order
               </span>
               <span className={`hud-label ${styles.captionMeta}`}>03</span>
             </figcaption>
           </figure>
         </div>
       </Section>
+      */}
 
       <Section
         id="tools"
-        number="04"
+        number="03"
         label="The workbench"
-        meta={`${toolCount} tools · Runs locally`}
+        meta={`${toolCount} tools · On your device`}
         bodyClassName={styles.toolsBody}
       >
         <div className={styles.toolsHead} data-reveal-group>
@@ -302,8 +359,8 @@ export default function HomePage() {
             Every tool, <span className={styles.accent}>one place</span>.
           </h2>
           <p className={styles.sectionLede} data-reveal>
-            Search by the job, or filter by category. Every tool runs in the
-            browser and leaves the file on your device.
+            Search by the job, or filter by category. Every tool works on your
+            device, so the file stays with you.
           </p>
         </div>
         <p className={`hud-label ${styles.legend}`}>
@@ -318,7 +375,7 @@ export default function HomePage() {
 
       <Section
         id="how-it-works"
-        number="05"
+        number="04"
         label="How it works"
         meta="Three steps, no upload"
         bodyClassName={styles.stepsBody}
@@ -344,7 +401,7 @@ export default function HomePage() {
 
       <Section
         id="faq"
-        number="06"
+        number="05"
         label="Questions"
         meta="Privacy, formats, limits"
         bodyClassName={styles.faqBody}
@@ -360,7 +417,7 @@ export default function HomePage() {
 
       <Section
         id="get-superpdf"
-        number="07"
+        number="06"
         label="Get SuperPDF"
         meta="Free · Open source"
         bodyClassName={styles.closingBody}

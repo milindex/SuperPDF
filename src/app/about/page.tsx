@@ -5,16 +5,17 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "About",
   description:
-    "SuperPDF is a PDF toolkit for people who would rather not upload the file. The work happens in the browser, on your device.",
+    "SuperPDF is a free PDF toolkit for people who would rather keep the file to themselves. The work happens in your browser, on your device.",
   path: "/about",
 });
 
 export default function AboutPage() {
   return (
     <StaticPage
+      centered
       path="/about"
       title="About"
-      intro="SuperPDF is a PDF toolkit for people who would rather not upload the file. The work happens in the browser, on your device."
+      intro="SuperPDF is a free PDF toolkit for people who would rather keep the file to themselves. The work happens in your browser, on your device."
       sections={[
         {
           heading: "Why this exists",

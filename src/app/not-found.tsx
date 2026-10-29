@@ -3,6 +3,8 @@ import styles from "./not-found.module.scss";
 
 export const metadata = {
   title: "Page not found",
+  description:
+    "This page is not here. Head back to the PDF tools or the home page.",
   robots: { index: false, follow: false },
 };
 

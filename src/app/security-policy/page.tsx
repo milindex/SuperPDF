@@ -6,13 +6,14 @@ import { LEGAL_LAST_UPDATED, pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Security",
   description:
-    "How SuperPDF keeps documents on your device, which engines run locally, and how to report a vulnerability.",
+    "How SuperPDF keeps documents on your device and how to report a security issue.",
   path: "/security-policy",
 });
 
 export default function SecurityPolicyPage() {
   return (
     <StaticPage
+      centered
       path="/security-policy"
       title="Security"
       intro="How the browser processing works, and what it means for your files."

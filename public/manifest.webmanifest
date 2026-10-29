@@ -1,7 +1,7 @@
 {
   "name": "SuperPDF",
   "short_name": "SuperPDF",
-  "description": "A private, browser-native PDF workbench. Merge, split, compress, convert, sign and protect without uploading.",
+  "description": "A private, browser-based PDF toolkit. Merge, split, compress, convert, sign and protect files without uploading them.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

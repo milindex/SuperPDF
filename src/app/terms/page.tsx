@@ -13,6 +13,7 @@ export const metadata = pageMetadata({
 export default function TermsPage() {
   return (
     <StaticPage
+      centered
       path="/terms"
       title="Terms & Conditions"
       intro="The terms that govern your use of SuperPDF."

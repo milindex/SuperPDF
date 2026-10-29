@@ -7,6 +7,7 @@ import {
 import { SwProvider } from "@/components/SwProvider";
 import Choreography from "@/components/Choreography/Choreography";
 import ScrollRuler from "@/components/ScrollRuler/ScrollRuler";
+import SmoothScroll from "@/components/SmoothScroll/SmoothScroll";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import RecentTracker from "@/components/RecentTracker/RecentTracker";
@@ -15,6 +16,7 @@ import {
   OG_IMAGE,
   SITE_DESCRIPTION,
   SITE_NAME,
+  SITE_TITLE,
   SITE_URL,
   organizationJsonLd,
   websiteJsonLd,
@@ -45,14 +47,25 @@ const bootScript = `(function(){try{var t=localStorage.getItem("superpdf-theme")
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "SuperPDF | The open PDF workbench",
+    default: SITE_TITLE,
     template: "%s | SuperPDF",
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
+  authors: [{ name: "Milind Sonawane", url: "https://milinds.dev" }],
+  creator: "Milind Sonawane",
+  publisher: SITE_NAME,
+  category: "PDF tools",
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
   manifest: "/manifest.webmanifest",
   icons: {
@@ -75,9 +88,8 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
   openGraph: {
-    title: "SuperPDF | The open PDF workbench",
-    description:
-      "A private, browser-native PDF workbench. Merge, split, compress, convert and sign without uploading.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     type: "website",
     siteName: SITE_NAME,
     url: "/",
@@ -86,9 +98,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SuperPDF | The open PDF workbench",
-    description:
-      "A private, browser-native PDF workbench. Merge, split, compress, convert and sign without uploading.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     images: [OG_IMAGE.url],
   },
 };
@@ -114,6 +125,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <JsonLd data={websiteJsonLd()} />
         <SwProvider>
           <Choreography />
+          <SmoothScroll />
           <ScrollRuler />
           <RecentTracker />
           <div className="app-shell">

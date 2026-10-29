@@ -13,6 +13,7 @@ export const metadata = pageMetadata({
 export default function CookiesPage() {
   return (
     <StaticPage
+      centered
       path="/cookies"
       title="Cookie Policy"
       intro="How SuperPDF uses cookies and similar technologies."

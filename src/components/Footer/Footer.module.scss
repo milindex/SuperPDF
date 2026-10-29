@@ -149,3 +149,32 @@
     grid-column: span 1;
   }
 }
+
+@media (max-width: 639px) {
+  .brand {
+    align-items: center;
+    text-align: center;
+  }
+
+  .statement {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .column {
+    text-align: center;
+  }
+
+  .columnList {
+    align-items: center;
+  }
+
+  .bottom {
+    align-items: center;
+    text-align: center;
+  }
+
+  .legal {
+    text-align: center;
+  }
+}

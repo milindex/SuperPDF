@@ -4,41 +4,44 @@ import styles from "./changelog.module.scss";
 
 const RELEASES = [
   {
+    version: "v3.0.1",
+    date: "29 October 2026",
+    title: "A smoother workbench",
+    current: true,
+    changes: [
+      "The right-edge ruler now works like a real scrollbar: hover to see the whole page, then click or drag to move.",
+      "Section links stay in view, highlight as you reach each section, and animate one letter at a time.",
+      "Scrolling is smoother, mobile footer text is centered, and form fields no longer show a boxy focus outline.",
+    ],
+  },
+  {
     version: "v3.0.0",
     date: "29 October 2026",
     title: "SuperPDF 3.0",
-    current: true,
     changes: [
-      "Kept the SuperPDF name after the PdfCraft name turned out to be taken, and moved the site back to superpdf.milinds.dev with a crimson identity.",
-      "Rebuilt the homepage around an asymmetric hero, a document-stack plate, ledger-style highlights, and a dark cover-sheet closing band.",
-      "New type stack: Instrument Sans for display and body, Instrument Serif for accents, and Geist Mono for HUD labels.",
-      "Added the light/dark theme toggle, a custom document ruler scrollbar, and numbered section markers.",
-      "Tool pages now collapse the drop zone after a file is chosen and show a sticky preview rail with the first page, size, and page count.",
-      "Added wildcard and fuzzy search to the FAQ, with nearest-question suggestions.",
-      "Refined mobile spacing and moved the footer to a compact two-column layout.",
+      "New SuperPDF name, crimson identity, and superpdf.milinds.dev domain.",
+      "Redesigned homepage, typography, dark mode, and mobile layout.",
+      "Tool pages gained a preview rail and a simpler file flow.",
+      "FAQ search is friendlier, with fuzzy matching and suggestions.",
     ],
   },
   {
     version: "v2.1.1",
     date: "25 October 2026",
-    title: "Discovery, policies, and a smaller site",
+    title: "Discovery and policies",
     changes: [
-      "Added a generated sitemap and robots.txt, with canonical URLs and unique titles and descriptions on every page.",
-      "Removed the blog for now; its routes, data, and links are gone from the site.",
-      "Rewrote the privacy, terms, cookie, and security policies to match what the app actually does, each with a last-updated date.",
-      "Linked the footer copyright credit to milinds.dev.",
+      "Added a sitemap, robots file, canonical URLs, and clearer page descriptions.",
+      "Rewrote the privacy, terms, cookie, and security pages.",
+      "Removed the blog and tidied footer links.",
     ],
   },
   {
     version: "v2.1.0",
     date: "25 October 2026",
-    title: "Redesign, workflows, and offline use",
+    title: "Workflows and offline use",
     changes: [
-      "New paper palette, two typefaces, and a quieter layout across every page, plus six more tools and automatic form-field detection.",
-      "A workflow builder that chains PDF tools and reruns the same steps on one file.",
-      "Recently used tools and workflows, plus a settings dialog to remember or clear them.",
-      "An offline copy of the main pages and tool code, with an installable web manifest.",
-      "Easy and Advanced control levels for each tool, saved per tool in this browser.",
+      "New design, six more tools, and a workflow builder for repeatable jobs.",
+      "Added recent tools, a settings panel, offline support, and Easy/Advanced modes.",
     ],
   },
   {
@@ -46,10 +49,9 @@ const RELEASES = [
     date: "26 August 2026",
     title: "Content and discovery",
     changes: [
-      "Added the tools index at /tools, grouped by category.",
-      "Added About, FAQ, Legal, Press, Privacy, Terms, Cookies, and Security pages.",
-      "Added PDF to Markdown and new split modes for ranges, pages, size, and bookmarks.",
-      "Added the version badge in the footer and the generated tool documentation.",
+      "Added the tools index and the main information pages.",
+      "Added PDF to Markdown, more split modes, and generated tool docs.",
+      "Added the footer version badge.",
     ],
   },
   {
@@ -57,11 +59,9 @@ const RELEASES = [
     date: "20 to 22 August 2026",
     title: "The browser toolkit",
     changes: [
-      "Rebuilt the app on Next.js, React, TypeScript, and SCSS modules.",
-      "Added the tool registry, service worker router, shared message contract, and CI checks.",
-      "Built the shared tool shell: layout, header, drop zone, options, and download banner.",
-      "Added 45 tools across organise, convert, edit, security, optimisation, and extraction.",
-      "Brought pdf.js, qpdf, tesseract.js, docx, xlsx, and image engines into the browser.",
+      "Rebuilt the app with a modern browser stack.",
+      "Added the shared tool shell and 45 tools.",
+      "Brought PDF, OCR, document, and image engines into the browser.",
     ],
   },
   {
@@ -69,10 +69,7 @@ const RELEASES = [
     date: "20 August 2026",
     title: "Initial scaffold",
     changes: [
-      "Created the Next.js app with SCSS modules and a test setup.",
-      "Added the first header, footer, logo, icon set, and homepage sections.",
-      "Added the tool registry, service worker contract, and documentation generator.",
-      "Added the first end-to-end tests for the shell, merge, split, and rotate.",
+      "Started the app with its first layout, tools, tests, and docs.",
     ],
   },
 ];
@@ -80,13 +77,14 @@ const RELEASES = [
 export const metadata = pageMetadata({
   title: "Changelog",
   description:
-    "Every release of SuperPDF, from the first scaffold to the current browser toolkit.",
+    "Every release of SuperPDF, from the first version to today.",
   path: "/changelog",
 });
 
 export default function ChangelogPage() {
   return (
     <StaticPage
+      centered
       path="/changelog"
       title="Changelog"
       intro="What changed, from the first scaffold to the current release."

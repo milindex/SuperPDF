@@ -13,6 +13,7 @@ export const metadata = pageMetadata({
 export default function PrivacyPage() {
   return (
     <StaticPage
+      centered
       path="/privacy"
       title="Privacy policy"
       intro="What SuperPDF collects, what it does not collect, and what happens to your files."

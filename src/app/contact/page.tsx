@@ -20,6 +20,7 @@ export default function ContactPage() {
 
   return (
     <StaticPage
+      centered
       path="/contact"
       title="Contact"
       intro="Questions, feedback, or a bug report. Send it here."

@@ -6,18 +6,19 @@ import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
 
 export const metadata = pageMetadata({
-  title: "SuperPDF for education",
+  title: "PDF tools for education",
   description:
-    "Free PDF tools for students, teachers, and researchers. Files are read on the device, so student work never goes to a server.",
+    "Free PDF tools for students, teachers and researchers. Student work stays on the device.",
   path: "/education",
 });
 
 export default function EducationPage() {
   return (
     <StaticPage
+      centered
       path="/education"
       title="SuperPDF for education"
-      intro="Free PDF tools for students, teachers, and researchers. Files are read on the device, so student work does not go to a server."
+      intro="Free PDF tools for students, teachers and researchers. Student work stays on the device and never goes to a server."
     >
       <section className={styles.useCases}>
         {educationUseCases.map((u) => (

@@ -36,6 +36,10 @@ export function ToolHeader({ title, description, notice }: ToolHeaderProps) {
         {tool?.wip && <span className={styles.wip}>WIP</span>}
       </div>
       <p className={styles.description}>{description}</p>
+      <p className={styles.trust}>
+        <span className={styles.trustDot} aria-hidden="true" />
+        Runs on your device. No upload, no account.
+      </p>
       {tool?.wipNote && <p className={styles.wipNote}>{tool.wipNote}</p>}
 
       {mode && tool?.hasAdvanced && (

@@ -15,7 +15,7 @@
 51
 <!-- GENERATED:END:status --> |
 | Public surface | Public Beta |
-| Release | v3.0.0.20261029 |
+| Release | v3.0.1.20261029 |
 
 ## 2. Processing model
 

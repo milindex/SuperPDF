@@ -5,7 +5,7 @@ SuperPDF is a **private, browser-native PDF workbench** built with Next.js
 your device — files are never uploaded, stored, or sent to a server.
 
 **Live:** [superpdf.milinds.dev](https://superpdf.milinds.dev)  
-**Status:** Public Beta · **Release:** `3.0.0.20261029`  
+**Status:** Public Beta · **Release:** `3.0.1.20261029`  
 **Source:** [github.com/milindex/SuperPDF](https://github.com/milindex/SuperPDF)
 
 ## What it does

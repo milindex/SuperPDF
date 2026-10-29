@@ -83,8 +83,8 @@ export async function generateMetadata({
   if (!tool) return {};
 
   return pageMetadata({
-    title: tool.name,
-    description: tool.description,
+    title: `${tool.name} without uploading`,
+    description: `${tool.description} No upload, no account — it runs on your device.`,
     path: `/tools/${tool.slug}`,
   });
 }
@@ -118,6 +118,12 @@ export default async function ToolRoute({
           name: tool.name,
           description: tool.description,
           path,
+          featureList: [
+            tool.name,
+            "No upload",
+            "No account",
+            "Runs on your device",
+          ],
         })}
       />
       <JsonLd

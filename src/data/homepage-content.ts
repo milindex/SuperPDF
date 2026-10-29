@@ -2,28 +2,46 @@ import { TOOL_COUNT } from "@/registry/tools";
 
 export const faqs = [
   {
-    question: "Why use SuperPDF instead of another PDF site?",
+    question: "Do I have to upload my PDF?",
     answer:
-      "Most PDF sites upload the file to a server before they do anything. SuperPDF runs the tool in your browser, so the document stays on your device and the result is ready without a round trip.",
+      "No. You choose the file, and it is read in this tab. There is no server copy, so there is nothing to store or delete.",
   },
   {
-    question: "Are my files uploaded?",
+    question: "Is SuperPDF really free?",
     answer:
-      "No. The file is read in the tab with browser engines and WebAssembly. There is no server copy to store, leak, or delete.",
+      "Yes. No account, no watermark, no daily limit and no ads. It is open source, and you can use every tool as often as you need.",
+  },
+  {
+    question: "Is it safe for contracts and private files?",
+    answer:
+      "The file stays on your device. We never receive it. Your device's own security still matters, so keep your browser updated and use a password for files you share.",
+  },
+  {
+    question: "Why use this instead of a big PDF site?",
+    answer:
+      "Most PDF sites upload your document first. We don't. That means no upload wait, no server copy and nothing to delete afterwards — plus all the tools in one place.",
   },
   {
     question: "What can I do with a PDF here?",
-    answer:
-      `Merge, split, reorder, compress, convert, sign, redact, fill, watermark, and protect. There are ${TOOL_COUNT} tools, and each one opens without an account.`,
+    answer: `${TOOL_COUNT} tools: merge, split, reorder, compress, convert, sign, redact, fill, watermark and protect. Every one opens without an account.`,
   },
   {
-    question: "Can I run several tools on one file?",
-    answer:
-      "Yes. The workflow builder chains PDF tools together, such as compress, add page numbers, then protect. Each step feeds the next, and you run the whole chain once.",
+    question: "Do I need an account?",
+    answer: "No. No email, no sign-up, no login.",
   },
   {
-    question: "Does it work offline?",
+    question: "Can I use it offline?",
     answer:
-      "Yes, once the page has loaded. Add SuperPDF to your home screen and the installed tools keep working without a connection. OCR needs to download its language model on first use.",
+      "Yes, after the first load. Add SuperPDF to your home screen and the installed tools keep working without a connection. OCR downloads its language model once.",
+  },
+  {
+    question: "What if my file is very large?",
+    answer:
+      "The work happens in your browser, so very large files depend on your device's memory. If a file is too heavy, the tool will tell you — nothing is sent away.",
+  },
+  {
+    question: "What does Public Beta mean?",
+    answer:
+      "The tools work, and we are still smoothing the edges. If something feels wrong, please tell us on GitHub. It genuinely helps.",
   },
 ];

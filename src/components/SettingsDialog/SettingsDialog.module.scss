@@ -218,10 +218,7 @@
   color: var(--color-text-muted);
 }
 
-:focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 2px;
-}
+
 
 @media (prefers-reduced-motion: reduce) {
   .switchThumb {

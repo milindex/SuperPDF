@@ -10,9 +10,9 @@ import {
 import styles from "./page.module.scss";
 
 export const metadata = pageMetadata({
-  title: "All PDF tools",
+  title: "51 private PDF tools",
   description:
-    "Every SuperPDF tool in one list. Merge, split, compress, convert, sign, and protect PDFs without uploading them.",
+    "All 51 PDF tools in one list. Merge, split, compress, convert, sign and protect files without uploading them.",
   path: "/tools",
 });
 
@@ -46,7 +46,8 @@ export default function ToolsPage() {
         <header className={styles.head}>
           <h1 className={styles.title}>All {toolCount} PDF tools</h1>
           <p className={styles.intro}>
-            Search by the job. Every tool runs in the browser and leaves the file on your device.
+            Search by the job. Every tool works on your device, so the file
+            stays with you.
           </p>
         </header>
 

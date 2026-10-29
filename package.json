@@ -1,6 +1,6 @@
 {
   "name": "superpdf",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "description": "A private, browser-native PDF workbench. Merge, split, compress, convert and sign without uploading.",
   "homepage": "https://superpdf.milinds.dev",

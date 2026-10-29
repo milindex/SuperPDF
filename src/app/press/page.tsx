@@ -7,13 +7,14 @@ import styles from "./page.module.scss";
 export const metadata = pageMetadata({
   title: "Press",
   description:
-    "Press information for SuperPDF, including a short fact sheet and media contact.",
+    "Press information, fact sheet and media contact for SuperPDF.",
   path: "/press",
 });
 
 export default function PressPage() {
   return (
     <StaticPage
+      centered
       path="/press"
       title="Press"
       intro="Press information and a short fact sheet."

@@ -41,8 +41,7 @@ export default function Footer() {
               <SuperPDFLogo height={30} />
             </Link>
             <p className={styles.statement}>
-              A private, browser-native PDF workbench. The file never leaves
-              your device.
+              A private PDF toolkit. Your file never leaves your device.
             </p>
             <a className={styles.email} href="mailto:connect@milinds.dev">
               connect@milinds.dev

@@ -6,8 +6,8 @@ import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
 
 export const metadata = pageMetadata({
-  title: "Features",
-  description: `All ${TOOL_COUNT} SuperPDF tools by category, from merging and splitting to OCR, encryption, and conversion.`,
+  title: "Private PDF tools",
+  description: `All ${TOOL_COUNT} tools in one place. Merge, split, compress, convert, sign and protect PDFs without uploading them.`,
   path: "/features",
 });
 
@@ -38,25 +38,25 @@ const PILLARS = [
     icon: "security",
     title: "No upload",
     description:
-      "The file is read on your device. There is no server copy to leak, sell, or delete.",
+      "Your file is read on your device. There is no server copy to lose, sell, or forget to delete.",
   },
   {
     icon: "rocket",
     title: "No waiting on a network",
     description:
-      "Processing starts when you add the file. Most tasks finish in seconds, and large files often beat a server round trip.",
+      "Work starts as soon as you add the file. Most jobs finish in seconds.",
   },
   {
     icon: "check",
     title: "Free, no account",
     description:
-      "No sign-up, no watermark, no file-count limit. Open a tool, add a file, download the result.",
+      "No sign-up, no watermark and no daily limit. Open a tool, add a file, download the result.",
   },
   {
     icon: "convert",
-    title: "Real PDF engines",
+    title: "Built for real documents",
     description:
-      "The PDF engines run in the browser: pdf-lib, pdf.js, qpdf in WebAssembly, tesseract.js, docx, and xlsx.",
+      "The same kinds of PDF engines, running in your browser instead of on someone else's server.",
   },
 ];
 
@@ -65,9 +65,10 @@ export default function FeaturesPage() {
 
   return (
     <StaticPage
+      centered
       path="/features"
-      title="Features"
-      intro={`${TOOL_COUNT} PDF tools that run in the browser, on the file you chose.`}
+      title="Private PDF tools"
+      intro={`${TOOL_COUNT} PDF tools that keep the file on your device.`}
     >
       <section className={styles.pillars}>
         {PILLARS.map((p) => (

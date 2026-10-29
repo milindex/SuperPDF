@@ -3,6 +3,8 @@ import styles from "./offline.module.scss";
 
 export const metadata = {
   title: "Offline",
+  description:
+    "You are offline. Saved SuperPDF pages and tools you have already visited should still open.",
   robots: { index: false, follow: false },
 };
 

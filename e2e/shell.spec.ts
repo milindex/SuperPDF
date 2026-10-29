@@ -44,7 +44,7 @@ test.describe("homepage sections", () => {
     await page.goto("/");
 
     await expect(
-      page.getByRole("heading", { name: /The PDF workbench you already/ }),
+      page.getByRole("heading", { name: /Your PDFs never leave this tab/ }),
     ).toBeVisible();
     await expect(
       page.getByRole("link", { name: "Find a tool" }),

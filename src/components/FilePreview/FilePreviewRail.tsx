@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
+import type { LoadedPdf } from "@/lib/pdfjs";
 import { useFilePreview } from "./FilePreviewContext";
 import styles from "./FilePreview.module.scss";
 
@@ -37,8 +38,10 @@ export default function FilePreviewRail() {
   const preview = useFilePreview();
   const [thumb, setThumb] = useState<string | null>(null);
   const [pages, setPages] = useState<number | null>(null);
+  const [page, setPage] = useState(1);
   const [status, setStatus] = useState<Status>("idle");
   const objectUrlRef = useRef<string | null>(null);
+  const pdfDocRef = useRef<LoadedPdf | null>(null);
 
   const file = preview?.file ?? null;
   const kind = file ? kindOf(file) : "other";
@@ -46,13 +49,16 @@ export default function FilePreviewRail() {
   useEffect(() => {
     setThumb(null);
     setPages(null);
+    setPage(1);
+    pdfDocRef.current = null;
+
     if (!file) {
       setStatus("idle");
       return;
     }
 
     let disposed = false;
-    let pdfDoc: { destroy: () => Promise<void> } | null = null;
+    let pdfDoc: LoadedPdf | null = null;
     let objectUrl: string | null = null;
     setStatus("loading");
 
@@ -72,19 +78,14 @@ export default function FilePreviewRail() {
         return;
       }
 
-      const { loadPdf, renderPageToDataUrl } = await import("@/lib/pdfjs");
-      const doc = await loadPdf(await file.arrayBuffer());
-      pdfDoc = doc;
+      const { loadPdf } = await import("@/lib/pdfjs");
+      pdfDoc = await loadPdf(await file.arrayBuffer());
       if (disposed) {
-        await doc.destroy();
+        await pdfDoc.destroy();
         return;
       }
-      const page = await renderPageToDataUrl(doc, 1, 0.9, "image/jpeg", 0.72);
-      if (!disposed) {
-        setThumb(page.dataUrl);
-        setPages(doc.pageCount);
-        setStatus("ready");
-      }
+      pdfDocRef.current = pdfDoc;
+      setPages(pdfDoc.pageCount);
     };
 
     run().catch(() => {
@@ -95,13 +96,46 @@ export default function FilePreviewRail() {
       disposed = true;
       if (objectUrl) URL.revokeObjectURL(objectUrl);
       if (objectUrlRef.current === objectUrl) objectUrlRef.current = null;
+      if (pdfDocRef.current === pdfDoc) pdfDocRef.current = null;
       if (pdfDoc) void pdfDoc.destroy();
     };
   }, [file, kind]);
 
+  useEffect(() => {
+    if (!file || kind !== "pdf" || !pages) return;
+    const doc = pdfDocRef.current;
+    if (!doc) return;
+
+    let cancelled = false;
+    setStatus("loading");
+
+    void (async () => {
+      const { renderPageToDataUrl } = await import("@/lib/pdfjs");
+      const rendered = await renderPageToDataUrl(
+        doc,
+        page,
+        0.9,
+        "image/jpeg",
+        0.72,
+      );
+      if (!cancelled) {
+        setThumb(rendered.dataUrl);
+        setStatus("ready");
+      }
+    })().catch(() => {
+      if (!cancelled) setStatus("error");
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [file, kind, page, pages]);
+
   if (!preview || !file) return null;
 
   const isMultiple = preview.count > 1;
+  const canPrev = page > 1;
+  const canNext = pages !== null && page < pages;
 
   return (
     <aside className={styles.rail} aria-label="Selected file preview">
@@ -122,7 +156,7 @@ export default function FilePreviewRail() {
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={thumb}
-              alt={`${file.name} preview`}
+              alt={`${file.name}, page ${page}`}
               className={styles.thumb}
             />
           )}
@@ -145,7 +179,7 @@ export default function FilePreviewRail() {
           )}
 
           {kind === "pdf" && status === "ready" && (
-            <span className={styles.pageTag}>Page 1</span>
+            <span className={styles.pageTag}>Page {page}</span>
           )}
         </div>
 
@@ -176,6 +210,34 @@ export default function FilePreviewRail() {
             </div>
           </dl>
         </div>
+
+        {kind === "pdf" && pages !== null && pages > 1 && (
+          <div className={styles.pager}>
+            <button
+              type="button"
+              className={styles.pagerButton}
+              onClick={() => setPage((current) => Math.max(1, current - 1))}
+              disabled={!canPrev}
+              aria-label="Previous page"
+            >
+              Prev
+            </button>
+            <span className={styles.pagerCount} aria-live="polite">
+              {page} / {pages}
+            </span>
+            <button
+              type="button"
+              className={styles.pagerButton}
+              onClick={() =>
+                setPage((current) => Math.min(pages, current + 1))
+              }
+              disabled={!canNext}
+              aria-label="Next page"
+            >
+              Next
+            </button>
+          </div>
+        )}
 
         <div className={styles.actions}>
           <button

@@ -6,7 +6,7 @@ import styles from "./page.module.scss";
 export const metadata = pageMetadata({
   title: "Legal",
   description:
-    "SuperPDF policies: privacy, terms, cookies, and security. The short version is that files stay on your device.",
+    "SuperPDF policies: privacy, terms, cookies and security. The short version: your files stay on your device.",
   path: "/legal",
 });
 
@@ -37,6 +37,7 @@ const LEGAL_PAGES = [
 export default function LegalPage() {
   return (
     <StaticPage
+      centered
       path="/legal"
       title="Legal"
       intro="Policies for SuperPDF. The short version: files stay on your device."

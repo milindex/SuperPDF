@@ -6,18 +6,19 @@ import { pageMetadata } from "@/lib/seo";
 import styles from "./page.module.scss";
 
 export const metadata = pageMetadata({
-  title: "SuperPDF for business",
+  title: "PDF tools for business",
   description:
-    "Handle client documents without sending them to another company. Browser-based PDF tools for teams, with no upload and no account.",
+    "Handle client documents without sending them to another company. Local PDF tools for teams, with no upload and no account.",
   path: "/business",
 });
 
 export default function BusinessPage() {
   return (
     <StaticPage
+      centered
       path="/business"
       title="SuperPDF for business"
-      intro="Handle client documents without sending them to another company. Every tool runs in the browser, on the device."
+      intro="Handle client documents without sending them to another company. Every tool works on your device."
     >
       <section className={styles.useCases}>
         {businessUseCases.map((u) => (

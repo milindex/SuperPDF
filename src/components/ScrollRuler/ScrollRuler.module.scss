@@ -3,8 +3,8 @@
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 40;
-  width: 300px;
+  z-index: 54;
+  width: 360px;
   pointer-events: none;
 }
 
@@ -14,9 +14,10 @@
   right: 0;
   bottom: 0;
   width: var(--ruler-rail, 60px);
-  overflow: hidden;
+  overflow: visible;
   cursor: crosshair;
   pointer-events: auto;
+  touch-action: none;
   isolation: isolate;
 }
 
@@ -25,9 +26,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: color-mix(in srgb, var(--bg) 55%, transparent);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
   mask-image: linear-gradient(
     to left,
     #000 40%,
@@ -56,26 +55,43 @@
 }
 
 .rail:focus-visible {
-  outline: 2px solid var(--app-ink);
-  outline-offset: -4px;
+  outline: 1px solid var(--app-ink);
+  outline-offset: -2px;
+}
+
+.rail[data-zoomed="true"] {
+  cursor: ns-resize;
 }
 
 .layer {
   position: absolute;
   inset-inline: 0;
-  top: 60px;
-  z-index: 1;
+  top: 0;
+  z-index: 2;
   will-change: transform;
+}
+
+.layerZooming {
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.tickRow {
+  position: absolute;
+  inset-inline: 0;
+  height: 0;
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .tick {
   position: absolute;
   right: 0;
+  top: 0;
   display: block;
   width: 10px;
   height: 1px;
   background: var(--ink);
   opacity: 0.38;
+  transform-origin: right center;
 }
 
 .major {
@@ -83,10 +99,10 @@
   opacity: 0.78;
 }
 
-.label {
+.tickLabel {
   position: absolute;
-  right: 25px;
-  display: block;
+  right: 24px;
+  top: 0;
   color: var(--ink);
   font-family: var(--font-mono);
   font-size: 9px;
@@ -95,104 +111,221 @@
   line-height: 1;
   opacity: 0.5;
   transform: translateY(-50%);
+  white-space: nowrap;
 }
 
-.needle {
+.sectionList {
   position: absolute;
-  top: 60px;
+  right: calc(var(--ruler-rail, 60px) + 16px);
+  bottom: 24px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  max-height: calc(100vh - 120px);
+  padding: 9px 11px 9px 16px;
+  overflow: hidden;
+  pointer-events: none;
+  transition:
+    opacity 180ms var(--ease-out),
+    transform 180ms var(--ease-out);
+}
+
+.sectionList::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to left,
+    color-mix(in srgb, var(--bg) 88%, transparent),
+    color-mix(in srgb, var(--bg) 55%, transparent) 70%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.sectionListHidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+.sectionLabel {
+  display: block;
+  max-width: 250px;
+  padding-block: 2px;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  font-stretch: 100%;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-align: right;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 6px var(--bg),
+    0 0 12px var(--bg);
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: color 260ms var(--ease-out);
+}
+
+.sectionLabel:hover {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.sectionLabelActive {
+  color: var(--app-ink);
+}
+
+.sectionLabelText {
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.sectionChar {
+  display: inline-block;
+  transition:
+    color 260ms var(--ease-out),
+    transform 260ms var(--ease-out),
+    opacity 260ms var(--ease-out);
+}
+
+.sectionLabelActive .sectionChar,
+.sectionLabelHover .sectionChar,
+.sectionList[data-zoomed="true"] .sectionChar {
+  animation: ruler-char 500ms var(--ease-out) both;
+  animation-delay: calc(var(--i) * 16ms);
+}
+
+@keyframes ruler-char {
+  0% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+
+  45% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.bracket {
+  position: absolute;
   left: 0;
   right: 0;
-  z-index: 2;
+  top: 0;
+  z-index: 1;
   height: 0;
+  border-block: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-out);
+  will-change: transform, height;
+}
+
+.ghost {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 4;
+  height: 3px;
+  background: var(--ink);
+  opacity: 0;
   pointer-events: none;
   will-change: transform;
 }
 
-.needle::after {
-  content: "";
+.needle {
   position: absolute;
+  left: 0;
   right: 0;
   top: 0;
-  width: 22px;
+  z-index: 5;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-out);
+  will-change: transform;
+}
+
+.needleLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: block;
   height: 1px;
   background: var(--app);
-}
-
-.sectionMark {
-  position: absolute;
-  left: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  color: var(--faint);
-  font-family: var(--font-display);
-  font-size: 9px;
-  font-weight: 560;
-  font-stretch: 100%;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-
-.sectionMarkActive {
-  color: var(--app-ink);
-}
-
-.sectionMarkNumber {
-  color: var(--faint);
-  font-family: var(--font-mono);
-  font-size: 7px;
-  letter-spacing: 0.1em;
-}
-
-.currentSection {
-  position: absolute;
-  left: 5px;
-  bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  color: var(--app-ink);
-  font-family: var(--font-display);
-  font-size: 10px;
-  font-weight: 560;
-  font-stretch: 100%;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-
-.currentNumber {
-  color: var(--faint);
-  font-family: var(--font-mono);
-  font-size: 7px;
-  letter-spacing: 0.1em;
+  box-shadow: 0 0 6px var(--app);
 }
 
 .needleLabel {
   position: absolute;
-  right: 26px;
-  top: 0;
-  padding: 2px 3px;
-  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  right: 2px;
+  top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 1px;
   color: var(--app-ink);
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 500;
   letter-spacing: 0.08em;
   line-height: 1;
   white-space: nowrap;
-  transform: translateY(-50%);
+}
+
+.digitColumns {
+  display: inline-flex;
+  height: 1em;
+  overflow: hidden;
+}
+
+.digitColumn {
+  display: flex;
+  flex-direction: column;
+  height: 1em;
+  transition: transform 180ms var(--ease-out);
+}
+
+.digitColumn span {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+
+.percentSign {
+  display: block;
 }
 
 @media (max-width: 1023px) {
   .zone {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tickRow,
+  .digitColumn {
+    transition: none;
+  }
+
+  .sectionLabelHover .sectionChar,
+  .sectionList[data-zoomed="true"] .sectionChar {
+    animation: none;
   }
 }
