@@ -36,6 +36,24 @@ describe("ToolsFilter", () => {
     expect(screen.queryByText("Merge PDF")).not.toBeInTheDocument();
   });
 
+  it("keeps the workflow card under every category filter", () => {
+    render(<ToolsFilter />);
+    const workflow = () => screen.getByRole("link", { name: /Workflow/ });
+    expect(workflow()).toHaveAttribute("href", "/workflow");
+
+    for (const category of [
+      "Organize",
+      "Convert",
+      "Edit",
+      "Security",
+      "Optimize",
+      "Create & forms",
+    ]) {
+      fireEvent.click(screen.getByRole("button", { name: category }));
+      expect(workflow()).toBeInTheDocument();
+    }
+  });
+
   it("shows conversion direction filters for Convert", () => {
     render(<ToolsFilter />);
     expect(screen.queryByText("To PDF")).not.toBeInTheDocument();

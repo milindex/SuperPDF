@@ -91,13 +91,12 @@ export default function ToolsFilter({ limit = 1000 }: { limit?: number }) {
     : matches;
 
   const showWorkflow = useMemo(() => {
-    if (activeCategory !== "all") return false;
     const term = query.trim().toLowerCase();
     if (!term) return true;
     return `${WORKFLOW_CARD.name} ${WORKFLOW_CARD.description}`
       .toLowerCase()
       .includes(term);
-  }, [query, activeCategory]);
+  }, [query]);
 
   const cardCount = visible.length + (showWorkflow ? 1 : 0);
 
