@@ -9,6 +9,7 @@ import DocumentStack from "@/components/DocumentStack/DocumentStack";
 import ToolsFilter from "@/components/ToolsFilter/ToolsFilter";
 import RecentBanner from "@/components/RecentBanner/RecentBanner";
 import FAQSection from "@/components/FAQSection/FAQSection";
+import SupportCallout from "@/components/SupportCallout/SupportCallout";
 import { JsonLd } from "@/components/JsonLd/JsonLd";
 import { faqs } from "@/data/homepage-content";
 import { toolsRegistry } from "@/registry/tools";
@@ -400,8 +401,18 @@ export default function HomePage() {
       </Section>
 
       <Section
-        id="faq"
+        id="support"
         number="05"
+        label="Support"
+        meta="Keep it free"
+        bodyClassName={styles.supportBody}
+      >
+        <SupportCallout />
+      </Section>
+
+      <Section
+        id="faq"
+        number="06"
         label="Questions"
         meta="Privacy, formats, limits"
         bodyClassName={styles.faqBody}
@@ -417,7 +428,7 @@ export default function HomePage() {
 
       <Section
         id="get-superpdf"
-        number="06"
+        number="07"
         label="Get SuperPDF"
         meta="Free · Open source"
         bodyClassName={styles.closingBody}

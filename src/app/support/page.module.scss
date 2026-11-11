@@ -1,0 +1,306 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+}
+
+.heroCopy {
+  padding: 1.5rem;
+}
+
+.kicker {
+  color: var(--app-ink);
+}
+
+.heroTitle {
+  max-width: 20ch;
+  margin-top: 0.75rem;
+  color: var(--ink-strong);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+  font-weight: 500;
+  font-stretch: 100%;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.heroText {
+  max-width: 52ch;
+  margin-top: 0.875rem;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 1.25rem;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.15s linear,
+    border-color 0.15s linear,
+    color 0.15s linear;
+}
+
+.secondaryAction:hover {
+  border-color: transparent;
+  background: var(--invert-bg);
+  color: var(--invert-fg);
+  text-decoration: none;
+}
+
+.note {
+  margin-top: 1rem;
+  color: var(--faint);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  border-top: 1px solid var(--line);
+  background: var(--line);
+}
+
+.fact {
+  padding: 1.25rem 1.5rem;
+  background: var(--bg);
+}
+
+.factLabel {
+  color: var(--faint);
+}
+
+.factValue {
+  margin: 0.25rem 0 0;
+  color: var(--ink-strong);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 560;
+  letter-spacing: -0.03em;
+}
+
+.block {
+  margin-top: 3.5rem;
+}
+
+.blockHead {
+  max-width: 52rem;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  color: var(--faint);
+}
+
+.blockTitle {
+  margin-top: 0.5rem;
+  color: var(--ink-strong);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+  font-weight: 500;
+  font-stretch: 100%;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.blockLede {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.fundingGrid,
+.waysGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+  list-style: none;
+}
+
+.fundingCard,
+.wayCard {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  background: var(--bg-raised);
+}
+
+.cardIcon {
+  display: inline-flex;
+  color: var(--app-ink);
+}
+
+.cardTitle {
+  margin-top: 0.75rem;
+  color: var(--ink-strong);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.cardDesc {
+  margin-top: 0.375rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.wayCard {
+  color: inherit;
+  transition: background-color 0.15s linear;
+}
+
+.wayCard:hover {
+  background: var(--bg);
+  text-decoration: none;
+}
+
+.wayCard:hover .cardTitle {
+  color: var(--app-ink);
+}
+
+.wayAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.wayAction svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.shareWrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-top: 1.25rem;
+}
+
+.shareLabel {
+  color: var(--faint);
+}
+
+.supporterList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+  list-style: none;
+}
+
+.supporter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-raised);
+}
+
+.supporterName {
+  color: var(--ink-strong);
+  font-weight: 600;
+}
+
+.supporterName:hover {
+  color: var(--app-ink);
+}
+
+.supporterMessage {
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.thanks {
+  max-width: 52rem;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  font-style: italic;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+@media (min-width: 640px) {
+  .fundingGrid,
+  .waysGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .heroCopy {
+    padding: 2.5rem;
+  }
+
+  .facts {
+    grid-template-columns: 1fr;
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+
+  .fact {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .factValue {
+    margin: 0;
+  }
+
+  .fundingGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .waysGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

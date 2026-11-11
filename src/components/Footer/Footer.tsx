@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SuperPDFLogo from "@/components/logos/SuperPDFLogo";
+import SupportCta from "@/components/SupportCta/SupportCta";
 import { APP_VERSION } from "@/lib/version";
 import styles from "./Footer.module.scss";
 
@@ -22,6 +23,7 @@ const footerLinks: Record<string, { name: string; href: string }[]> = {
     { name: "Business", href: "/business" },
     { name: "Education", href: "/education" },
     { name: "Contact", href: "/contact" },
+    { name: "Support us", href: "/support" },
   ],
   Legal: [
     { name: "Privacy", href: "/privacy" },
@@ -46,6 +48,7 @@ export default function Footer() {
             <a className={styles.email} href="mailto:connect@milinds.dev">
               connect@milinds.dev
             </a>
+            <SupportCta label="Buy me a coffee" />
           </div>
 
           {Object.entries(footerLinks).map(([category, links]) => (

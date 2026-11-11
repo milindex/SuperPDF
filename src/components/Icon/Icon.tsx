@@ -50,6 +50,16 @@ export default function Icon({ name, size = 32 }: { name: string; size?: number 
           <path d="M3 4a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v16a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-16" /> <path d="M12 3v18" />
         </svg>
       )
+    case "coffee":
+      return (
+        <svg {...sp}>
+          <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1" />
+          <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2" />
+          <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2" />
+          <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5" />
+          <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555" />
+        </svg>
+      )
     case "compare":
       return (
         <svg {...sp}>

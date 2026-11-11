@@ -4,10 +4,21 @@ import styles from "./changelog.module.scss";
 
 const RELEASES = [
   {
+    version: "v3.0.2",
+    date: "11 November 2026",
+    title: "Support the project",
+    current: true,
+    changes: [
+      "Added a Support page explaining where donations go, with one-off tips and monthly memberships through Ko-fi.",
+      "Added a quiet support callout to the homepage, About page and footer — still no ads, accounts or paywall.",
+      "Added unit tests for the conversion tools, settings, workflows, the service-worker contract and image helpers.",
+      "Upgraded Next.js to 16.4.6.",
+    ],
+  },
+  {
     version: "v3.0.1",
     date: "29 October 2026",
     title: "A smoother workbench",
-    current: true,
     changes: [
       "The right-edge ruler now works like a real scrollbar: hover to see the whole page, then click or drag to move.",
       "Section links stay in view, highlight as you reach each section, and animate one letter at a time.",

@@ -6,6 +6,7 @@ export const SITE_NAME = "SuperPDF";
 export const SITE_EMAIL = "connect@milinds.dev";
 export const SITE_GITHUB = "https://github.com/milindex/SuperPDF";
 export const SITE_ISSUES = `${SITE_GITHUB}/issues`;
+export const SITE_KOFI = "https://ko-fi.com/D6N42AGXNQ";
 
 export const SITE_TITLE = "SuperPDF — PDF tools that never upload your files";
 
@@ -91,7 +92,7 @@ export function organizationJsonLd() {
     url: SITE_URL,
     email: SITE_EMAIL,
     description: SITE_DESCRIPTION,
-    sameAs: [SITE_GITHUB],
+    sameAs: [SITE_GITHUB, SITE_KOFI],
     logo: {
       "@type": "ImageObject",
       url: absoluteUrl("/icon-512.png"),

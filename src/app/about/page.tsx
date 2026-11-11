@@ -1,4 +1,5 @@
 import StaticPage from "@/components/StaticPage/StaticPage";
+import SupportCallout from "@/components/SupportCallout/SupportCallout";
 import { aboutMilestones } from "@/data/page-content";
 import { pageMetadata } from "@/lib/seo";
 
@@ -38,6 +39,8 @@ export default function AboutPage() {
           ],
         },
       ]}
-    />
+    >
+      <SupportCallout />
+    </StaticPage>
   );
 }

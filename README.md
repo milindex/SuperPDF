@@ -14,7 +14,7 @@ your device — files are never uploaded, stored, or sent to a server.
 </p>
 
 **Live:** [superpdf.milinds.dev](https://superpdf.milinds.dev)  
-**Status:** Public Beta · **Release:** `3.0.1.20261029`  
+**Status:** Public Beta · **Release:** `3.0.2.20261111`  
 **Source:** [github.com/milindex/SuperPDF](https://github.com/milindex/SuperPDF)
 
 ## What it does
@@ -108,6 +108,12 @@ Cloudflare Pages. The canonical domain is `https://superpdf.milinds.dev`.
 
 Public Beta feedback is welcome at
 [github.com/milindex/SuperPDF/issues](https://github.com/milindex/SuperPDF/issues).
+
+## Support
+
+SuperPDF stays free, with no ads and no uploads. If it saves you time, you can
+[buy me a coffee on Ko-fi](https://ko-fi.com/D6N42AGXNQ) or read
+[where the money goes](https://superpdf.milinds.dev/support).
 
 ## License
 
