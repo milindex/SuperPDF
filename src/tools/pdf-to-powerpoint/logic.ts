@@ -1,7 +1,7 @@
 "use client";
 
 import PptxGenJS from "pptxgenjs";
-import { loadPdf, renderPageToDataUrl } from "@/lib/pdfjs";
+import { blobToDataUrl, loadPdf, renderPageToBlob } from "@/lib/pdfjs";
 
 const SLIDE_W = 10; // inches (16:9 ~ 10 x 5.625)
 const SLIDE_H = 5.625;
@@ -22,7 +22,8 @@ export async function pdfToPowerPoint(buffer: ArrayBuffer): Promise<Uint8Array> 
     pptx.layout = "PDF16x9";
 
     for (let n = 1; n <= pdf.pageCount; n++) {
-      const { dataUrl, width, height } = await renderPageToDataUrl(pdf, n, 1.5, "image/png");
+      const { blob, width, height } = await renderPageToBlob(pdf, n, 1.5, "image/png");
+      const dataUrl = await blobToDataUrl(blob);
       const slide = pptx.addSlide();
       const aspect = height / width;
       let imgW = SLIDE_W - 0.5;

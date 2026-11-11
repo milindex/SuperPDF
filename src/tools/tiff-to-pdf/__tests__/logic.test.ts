@@ -37,8 +37,10 @@ beforeEach(() => {
   vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(
     ctx as unknown as CanvasRenderingContext2D,
   );
-  vi.spyOn(HTMLCanvasElement.prototype, "toDataURL").mockReturnValue(
-    "data:image/png;base64,QUJD",
+  vi.spyOn(HTMLCanvasElement.prototype, "toBlob").mockImplementation(
+    (callback: BlobCallback) => {
+      callback(new Blob([new Uint8Array([65, 66, 67])], { type: "image/png" }));
+    },
   );
 });
 

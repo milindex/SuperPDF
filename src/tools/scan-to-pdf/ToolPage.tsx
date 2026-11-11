@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { SuccessBanner } from "@/components/SuccessBanner/SuccessBanner";
+import { useObjectUrlState } from "@/lib/use-object-url";
 import { captureFrame, pagesToPdf, type CapturedPage } from "./logic";
 import styles from "./ToolPage.module.scss";
 
@@ -13,7 +14,7 @@ export default function ScanToPdfTool() {
   const [cameraOn, setCameraOn] = useState(false);
   const [pages, setPages] = useState<CapturedPage[]>([]);
   const [processing, setProcessing] = useState(false);
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultUrl, setResultUrl] = useObjectUrlState();
   const [resultName, setResultName] = useState("scan.pdf");
   const [error, setError] = useState<string | null>(null);
 
@@ -43,10 +44,11 @@ export default function ScanToPdfTool() {
 
   useEffect(() => () => stopCamera(), [stopCamera]);
 
-  const capture = () => {
+  const capture = async () => {
     if (!videoRef.current) return;
     try {
-      setPages((prev) => [...prev, captureFrame(videoRef.current!)]);
+      const frame = await captureFrame(videoRef.current);
+      setPages((prev) => [...prev, frame]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Capture failed.");
     }

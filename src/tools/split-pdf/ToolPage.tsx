@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useObjectUrlItems } from "@/lib/use-object-url";
 import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
@@ -56,7 +57,7 @@ export default function SplitPdfTool() {
   const [maxSize, setMaxSize] = useState("");
   const [sizeUnit, setSizeUnit] = useState<"KB" | "MB">("MB");
   const [processing, setProcessing] = useState(false);
-  const [outputs, setOutputs] = useState<OutputFile[]>([]);
+  const [outputs, setOutputs] = useObjectUrlItems<OutputFile>((out) => out.url);
   const [error, setError] = useState<string | null>(null);
 
   const handleFiles = useCallback((accepted: File[]) => {

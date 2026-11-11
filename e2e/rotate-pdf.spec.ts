@@ -27,6 +27,7 @@ async function waitForSw(page: import("@playwright/test").Page) {
 
 test("rotate tool rotates a PDF and offers a download", async ({ page }) => {
   await page.goto("/tools/rotate-pdf");
+  await page.waitForLoadState("networkidle");
 
   await expect(
     page.getByRole("heading", { name: "Rotate PDF" }),
@@ -53,6 +54,7 @@ test("rotate tool rotates a PDF and offers a download", async ({ page }) => {
 
 test("rotate tool shows the drop region on load", async ({ page }) => {
   await page.goto("/tools/rotate-pdf");
+  await page.waitForLoadState("networkidle");
   await expect(
     page.getByText("Drag & drop a PDF file here"),
   ).toBeVisible();

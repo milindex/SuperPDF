@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useObjectUrlState } from "@/lib/use-object-url";
 import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
@@ -17,7 +18,7 @@ export default function WatermarkPdfTool() {
   const [text, setText] = useState("CONFIDENTIAL");
   const [opacity, setOpacity] = useState("0.2");
   const [processing, setProcessing] = useState(false);
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultUrl, setResultUrl] = useObjectUrlState();
   const [resultName, setResultName] = useState("watermarked.pdf");
   const [error, setError] = useState<string | null>(null);
 

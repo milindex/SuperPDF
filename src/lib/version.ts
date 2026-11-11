@@ -4,4 +4,4 @@
  * The date component (YYYYMMDD) is the build/release date and should be
  * bumped on every deploy so users can verify the running build.
  */
-export const APP_VERSION = "3.0.2.20261111";
+export const APP_VERSION = "3.0.3.20261112";

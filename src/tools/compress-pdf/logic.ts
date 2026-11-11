@@ -1,7 +1,7 @@
 "use client";
 
 import { PDFDocument } from "pdf-lib";
-import { dataUrlToBytes, loadPdf, renderPageToDataUrl } from "@/lib/pdfjs";
+import { blobToBytes, loadPdf, renderPageToBlob } from "@/lib/pdfjs";
 
 /**
  * Compress a PDF by rendering each page to a JPEG and rebuilding the document.
@@ -20,14 +20,14 @@ export async function compressPdf(
   try {
     const out = await PDFDocument.create();
     for (let n = 1; n <= pdf.pageCount; n++) {
-      const { dataUrl, width, height } = await renderPageToDataUrl(
+      const { blob, width, height } = await renderPageToBlob(
         pdf,
         n,
         scale,
         "image/jpeg",
         quality,
       );
-      const jpg = await out.embedJpg(dataUrlToBytes(dataUrl));
+      const jpg = await out.embedJpg(await blobToBytes(blob));
       const page = out.addPage([width, height]);
       page.drawImage(jpg, { x: 0, y: 0, width, height });
     }

@@ -14,7 +14,7 @@ your device — files are never uploaded, stored, or sent to a server.
 </p>
 
 **Live:** [superpdf.milinds.dev](https://superpdf.milinds.dev)  
-**Status:** Public Beta · **Release:** `3.0.2.20261111`  
+**Status:** Public Beta · **Release:** `3.0.3.20261112`  
 **Source:** [github.com/milindex/SuperPDF](https://github.com/milindex/SuperPDF)
 
 ## What it does

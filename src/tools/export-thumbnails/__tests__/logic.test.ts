@@ -3,7 +3,7 @@ import JSZip from "jszip";
 
 const mocks = vi.hoisted(() => ({
   loadPdf: vi.fn(),
-  renderPageToDataUrl: vi.fn(),
+  renderPageToBlob: vi.fn(),
 }));
 
 vi.mock("@/lib/pdfjs", () => mocks);
@@ -15,11 +15,11 @@ const pdf = { pageCount: 2, destroy: vi.fn() };
 beforeEach(() => {
   pdf.destroy.mockClear();
   mocks.loadPdf.mockReset();
-  mocks.renderPageToDataUrl.mockReset();
+  mocks.renderPageToBlob.mockReset();
   mocks.loadPdf.mockResolvedValue(pdf);
-  mocks.renderPageToDataUrl.mockImplementation(
+  mocks.renderPageToBlob.mockImplementation(
     async () => ({
-      dataUrl: "data:image/png;base64,QUJDRA==",
+      blob: new Blob([new Uint8Array([65, 66, 67, 68])], { type: "image/png" }),
     }),
   );
 });
@@ -35,7 +35,7 @@ describe("exportThumbnails", () => {
     expect(onProgress.mock.calls.map(([value]) => value)).toEqual([
       45, 90, 95, 100,
     ]);
-    expect(mocks.renderPageToDataUrl).toHaveBeenCalledWith(
+    expect(mocks.renderPageToBlob).toHaveBeenCalledWith(
       pdf,
       1,
       2,
@@ -46,14 +46,14 @@ describe("exportThumbnails", () => {
   });
 
   it("uses jpg names and the JPEG mime type", async () => {
-    mocks.renderPageToDataUrl.mockResolvedValue({
-      dataUrl: "data:image/jpeg;base64,QUJD",
+    mocks.renderPageToBlob.mockResolvedValue({
+      blob: new Blob([new Uint8Array([65, 66, 67])], { type: "image/jpeg" }),
     });
     const blob = await exportThumbnails(new ArrayBuffer(4), "jpeg", 1);
     const zip = await JSZip.loadAsync(await blob.arrayBuffer());
 
     expect(Object.keys(zip.files)).toEqual(["page-1.jpg", "page-2.jpg"]);
-    expect(mocks.renderPageToDataUrl).toHaveBeenCalledWith(
+    expect(mocks.renderPageToBlob).toHaveBeenCalledWith(
       pdf,
       1,
       1,
@@ -65,8 +65,8 @@ describe("exportThumbnails", () => {
   it("zero-pads names to the page count width", async () => {
     const many = { pageCount: 12, destroy: vi.fn() };
     mocks.loadPdf.mockResolvedValue(many);
-    mocks.renderPageToDataUrl.mockResolvedValue({
-      dataUrl: "data:image/png;base64,QUJD",
+    mocks.renderPageToBlob.mockResolvedValue({
+      blob: new Blob([new Uint8Array([65, 66, 67])], { type: "image/png" }),
     });
 
     const blob = await exportThumbnails(new ArrayBuffer(4), "png", 1);
@@ -77,7 +77,7 @@ describe("exportThumbnails", () => {
   });
 
   it("destroys the document when rendering fails", async () => {
-    mocks.renderPageToDataUrl.mockRejectedValue(new Error("boom"));
+    mocks.renderPageToBlob.mockRejectedValue(new Error("boom"));
     await expect(
       exportThumbnails(new ArrayBuffer(4), "png", 1),
     ).rejects.toThrow("boom");

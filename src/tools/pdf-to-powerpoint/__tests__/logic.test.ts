@@ -18,14 +18,16 @@ const mocks = vi.hoisted(() => {
     defineLayout,
     FakePptx,
     loadPdf: vi.fn(),
-    renderPageToDataUrl: vi.fn(),
+    renderPageToBlob: vi.fn(),
+    blobToDataUrl: vi.fn(),
   };
 });
 
 vi.mock("pptxgenjs", () => ({ default: mocks.FakePptx }));
 vi.mock("@/lib/pdfjs", () => ({
   loadPdf: mocks.loadPdf,
-  renderPageToDataUrl: mocks.renderPageToDataUrl,
+  renderPageToBlob: mocks.renderPageToBlob,
+  blobToDataUrl: mocks.blobToDataUrl,
 }));
 
 import { pdfToPowerPoint } from "../logic";
@@ -39,13 +41,15 @@ beforeEach(() => {
   mocks.write.mockClear();
   mocks.defineLayout.mockClear();
   mocks.loadPdf.mockReset();
-  mocks.renderPageToDataUrl.mockReset();
+  mocks.renderPageToBlob.mockReset();
+  mocks.blobToDataUrl.mockReset();
   mocks.loadPdf.mockResolvedValue(pdf);
-  mocks.renderPageToDataUrl.mockImplementation(
+  mocks.blobToDataUrl.mockResolvedValue("data:image/png;base64,MOCK");
+  mocks.renderPageToBlob.mockImplementation(
     async (_pdf: unknown, page: number) =>
       page === 1
-        ? { dataUrl: "data:image/png;base64,WIDE", width: 800, height: 400 }
-        : { dataUrl: "data:image/png;base64,TALL", width: 400, height: 800 },
+        ? { blob: new Blob(), width: 800, height: 400 }
+        : { blob: new Blob(), width: 400, height: 800 },
   );
 });
 
@@ -59,7 +63,7 @@ describe("pdfToPowerPoint", () => {
       height: 5.625,
     });
     expect(mocks.addSlide).toHaveBeenCalledTimes(2);
-    expect(mocks.renderPageToDataUrl).toHaveBeenCalledWith(
+    expect(mocks.renderPageToBlob).toHaveBeenCalledWith(
       pdf,
       1,
       1.5,
@@ -70,8 +74,8 @@ describe("pdfToPowerPoint", () => {
   });
 
   it("letterboxes a wide page inside the slide", () => {
-    mocks.renderPageToDataUrl.mockResolvedValue({
-      dataUrl: "data:image/png;base64,WIDE",
+    mocks.renderPageToBlob.mockResolvedValue({
+      blob: new Blob(),
       width: 800,
       height: 400,
     });
@@ -91,8 +95,8 @@ describe("pdfToPowerPoint", () => {
   });
 
   it("clamps a tall page to the slide height", () => {
-    mocks.renderPageToDataUrl.mockResolvedValue({
-      dataUrl: "data:image/png;base64,TALL",
+    mocks.renderPageToBlob.mockResolvedValue({
+      blob: new Blob(),
       width: 400,
       height: 800,
     });
@@ -112,7 +116,7 @@ describe("pdfToPowerPoint", () => {
   });
 
   it("destroys the document when rendering fails", async () => {
-    mocks.renderPageToDataUrl.mockRejectedValue(new Error("boom"));
+    mocks.renderPageToBlob.mockRejectedValue(new Error("boom"));
     await expect(pdfToPowerPoint(new ArrayBuffer(4))).rejects.toThrow("boom");
     expect(pdf.destroy).toHaveBeenCalledTimes(1);
   });

@@ -1,6 +1,6 @@
 "use client";
 
-import { loadPdf, renderPageToDataUrl } from "@/lib/pdfjs";
+import { blobToDataUrl, loadPdf, renderPageToBlob } from "@/lib/pdfjs";
 
 /**
  * Convert a PDF to a standalone HTML file with one embedded page image per
@@ -11,7 +11,8 @@ export async function pdfToHtml(buffer: ArrayBuffer): Promise<Uint8Array> {
   try {
     const sections: string[] = [];
     for (let n = 1; n <= pdf.pageCount; n++) {
-      const { dataUrl } = await renderPageToDataUrl(pdf, n, 2, "image/png");
+      const { blob } = await renderPageToBlob(pdf, n, 2, "image/png");
+      const dataUrl = await blobToDataUrl(blob);
       sections.push(`<section style="margin:0 0 2em 0;text-align:center;">
   <img src="${dataUrl}" style="max-width:100%;height:auto;" alt="Page ${n}"/>
 </section>`);

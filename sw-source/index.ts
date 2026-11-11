@@ -18,11 +18,49 @@ import {
 
 const ctx = self as unknown as ServiceWorkerGlobalScope;
 
+// `useSwRegistration` registers `/sw.js?dev=1` in development. Dev chunk names
+// are not content-hashed, so they must not be served cache-first.
+const isDev = new URL(ctx.location.href).searchParams.get("dev") === "1";
+
+/**
+ * Recursively collects every transferable ArrayBuffer in a response value: a
+ * single Uint8Array, an array of Uint8Arrays (split-pdf), or an object
+ * containing typed arrays. Collected buffers are transferred instead of
+ * structured-clone copied.
+ */
+function collectTransferables(value: unknown): ArrayBuffer[] {
+  const buffers = new Set<ArrayBuffer>();
+
+  const visit = (node: unknown): void => {
+    if (node == null) return;
+    if (node instanceof ArrayBuffer) {
+      buffers.add(node);
+      return;
+    }
+    if (ArrayBuffer.isView(node)) {
+      if (node.buffer instanceof ArrayBuffer) buffers.add(node.buffer);
+      return;
+    }
+    if (Array.isArray(node)) {
+      for (const item of node) visit(item);
+      return;
+    }
+    if (typeof node === "object") {
+      for (const field of Object.values(node as Record<string, unknown>)) {
+        visit(field);
+      }
+    }
+  };
+
+  visit(value);
+  return [...buffers];
+}
+
 ctx.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
       await ctx.skipWaiting();
-      await precacheRoutes(OFFLINE_ROUTES);
+      if (!isDev) await precacheRoutes(OFFLINE_ROUTES);
     })(),
   );
 });
@@ -33,7 +71,11 @@ ctx.addEventListener("activate", (event) => {
       const names = await caches.keys();
       await Promise.all(
         names
-          .filter((name) => name.startsWith("superpdf-") && name !== OFFLINE_CACHE)
+          .filter(
+            (name) =>
+              name.startsWith("superpdf-") &&
+              (isDev || name !== OFFLINE_CACHE),
+          )
           .map((name) => caches.delete(name)),
       );
       await ctx.clients.claim();
@@ -56,10 +98,18 @@ ctx.addEventListener("fetch", (event) => {
 
   const isNextAsset = url.pathname.startsWith("/_next/static/");
   const isStatic =
-    /\.(css|js|mjs|woff2?|ttf|png|jpe?g|svg|webp|ico)$/i.test(url.pathname);
+    /\.(css|js|mjs|wasm|rsc|txt|woff2?|ttf|png|jpe?g|svg|webp|ico)$/i.test(
+      url.pathname,
+    );
 
+  // In production, `/_next/static/*` filenames are content-hashed and
+  // immutable, so serve them cache-first; this mirror keeps them available
+  // offline without a network round-trip. Dev filenames are not hashed, so
+  // they take the network-first path instead.
   if (isNextAsset) {
-    event.respondWith(networkFirstAsset(request));
+    event.respondWith(
+      isDev ? networkFirstAsset(request) : cacheFirst(request),
+    );
     return;
   }
 
@@ -121,8 +171,8 @@ ctx.addEventListener("message", async (event: ExtendableMessageEvent) => {
 
   try {
     const result = await routeRequest(type, payload);
-    const transfer = result instanceof Uint8Array ? [result.buffer] : undefined;
-    respond({ id, result }, transfer as Transferable[] | undefined);
+    const transfer = collectTransferables(result);
+    respond({ id, result }, transfer.length > 0 ? transfer : undefined);
   } catch (error) {
     respond({
       id,

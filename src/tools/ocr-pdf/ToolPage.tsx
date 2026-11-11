@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useObjectUrlState } from "@/lib/use-object-url";
 import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
@@ -12,7 +13,7 @@ export default function OcrPdfTool() {
   const [file, setFile] = useState<File | null>(null);
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState<string>("");
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultUrl, setResultUrl] = useObjectUrlState();
   const [resultName, setResultName] = useState("ocr.txt");
   const [error, setError] = useState<string | null>(null);
 

@@ -13,6 +13,7 @@ async function makePdfBuffer(): Promise<Buffer> {
 
 test("converts a PDF with a text layer to Markdown", async ({ page }) => {
   await page.goto("/tools/pdf-to-markdown");
+  await page.waitForLoadState("networkidle");
 
   await expect(
     page.getByRole("heading", { name: "PDF to Markdown" }),

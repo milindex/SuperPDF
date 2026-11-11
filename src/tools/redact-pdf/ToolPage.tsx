@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useObjectUrlState } from "@/lib/use-object-url";
 import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
@@ -24,7 +25,7 @@ export default function RedactPdfTool() {
   const [rect, setRect] = useState({ x: "10", y: "10", w: "30", h: "20" });
   const [regions, setRegions] = useState<DraftRegion[]>([]);
   const [processing, setProcessing] = useState(false);
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultUrl, setResultUrl] = useObjectUrlState();
   const [resultName, setResultName] = useState("redacted.pdf");
   const [error, setError] = useState<string | null>(null);
 

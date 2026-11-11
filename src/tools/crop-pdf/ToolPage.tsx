@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useObjectUrlState } from "@/lib/use-object-url";
 import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
@@ -13,7 +14,7 @@ export default function CropPdfTool() {
   const [file, setFile] = useState<File | null>(null);
   const [margins, setMargins] = useState({ top: "5", right: "5", bottom: "5", left: "5" });
   const [processing, setProcessing] = useState(false);
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultUrl, setResultUrl] = useObjectUrlState();
   const [resultName, setResultName] = useState("cropped.pdf");
   const [error, setError] = useState<string | null>(null);
 

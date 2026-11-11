@@ -84,6 +84,7 @@ test.describe("homepage sections", () => {
 
   test("shows a recently used tool after visiting it", async ({ page }) => {
     await page.goto("/tools/merge-pdf");
+    await page.waitForLoadState("networkidle");
     await page.goto("/");
 
     await expect(

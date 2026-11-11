@@ -29,6 +29,7 @@ async function waitForSw(page: import("@playwright/test").Page) {
 
 test("merge tool merges two PDFs and offers a download", async ({ page }) => {
   await page.goto("/tools/merge-pdf");
+  await page.waitForLoadState("networkidle");
 
   await expect(
     page.getByRole("heading", { name: "Merge PDFs" }),
@@ -62,6 +63,7 @@ test("merge tool merges two PDFs and offers a download", async ({ page }) => {
 
 test("merge tool shows the drop region on load", async ({ page }) => {
   await page.goto("/tools/merge-pdf");
+  await page.waitForLoadState("networkidle");
   await expect(
     page.getByText("Drag & drop PDF files here"),
   ).toBeVisible();
