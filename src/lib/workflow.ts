@@ -71,6 +71,10 @@ const toArrayBuffer = (bytes: Uint8Array): ArrayBuffer =>
     bytes.byteOffset + bytes.byteLength,
   ) as ArrayBuffer;
 
+// `sendToSw` transfers the ArrayBuffer out of this tab, so the workflow must
+// not reuse the passed buffer afterwards. `runWorkflow` reassigns `current`
+// from each step's result, so the SW tools can pass the buffer directly
+// instead of paying for a `slice(0)` copy.
 const callSw = async (
   type: string,
   payload: Record<string, unknown>,
@@ -138,7 +142,7 @@ export const WORKFLOW_TOOLS: WorkflowTool[] = [
     ],
     apply: (buffer, options) =>
       callSw(ROTATE_PDF_TYPE, {
-        buffer: buffer.slice(0),
+        buffer: buffer,
         angle: numberFrom(options.angle, 90),
       }),
   },
@@ -176,7 +180,7 @@ export const WORKFLOW_TOOLS: WorkflowTool[] = [
     ],
     apply: (buffer, options) =>
       callSw(ADD_PAGE_NUMBERS_TYPE, {
-        buffer: buffer.slice(0),
+        buffer: buffer,
         format: textFrom(options.format, "page-x-of-y") as PageNumberFormat,
         position: textFrom(
           options.position,
@@ -210,7 +214,7 @@ export const WORKFLOW_TOOLS: WorkflowTool[] = [
     ],
     apply: (buffer, options) =>
       callSw(WATERMARK_PDF_TYPE, {
-        buffer: buffer.slice(0),
+        buffer: buffer,
         text: textFrom(options.text, "CONFIDENTIAL").trim() || "CONFIDENTIAL",
         opacity: numberFrom(options.opacity, 0.2),
       }),
@@ -230,7 +234,7 @@ export const WORKFLOW_TOOLS: WorkflowTool[] = [
     ],
     apply: (buffer, options) =>
       callSw(PAGE_SIZE_TYPE, {
-        buffer: buffer.slice(0),
+        buffer: buffer,
         preset: textFrom(options.preset, "a4") as PageSizePreset,
       }),
   },
@@ -252,7 +256,7 @@ export const WORKFLOW_TOOLS: WorkflowTool[] = [
     apply: (buffer, options) => {
       const margin = Math.min(45, Math.max(0, numberFrom(options.margin, 5)));
       return callSw(CROP_PDF_TYPE, {
-        buffer: buffer.slice(0),
+        buffer: buffer,
         topPct: margin,
         rightPct: margin,
         bottomPct: margin,
@@ -266,7 +270,7 @@ export const WORKFLOW_TOOLS: WorkflowTool[] = [
     description: "Burn layers and annotations into one static page.",
     options: [],
     apply: (buffer) =>
-      callSw(FLATTEN_PDF_TYPE, { buffer: buffer.slice(0) }),
+      callSw(FLATTEN_PDF_TYPE, { buffer: buffer }),
   },
   {
     id: "remove-metadata",
@@ -274,7 +278,7 @@ export const WORKFLOW_TOOLS: WorkflowTool[] = [
     description: "Strip the title, author, and other hidden document properties.",
     options: [],
     apply: (buffer) =>
-      callSw(REMOVE_METADATA_TYPE, { buffer: buffer.slice(0) }),
+      callSw(REMOVE_METADATA_TYPE, { buffer: buffer }),
   },
   {
     id: "remove-restrictions",
@@ -292,7 +296,7 @@ export const WORKFLOW_TOOLS: WorkflowTool[] = [
     description: "Rebuild a damaged PDF before the next step reads it.",
     options: [],
     apply: (buffer) =>
-      callSw(REPAIR_PDF_TYPE, { buffer: buffer.slice(0) }),
+      callSw(REPAIR_PDF_TYPE, { buffer: buffer }),
   },
   {
     id: "pdfa",

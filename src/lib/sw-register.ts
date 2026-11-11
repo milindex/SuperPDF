@@ -11,8 +11,14 @@ import { setSwRegistration } from "./sw-client";
 export function useSwRegistration(): void {
   useEffect(() => {
     if (!("serviceWorker" in navigator)) return;
+    // Dev chunks are not content-hashed and change on every edit, so the
+    // worker must not serve them cache-first (that can hydrate stale code and
+    // blank a lazy section). The `dev` flag makes the SW network-first and
+    // skip/clear precaching; production keeps the cache-first policy.
+    const scriptUrl =
+      process.env.NODE_ENV === "production" ? "/sw.js" : "/sw.js?dev=1";
     navigator.serviceWorker
-      .register("/sw.js", { scope: "/", type: "module" })
+      .register(scriptUrl, { scope: "/", type: "module" })
       .then((reg) => {
         setSwRegistration(reg);
       })

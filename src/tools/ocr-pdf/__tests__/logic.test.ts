@@ -9,8 +9,7 @@ const mocks = vi.hoisted(() => {
   };
   return {
     loadPdf: vi.fn(),
-    renderPageToDataUrl: vi.fn(),
-    dataUrlToBytes: vi.fn(() => new Uint8Array([1, 2])),
+    renderPageToBlob: vi.fn(),
     createWorker: vi.fn(),
     worker,
   };
@@ -18,8 +17,7 @@ const mocks = vi.hoisted(() => {
 
 vi.mock("@/lib/pdfjs", () => ({
   loadPdf: mocks.loadPdf,
-  renderPageToDataUrl: mocks.renderPageToDataUrl,
-  dataUrlToBytes: mocks.dataUrlToBytes,
+  renderPageToBlob: mocks.renderPageToBlob,
 }));
 vi.mock("tesseract.js", () => ({ createWorker: mocks.createWorker }));
 
@@ -30,18 +28,17 @@ const pdf = { pageCount: 2, destroy: vi.fn() };
 beforeEach(() => {
   pdf.destroy.mockClear();
   mocks.loadPdf.mockReset();
-  mocks.renderPageToDataUrl.mockReset();
+  mocks.renderPageToBlob.mockReset();
   mocks.createWorker.mockReset();
-  mocks.dataUrlToBytes.mockClear();
   mocks.worker.loadLanguage.mockReset();
   mocks.worker.initialize.mockReset();
   mocks.worker.recognize.mockReset();
   mocks.worker.terminate.mockReset();
 
   mocks.loadPdf.mockResolvedValue(pdf);
-  mocks.renderPageToDataUrl.mockImplementation(
+  mocks.renderPageToBlob.mockImplementation(
     async (_pdf: unknown, page: number) => ({
-      dataUrl: `data:image/png;base64,P${page}`,
+      blob: new Blob([`P${page}`], { type: "image/png" }),
     }),
   );
   mocks.createWorker.mockResolvedValue(mocks.worker);

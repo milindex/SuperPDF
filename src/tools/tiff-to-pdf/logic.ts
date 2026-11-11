@@ -3,7 +3,7 @@
 import * as UTIF from "utif";
 import { imagesToPdf } from "@/lib/images-to-pdf";
 
-function tiffToPngBytes(buffer: ArrayBuffer): Uint8Array {
+async function tiffToPngBytes(buffer: ArrayBuffer): Promise<Uint8Array> {
   const ifds = UTIF.decode(buffer);
   if (ifds.length === 0) throw new Error("No images found in this TIFF.");
   const ifd = ifds[0];
@@ -22,9 +22,14 @@ function tiffToPngBytes(buffer: ArrayBuffer): Uint8Array {
   imageData.data.set(rgba);
   ctx.putImageData(imageData, 0, 0);
 
-  const dataUrl = canvas.toDataURL("image/png");
-  const base64 = dataUrl.split(",")[1];
-  return new Uint8Array(atob(base64).split("").map((c) => c.charCodeAt(0)));
+  const blob = await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (result) =>
+        result ? resolve(result) : reject(new Error("Failed to encode image.")),
+      "image/png",
+    );
+  });
+  return new Uint8Array(await blob.arrayBuffer());
 }
 
 /**
@@ -34,7 +39,7 @@ function tiffToPngBytes(buffer: ArrayBuffer): Uint8Array {
 export async function tiffToPdf(files: File[]): Promise<Uint8Array> {
   const images = await Promise.all(
     files.map(async (f) => ({
-      bytes: tiffToPngBytes(await f.arrayBuffer()),
+      bytes: await tiffToPngBytes(await f.arrayBuffer()),
       kind: "png" as const,
     })),
   );

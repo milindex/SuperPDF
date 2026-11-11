@@ -1,6 +1,6 @@
 "use client";
 
-import { dataUrlToBytes, loadPdf, renderPageToDataUrl } from "@/lib/pdfjs";
+import { loadPdf, renderPageToBlob } from "@/lib/pdfjs";
 
 /**
  * OCR a scanned PDF: each page is rendered to an image, recognized by
@@ -21,11 +21,8 @@ export async function ocrPdf(
     const parts: string[] = [];
     for (let n = 1; n <= pdf.pageCount; n++) {
       onProgress?.(n, pdf.pageCount);
-      const { dataUrl } = await renderPageToDataUrl(pdf, n, 2, "image/png");
-      const pngBytes = dataUrlToBytes(dataUrl);
-      const { data } = await worker.recognize(
-        new Blob([pngBytes as Uint8Array<ArrayBuffer>], { type: "image/png" }),
-      );
+      const { blob } = await renderPageToBlob(pdf, n, 2, "image/png");
+      const { data } = await worker.recognize(blob);
       parts.push(`=== Page ${n} ===\n${(data.text ?? "").trim()}`);
     }
     return parts.join("\n\n");

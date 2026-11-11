@@ -26,6 +26,7 @@ async function waitForSw(page: import("@playwright/test").Page) {
 
 test("split tool splits a PDF by range and lists outputs", async ({ page }) => {
   await page.goto("/tools/split-pdf");
+  await page.waitForLoadState("networkidle");
 
   await expect(
     page.getByRole("heading", { name: "Split PDF" }),
@@ -52,6 +53,7 @@ test("split tool splits a PDF by range and lists outputs", async ({ page }) => {
 
 test("split tool splits every N pages", async ({ page }) => {
   await page.goto("/tools/split-pdf");
+  await page.waitForLoadState("networkidle");
 
   const pdf = await makePdfBuffer(7);
   await page.locator('input[type="file"]').setInputFiles({
@@ -76,6 +78,7 @@ test("split tool splits every N pages", async ({ page }) => {
 
 test("split tool shows the drop region on load", async ({ page }) => {
   await page.goto("/tools/split-pdf");
+  await page.waitForLoadState("networkidle");
   await expect(
     page.getByText("Drag & drop a PDF file here"),
   ).toBeVisible();

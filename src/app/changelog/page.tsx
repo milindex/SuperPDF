@@ -4,10 +4,25 @@ import styles from "./changelog.module.scss";
 
 const RELEASES = [
   {
+    version: "v3.0.3",
+    date: "12 November 2026",
+    title: "A lighter, faster workbench",
+    current: true,
+    changes: [
+      "Tool pages now load only the code for the selected tool, so pages open faster and download less.",
+      "Image, OCR, compression and document exports now encode straight to binary instead of giant base64 strings, cutting memory use on large PDFs.",
+      "Files move between the page and the service worker without an extra copy, so large merges and edits finish sooner.",
+      "Preview images are released as soon as they are replaced or you leave a page, so long sessions no longer hold on to memory.",
+      "Offline downloads are fetched in a bounded queue, and shared chunks are only stored once.",
+      "Scrolling no longer re-measures the page on every wheel tick.",
+      "Development builds no longer serve edited code from a stale service-worker cache.",
+      "Removed unused dependencies and split the test suite into DOM and non-DOM runs.",
+    ],
+  },
+  {
     version: "v3.0.2",
     date: "11 November 2026",
     title: "Support the project",
-    current: true,
     changes: [
       "Added a Support page explaining where donations go, with one-off tips and monthly memberships through Ko-fi.",
       "Added a quiet support callout to the homepage, About page and footer — still no ads, accounts or paywall.",

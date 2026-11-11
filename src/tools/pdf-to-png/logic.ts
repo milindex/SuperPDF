@@ -1,6 +1,6 @@
 "use client";
 
-import { dataUrlToBytes, loadPdf, renderPageToDataUrl } from "@/lib/pdfjs";
+import { blobToBytes, loadPdf, renderPageToBlob } from "@/lib/pdfjs";
 
 export interface RenderedImage {
   bytes: Uint8Array;
@@ -20,14 +20,14 @@ export async function pdfToPng(
   try {
     const out: RenderedImage[] = [];
     for (let n = 1; n <= pdf.pageCount; n++) {
-      const { dataUrl, width, height } = await renderPageToDataUrl(
+      const { blob, width, height } = await renderPageToBlob(
         pdf,
         n,
         scale,
         "image/png",
       );
       out.push({
-        bytes: dataUrlToBytes(dataUrl),
+        bytes: await blobToBytes(blob),
         name: `page-${n}.png`,
         width,
         height,

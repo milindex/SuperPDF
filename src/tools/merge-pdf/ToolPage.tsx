@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useCallback } from "react";
+import { useObjectUrlState } from "@/lib/use-object-url";
 import {
   DndContext,
   closestCenter,
@@ -108,7 +109,7 @@ function SortableItem({
 export default function MergePdfTool() {
   const [files, setFiles] = useState<FileItem[]>([]);
   const [processing, setProcessing] = useState(false);
-  const [mergedUrl, setMergedUrl] = useState<string | null>(null);
+  const [mergedUrl, setMergedUrl] = useObjectUrlState();
   const [mergedName, setMergedName] = useState("merged.pdf");
   const [error, setError] = useState<string | null>(null);
 
@@ -172,7 +173,6 @@ export default function MergePdfTool() {
   };
 
   const clear = () => {
-    if (mergedUrl) URL.revokeObjectURL(mergedUrl);
     setFiles([]);
     setMergedUrl(null);
   };

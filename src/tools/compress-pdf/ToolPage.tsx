@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useObjectUrlState } from "@/lib/use-object-url";
 import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { DragNDropRegion } from "@/components/DragNDropRegion/DragNDropRegion";
@@ -15,7 +16,7 @@ export default function CompressPdfTool() {
   const [file, setFile] = useState<File | null>(null);
   const [quality, setQuality] = useState("0.7");
   const [processing, setProcessing] = useState(false);
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultUrl, setResultUrl] = useObjectUrlState();
   const [resultName, setResultName] = useState("compressed.pdf");
   const [resultSize, setResultSize] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);

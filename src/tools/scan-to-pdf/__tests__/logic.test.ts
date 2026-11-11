@@ -20,8 +20,10 @@ beforeEach(() => {
   vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(
     ctx as unknown as CanvasRenderingContext2D,
   );
-  vi.spyOn(HTMLCanvasElement.prototype, "toDataURL").mockReturnValue(
-    "data:image/png;base64,QUJD",
+  vi.spyOn(HTMLCanvasElement.prototype, "toBlob").mockImplementation(
+    (callback: BlobCallback) => {
+      callback(new Blob([new Uint8Array([65, 66, 67])], { type: "image/png" }));
+    },
   );
 });
 
@@ -30,9 +32,9 @@ afterEach(() => {
 });
 
 describe("captureFrame", () => {
-  it("draws the video frame on a white canvas", () => {
+  it("draws the video frame on a white canvas", async () => {
     const video = { videoWidth: 640, videoHeight: 480 } as HTMLVideoElement;
-    const page = captureFrame(video);
+    const page = await captureFrame(video);
 
     expect(page.width).toBe(640);
     expect(page.height).toBe(480);
@@ -41,17 +43,17 @@ describe("captureFrame", () => {
     expect(ctx.drawImage).toHaveBeenCalledWith(video, 0, 0, 640, 480);
   });
 
-  it("falls back to 1280×720 when the video has no size", () => {
-    const page = captureFrame({ videoWidth: 0, videoHeight: 0 } as HTMLVideoElement);
+  it("falls back to 1280×720 when the video has no size", async () => {
+    const page = await captureFrame({ videoWidth: 0, videoHeight: 0 } as HTMLVideoElement);
     expect(page.width).toBe(1280);
     expect(page.height).toBe(720);
   });
 
-  it("reports a canvas failure", () => {
+  it("reports a canvas failure", async () => {
     vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
-    expect(() =>
+    await expect(
       captureFrame({ videoWidth: 1, videoHeight: 1 } as HTMLVideoElement),
-    ).toThrow("Canvas is not supported in this browser.");
+    ).rejects.toThrow("Canvas is not supported in this browser.");
   });
 });
 

@@ -58,10 +58,16 @@ export async function extractImages(
           if (!ctx) continue;
           ctx.drawImage(bitmap, 0, 0);
 
-          const dataUrl = canvas.toDataURL("image/png");
-          const bytes = new Uint8Array(
-            atob(dataUrl.split(",")[1]).split("").map((c) => c.charCodeAt(0)),
-          );
+          const blob = await new Promise<Blob>((resolve, reject) => {
+            canvas.toBlob(
+              (result) =>
+                result
+                  ? resolve(result)
+                  : reject(new Error("Failed to encode image.")),
+              "image/png",
+            );
+          });
+          const bytes = new Uint8Array(await blob.arrayBuffer());
           out.push({
             bytes,
             name: `image-${n}-${i}.png`,

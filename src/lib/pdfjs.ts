@@ -67,3 +67,61 @@ export function dataUrlToBytes(dataUrl: string): Uint8Array {
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
   return bytes;
 }
+
+/**
+ * Render a page to a canvas and return its encoded bytes as a Blob.
+ * `scale` controls resolution (1 = 72dpi equivalent; 2 is typical for export).
+ */
+export async function renderPageToBlob(
+  pdf: LoadedPdf,
+  pageNumber: number,
+  scale = 2,
+  type: "image/png" | "image/jpeg" = "image/png",
+  quality?: number,
+): Promise<{ blob: Blob; width: number; height: number }> {
+  const page = await pdf.getPage(pageNumber);
+  const viewport = page.getViewport({ scale });
+
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.floor(viewport.width);
+  canvas.height = Math.floor(viewport.height);
+  const ctx = canvas.getContext("2d", { alpha: type === "image/png" });
+  if (!ctx) throw new Error("Canvas is not supported in this browser.");
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  await page.render({ canvasContext: ctx, viewport }).promise;
+
+  const blob = await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (result) =>
+        result
+          ? resolve(result)
+          : reject(new Error("Failed to render page to an image blob.")),
+      type,
+      quality,
+    );
+  });
+
+  return { blob, width: canvas.width, height: canvas.height };
+}
+
+/**
+ * Read a Blob's contents into a byte array.
+ */
+export async function blobToBytes(blob: Blob): Promise<Uint8Array> {
+  return new Uint8Array(await blob.arrayBuffer());
+}
+
+/**
+ * Read a Blob's contents as a data URL (e.g. for embedding in SVG/HTML/pptx).
+ */
+export async function blobToDataUrl(blob: Blob): Promise<string> {
+  return await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () =>
+      reject(reader.error ?? new Error("Failed to read image blob."));
+    reader.readAsDataURL(blob);
+  });
+}

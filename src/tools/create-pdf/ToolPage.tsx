@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useObjectUrlState } from "@/lib/use-object-url";
 import { ToolLayout } from "@/components/ToolLayout/ToolLayout";
 import { ToolHeader } from "@/components/ToolHeader/ToolHeader";
 import { SuccessBanner } from "@/components/SuccessBanner/SuccessBanner";
@@ -20,7 +21,7 @@ export default function CreatePdfTool() {
   const [orientation, setOrientation] = useState<Orientation>("portrait");
   const [pageCount, setPageCount] = useState(1);
   const [processing, setProcessing] = useState(false);
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultUrl, setResultUrl] = useObjectUrlState();
   const [error, setError] = useState<string | null>(null);
 
   const create = async () => {

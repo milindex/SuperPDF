@@ -2,7 +2,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   loadPdf: vi.fn(),
-  renderPageToDataUrl: vi.fn(),
+  renderPageToBlob: vi.fn(),
+  blobToDataUrl: vi.fn(),
 }));
 
 vi.mock("@/lib/pdfjs", () => mocks);
@@ -14,15 +15,21 @@ const pdf = { pageCount: 2, destroy: vi.fn() };
 beforeEach(() => {
   pdf.destroy.mockClear();
   mocks.loadPdf.mockReset();
-  mocks.renderPageToDataUrl.mockReset();
+  mocks.renderPageToBlob.mockReset();
+  mocks.blobToDataUrl.mockReset();
   mocks.loadPdf.mockResolvedValue(pdf);
-  mocks.renderPageToDataUrl.mockImplementation(
+  mocks.renderPageToBlob.mockImplementation(
     async (_pdf: unknown, page: number) => ({
-      dataUrl: `data:image/png;base64,IMAGE${page}`,
+      blob: new Blob(),
       width: 600 + page,
       height: 800 + page,
     }),
   );
+  let dataUrlPage = 0;
+  mocks.blobToDataUrl.mockImplementation(async () => {
+    dataUrlPage += 1;
+    return `data:image/png;base64,IMAGE${dataUrlPage}`;
+  });
 });
 
 describe("pdfToSvg", () => {
@@ -40,7 +47,7 @@ describe("pdfToSvg", () => {
   });
 
   it("destroys the document when rendering fails", async () => {
-    mocks.renderPageToDataUrl.mockRejectedValue(new Error("boom"));
+    mocks.renderPageToBlob.mockRejectedValue(new Error("boom"));
     await expect(pdfToSvg(new ArrayBuffer(4))).rejects.toThrow("boom");
     expect(pdf.destroy).toHaveBeenCalledTimes(1);
   });

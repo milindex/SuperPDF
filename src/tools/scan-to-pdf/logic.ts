@@ -12,7 +12,9 @@ export interface CapturedPage {
 /**
  * Capture a frame from the given video element and return it as PNG bytes.
  */
-export function captureFrame(video: HTMLVideoElement): CapturedPage {
+export async function captureFrame(
+  video: HTMLVideoElement,
+): Promise<CapturedPage> {
   const width = video.videoWidth || 1280;
   const height = video.videoHeight || 720;
   const canvas = document.createElement("canvas");
@@ -23,10 +25,17 @@ export function captureFrame(video: HTMLVideoElement): CapturedPage {
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, width, height);
   ctx.drawImage(video, 0, 0, width, height);
-  const dataUrl = canvas.toDataURL("image/png");
-  const base64 = dataUrl.split(",")[1];
+
+  const blob = await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (result) =>
+        result ? resolve(result) : reject(new Error("Failed to capture frame.")),
+      "image/png",
+    );
+  });
+
   return {
-    bytes: new Uint8Array(atob(base64).split("").map((c) => c.charCodeAt(0))),
+    bytes: new Uint8Array(await blob.arrayBuffer()),
     width,
     height,
   };

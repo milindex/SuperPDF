@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { useObjectUrlState } from "@/lib/use-object-url";
 import {
   DndContext,
   closestCenter,
@@ -82,7 +83,7 @@ export default function OrganizePagesTool() {
   const [files, setFiles] = useState<SourceFile[]>([]);
   const [pages, setPages] = useState<PageItem[]>([]);
   const [processing, setProcessing] = useState(false);
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultUrl, setResultUrl] = useObjectUrlState();
   const [resultName, setResultName] = useState("organized.pdf");
   const [error, setError] = useState<string | null>(null);
 
@@ -191,7 +192,6 @@ export default function OrganizePagesTool() {
   };
 
   const clear = () => {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
     setFiles([]);
     setPages([]);
     setResultUrl(null);

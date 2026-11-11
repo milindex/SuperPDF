@@ -2,8 +2,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   loadPdf: vi.fn(),
-  renderPageToDataUrl: vi.fn(),
-  dataUrlToBytes: vi.fn((url: string) => new TextEncoder().encode(url)),
+  renderPageToBlob: vi.fn(),
+  blobToBytes: vi.fn(async (blob: Blob) => new Uint8Array(await blob.arrayBuffer())),
 }));
 
 vi.mock("@/lib/pdfjs", () => mocks);
@@ -37,11 +37,11 @@ beforeEach(() => {
   pdfLib.pages.length = 0;
 
   mocks.loadPdf.mockReset();
-  mocks.renderPageToDataUrl.mockReset();
+  mocks.renderPageToBlob.mockReset();
   mocks.loadPdf.mockResolvedValue(pdf);
-  mocks.renderPageToDataUrl.mockImplementation(
+  mocks.renderPageToBlob.mockImplementation(
     async (_pdf: unknown, page: number) => ({
-      dataUrl: `data:image/jpeg;base64,PAGE${page}`,
+      blob: new Blob([`PAGE${page}`]),
       width: 100 * page,
       height: 200 * page,
     }),
@@ -52,7 +52,7 @@ describe("compressPdf", () => {
   it("renders every page to JPEG and rebuilds the document", async () => {
     const out = await compressPdf(new ArrayBuffer(4));
 
-    expect(mocks.renderPageToDataUrl).toHaveBeenNthCalledWith(
+    expect(mocks.renderPageToBlob).toHaveBeenNthCalledWith(
       1,
       pdf,
       1,
@@ -60,7 +60,7 @@ describe("compressPdf", () => {
       "image/jpeg",
       0.7,
     );
-    expect(mocks.renderPageToDataUrl).toHaveBeenNthCalledWith(
+    expect(mocks.renderPageToBlob).toHaveBeenNthCalledWith(
       2,
       pdf,
       2,
@@ -68,9 +68,8 @@ describe("compressPdf", () => {
       "image/jpeg",
       0.7,
     );
-    expect(mocks.dataUrlToBytes).toHaveBeenCalledWith(
-      "data:image/jpeg;base64,PAGE1",
-    );
+    expect(mocks.blobToBytes).toHaveBeenCalledTimes(2);
+    expect(mocks.blobToBytes).toHaveBeenCalledWith(expect.any(Blob));
     expect(pdfLib.out.embedJpg).toHaveBeenCalledTimes(2);
     expect(pdfLib.out.addPage).toHaveBeenNthCalledWith(1, [100, 200]);
     expect(pdfLib.out.addPage).toHaveBeenNthCalledWith(2, [200, 400]);
@@ -82,7 +81,7 @@ describe("compressPdf", () => {
 
   it("passes custom quality and scale through", async () => {
     await compressPdf(new ArrayBuffer(4), 0.4, 0.5);
-    expect(mocks.renderPageToDataUrl).toHaveBeenCalledWith(
+    expect(mocks.renderPageToBlob).toHaveBeenCalledWith(
       pdf,
       1,
       0.5,
@@ -92,7 +91,7 @@ describe("compressPdf", () => {
   });
 
   it("destroys the document when rendering fails", async () => {
-    mocks.renderPageToDataUrl.mockRejectedValue(new Error("render failed"));
+    mocks.renderPageToBlob.mockRejectedValue(new Error("render failed"));
     await expect(compressPdf(new ArrayBuffer(4))).rejects.toThrow("render failed");
     expect(pdf.destroy).toHaveBeenCalledTimes(1);
   });

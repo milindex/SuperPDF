@@ -1,6 +1,6 @@
 "use client";
 
-import { loadPdf, renderPageToDataUrl } from "@/lib/pdfjs";
+import { loadPdf, renderPageToBlob } from "@/lib/pdfjs";
 
 export type ThumbnailFormat = "png" | "jpeg";
 
@@ -19,7 +19,7 @@ export async function exportThumbnails(
 
   try {
     for (let page = 1; page <= pdf.pageCount; page += 1) {
-      const { dataUrl } = await renderPageToDataUrl(
+      const { blob } = await renderPageToBlob(
         pdf,
         page,
         scale,
@@ -27,7 +27,7 @@ export async function exportThumbnails(
         0.9,
       );
       const name = `page-${String(page).padStart(padding, "0")}.${extension}`;
-      zip.file(name, dataUrl.split(",")[1], { base64: true });
+      zip.file(name, blob);
       onProgress?.(Math.round((page / pdf.pageCount) * 90));
     }
   } finally {

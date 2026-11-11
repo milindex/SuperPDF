@@ -4,42 +4,65 @@ import { OFFLINE_CACHE } from "@/lib/offline";
 
 const ASSET_PATTERN = /(?:src|href)="(\/_next\/static\/[^"]+)"/g;
 
-async function cacheAssetsFromHtml(
-  html: string,
-  cache: Cache,
-): Promise<void> {
+/** Extract `/_next/static/...` asset URLs referenced by a route's HTML. */
+function collectAssetUrls(html: string): Set<string> {
   const assets = new Set<string>();
   for (const match of html.matchAll(ASSET_PATTERN)) {
     assets.add(match[1]);
   }
-  await Promise.allSettled(
-    [...assets].map(async (asset) => {
-      if (await cache.match(asset)) return;
-      const response = await fetch(asset, { cache: "reload" });
-      if (response.ok) await cache.put(asset, response);
-    }),
-  );
+  return assets;
+}
+
+/** Run `worker` over `items` with at most `limit` concurrent invocations. */
+async function runPool<T>(
+  items: readonly T[],
+  limit: number,
+  worker: (item: T) => Promise<void>,
+): Promise<void> {
+  let next = 0;
+  const lanes = Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (next < items.length) {
+      const item = items[next];
+      next += 1;
+      await worker(item);
+    }
+  });
+  await Promise.all(lanes);
 }
 
 /** Fetch and store the app routes plus the chunks they reference. */
 export async function precacheRoutes(routes: string[]): Promise<number> {
   const cache = await caches.open(OFFLINE_CACHE);
+  const assetUrls = new Set<string>();
   let stored = 0;
 
-  for (const route of routes) {
+  // Prefetch routes with a small concurrency cap so a burst of navigations
+  // does not saturate the network. Asset URLs are collected across all routes
+  // and fetched once afterwards, deduplicating shared `_next/static` chunks.
+  await runPool(routes, 3, async (route) => {
     try {
       const response = await fetch(route, { cache: "reload" });
-      if (!response.ok) continue;
+      if (!response.ok) return;
       const copy = response.clone();
       await cache.put(route, response);
       stored += 1;
       if ((copy.headers.get("content-type") ?? "").includes("text/html")) {
-        await cacheAssetsFromHtml(await copy.text(), cache);
+        for (const asset of collectAssetUrls(await copy.text())) {
+          assetUrls.add(asset);
+        }
       }
     } catch {
       // A route that cannot be fetched now may still work from a prior visit.
     }
-  }
+  });
+
+  await Promise.allSettled(
+    [...assetUrls].map(async (asset) => {
+      if (await cache.match(asset)) return;
+      const response = await fetch(asset, { cache: "reload" });
+      if (response.ok) await cache.put(asset, response);
+    }),
+  );
 
   await Promise.allSettled(
     [
@@ -105,7 +128,14 @@ export async function cacheFirst(request: Request): Promise<Response> {
   }
 }
 
-export async function networkFirstAsset(request: Request): Promise<Response> {
+/**
+ * Network-first with a cache fallback. Used for development assets, whose
+ * filenames are not content-hashed and change on every edit; serving them
+ * cache-first would hydrate stale code.
+ */
+export async function networkFirstAsset(
+  request: Request,
+): Promise<Response> {
   const cache = await caches.open(OFFLINE_CACHE);
   try {
     const response = await fetch(request);

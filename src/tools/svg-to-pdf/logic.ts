@@ -17,9 +17,14 @@ async function svgToPngBytes(file: File): Promise<Uint8Array> {
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("Canvas is not supported in this browser.");
     ctx.drawImage(img, 0, 0);
-    const dataUrl = canvas.toDataURL("image/png");
-    const base64 = dataUrl.split(",")[1];
-    return new Uint8Array(atob(base64).split("").map((c) => c.charCodeAt(0)));
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob(
+        (result) =>
+          result ? resolve(result) : reject(new Error("Failed to encode image.")),
+        "image/png",
+      );
+    });
+    return new Uint8Array(await blob.arrayBuffer());
   } finally {
     URL.revokeObjectURL(url);
   }
