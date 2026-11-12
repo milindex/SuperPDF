@@ -41,23 +41,20 @@ not pollute production numbers.
 
 ### 1. Create the tables
 
-Run the migration against the shared Supabase project:
+The Supabase project is shared with CoderTools, which already has a migration
+history (`001`) that this repository does not contain. Running `supabase db
+push` from here therefore stops with `DbPushMissingLocalError`, and repairing
+the shared history just to add one table set is not worth the risk.
 
-```shell
-supabase db push
-```
+Apply the SuperPDF migration directly instead: paste
+`supabase/migrations/20261112193000_superpdf_analytics.sql` into the Supabase
+SQL editor, or run it with any Postgres client against the project. The file is
+idempotent and only creates or alters `superpdf_*` objects. It never touches the
+`codertools_*` tables or the shared migration history.
 
-Or paste `supabase/migrations/20261112193000_superpdf_analytics.sql` into the
-Supabase SQL editor. The migration only creates and alters `superpdf_*` objects.
-
-The migration filename uses a timestamp rather than a small sequence number
-because the shared project already has another site's `001_*.sql` in its
-migration history. If the CLI reports that the file sorts before the remote's
-latest migration, push it explicitly:
-
-```shell
-supabase db push --include-all
-```
+`supabase migration list --remote` will keep showing this version as pending
+because it was applied outside the CLI. That is expected for this repository;
+the tables are what matter.
 
 ### 2. Deploy the edge functions
 
@@ -65,6 +62,9 @@ supabase db push --include-all
 supabase functions deploy superpdf-track --no-verify-jwt
 supabase functions deploy superpdf-analytics --no-verify-jwt
 ```
+
+On Supabase CLI v3, add `--yes` because deploying to a hosted project counts as
+a remote change. Add `--use-api` if Docker is not running.
 
 Set the function secrets once per project:
 
