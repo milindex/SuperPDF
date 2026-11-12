@@ -6,7 +6,7 @@ import { LEGAL_LAST_UPDATED, pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Cookie policy",
   description:
-    "SuperPDF sets no analytics or tracking cookies. See what is stored in your browser, why, and how to clear it.",
+    "SuperPDF sets no cookies — not for analytics or tracking. See what is stored in your browser, why, and how to clear it.",
   path: "/cookies",
 });
 

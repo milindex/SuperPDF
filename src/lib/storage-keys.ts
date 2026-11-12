@@ -5,6 +5,9 @@ export const STORAGE_KEYS = {
   workflowDraft: "superpdf:workflow-draft",
   toolSettings: "superpdf:tool-settings",
   toolModes: "superpdf:tool-modes",
+  visitorId: "superpdf:visitor-id",
+  visitorSeen: "superpdf:visitor-seen",
+  visitCount: "superpdf:visit-count",
 } as const;
 
 export const STORAGE_EVENTS = {

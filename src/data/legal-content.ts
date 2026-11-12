@@ -2,8 +2,9 @@
  * Legal copy for the privacy, terms, cookie, and security pages.
  *
  * Keep this in step with how the app actually behaves: processing happens in
- * the browser, no accounts, no analytics or advertising scripts, and only
- * functional data in localStorage plus a service-worker cache.
+ * the browser, no accounts, no advertising or session-replay scripts, and only
+ * functional data plus an anonymous analytics ID in localStorage and a
+ * service-worker cache.
  */
 
 export const privacySections = [
@@ -25,22 +26,23 @@ export const privacySections = [
   {
     heading: "3. Information we collect",
     body: [
-      "The tools need no account, no email address, and no payment details. We do not run analytics, advertising, or session-replay scripts, and we do not set tracking cookies.",
-      "Our hosting provider processes ordinary request data — such as IP address, user agent, requested URL, and timestamp — to deliver the site and protect it from abuse. That data is not linked to your documents and is not used by us to build a profile of you.",
+      "The tools need no account, no email address, and no payment details. We do not run advertising or session-replay scripts, and we do not set tracking cookies.",
+      "We do run a small, privacy-first analytics system. It records anonymous page views and a random visitor ID kept in your browser's local storage, so we can count how many people use the site and which tools are popular. The record contains the page path, a timestamp, the random ID, the browser, operating system and device type derived from the request's user agent, and a two-letter country code supplied by Cloudflare's edge. It contains no IP address, no document data, and nothing that identifies you personally.",
+      "Our hosting provider processes ordinary request data — such as IP address, user agent, requested URL, and timestamp — to deliver the site and protect it from abuse. IP addresses are used transiently for delivery and rate limiting; they are not written to the analytics tables. That request data is not linked to your documents and is not used by us to build a profile of you.",
       "If you email us, we receive your address and whatever you choose to include in the message. We use it only to answer you.",
     ],
   },
   {
     heading: "4. Cookies",
     body: [
-      "SuperPDF does not set cookies for analytics, advertising, or tracking. Functional preferences are stored in your browser's local storage instead, and never sent to us. The Cookie Policy explains what is stored and how to clear it.",
+      "SuperPDF does not set cookies — not for analytics, advertising, or tracking. The anonymous analytics system uses a random ID in your browser's local storage instead of a cookie. The Cookie Policy explains what is stored and how to clear it.",
     ],
   },
   {
     heading: "5. Storage on your device",
     body: [
-      "To make the site convenient, the app can save a small amount of functional data in your browser: your settings, the list of recently used tools and workflows, saved workflow definitions, an in-progress workflow draft, and per-tool preferences and control levels.",
-      "This data stays on your device. It never contains document contents. You can remove all of it from the settings dialog (Clear local data) or through your browser's site-data controls.",
+      "To make the site convenient, the app can save a small amount of functional data in your browser: your settings, the list of recently used tools and workflows, saved workflow definitions, an in-progress workflow draft, per-tool preferences and control levels, and an anonymous analytics visitor ID and visit counter.",
+      "This data stays on your device. It never contains document contents. You can remove all of it from the settings dialog (Clear local data) or through your browser's site-data controls. Removing the analytics ID only makes this browser look new to us; it does not delete aggregate counts.",
       "The offline feature uses the browser's cache storage to keep a copy of the app shell and tool code you have visited, so pages can open without a network connection.",
     ],
   },
@@ -55,13 +57,14 @@ export const privacySections = [
     heading: "7. How long data is kept",
     body: [
       "We do not retain your documents at all. Working copies live in the tab and are released when you close it or clear the tool.",
-      "Functional data in local storage remains until you clear it. Hosting logs are kept by our hosting provider for a limited period under its own retention policy.",
+      "Functional data in local storage remains until you clear it. Anonymous analytics rows are kept in aggregate form; they contain no IP address or document data. Hosting logs are kept by our hosting provider for a limited period under its own retention policy.",
     ],
   },
   {
     heading: "8. Sharing",
     body: [
       "We do not sell personal information, and we do not share document data with anyone, because we never receive it.",
+      "We use Supabase to store anonymous analytics records and Cloudflare to serve the site and supply the country code. Neither receives your documents, and neither is given an IP address by the analytics code.",
       "We may disclose account or contact information if the law requires it, or if it is necessary to protect the site and its users. Since the tools require no account, there is usually nothing to disclose beyond correspondence you have sent us.",
     ],
   },
@@ -172,8 +175,8 @@ export const cookieSections = [
   {
     heading: "1. The short version",
     body: [
-      "SuperPDF does not set analytics, advertising, or tracking cookies. There is no consent banner because there is nothing to consent to.",
-      "Preferences are kept in your browser's local storage, which stays on your device and is never sent to us.",
+      "SuperPDF sets no cookies at all — not for analytics, advertising, or tracking. There is no consent banner because there is nothing to consent to.",
+      "Anonymous analytics uses local storage rather than cookies, and preferences are kept there too. That data stays on your device unless it is an anonymous page-view count sent to our own analytics function.",
     ],
   },
   {
@@ -182,6 +185,7 @@ export const cookieSections = [
       "Settings, including control levels and tool preferences, so a tool opens the way you left it.",
       "Recently used tools and workflows, so you can return to them quickly.",
       "Saved workflow definitions and an in-progress workflow draft.",
+      "An anonymous analytics visitor ID, a “seen” flag and a visit counter, so returning visits can be counted. These contain no personal data and are not linked to your documents.",
       "A service-worker cache of the app shell and tool code you have visited, which powers the offline mode.",
     ],
   },
@@ -195,13 +199,14 @@ export const cookieSections = [
     heading: "4. Third-party requests",
     body: [
       "Tool engine files, such as the OCR language model, may be downloaded from a public content delivery network and cached by your browser. That provider sees the request, as any web server would, but not the document you are processing.",
+      "Anonymous page views are sent to our own Supabase edge function. That is first-party analytics, not an advertising or third-party tracking script. It carries no document data and no IP address.",
       "We do not embed third-party advertising, analytics, or social tracking scripts.",
     ],
   },
   {
     heading: "5. Managing and clearing data",
     body: [
-      "Use Clear local data in the settings dialog to remove saved preferences, recent items, and workflows from this browser.",
+      "Use Clear local data in the settings dialog to remove saved preferences, recent items, workflows, and the anonymous analytics ID from this browser.",
       "Your browser's site-data settings can also clear local storage and cached files for superpdf.milinds.dev. Clearing them does not stop the PDF tools from working.",
     ],
   },
@@ -245,7 +250,7 @@ export const securitySections = [
   {
     heading: "5. What is stored in the browser",
     body: [
-      "Functional preferences, recent items, and saved workflows are kept in local storage. The offline mode caches the app shell and tool code in the browser's cache storage.",
+      "Functional preferences, recent items, saved workflows, and an anonymous analytics visitor ID are kept in local storage. The offline mode caches the app shell and tool code in the browser's cache storage.",
       "No document contents or passwords are stored. Clearing site data removes all of it.",
     ],
   },

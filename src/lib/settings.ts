@@ -110,6 +110,11 @@ export function clearUserData(keepSettings = false): void {
     window.localStorage.removeItem(STORAGE_KEYS.workflowDraft);
     window.localStorage.removeItem(STORAGE_KEYS.toolSettings);
     window.localStorage.removeItem(STORAGE_KEYS.toolModes);
+    // The anonymous analytics identity is local data too. Removing it only
+    // makes this browser look new; it never deletes aggregate counts.
+    window.localStorage.removeItem(STORAGE_KEYS.visitorId);
+    window.localStorage.removeItem(STORAGE_KEYS.visitorSeen);
+    window.localStorage.removeItem(STORAGE_KEYS.visitCount);
     if (!keepSettings) {
       window.localStorage.removeItem(STORAGE_KEYS.settings);
     }

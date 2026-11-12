@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SuperPDFLogo from "@/components/logos/SuperPDFLogo";
 import SupportCta from "@/components/SupportCta/SupportCta";
+import AnalyticsPreview from "@/components/analytics/AnalyticsPreview";
 import { APP_VERSION } from "@/lib/version";
 import styles from "./Footer.module.scss";
 
@@ -23,6 +24,7 @@ const footerLinks: Record<string, { name: string; href: string }[]> = {
     { name: "Business", href: "/business" },
     { name: "Education", href: "/education" },
     { name: "Contact", href: "/contact" },
+    { name: "Analytics", href: "/analytics" },
     { name: "Support us", href: "/support" },
   ],
   Legal: [
@@ -69,6 +71,10 @@ export default function Footer() {
               </ul>
             </nav>
           ))}
+        </div>
+
+        <div className={styles.preview}>
+          <AnalyticsPreview />
         </div>
 
         <div className={styles.bottom}>

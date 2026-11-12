@@ -15,7 +15,7 @@
 51
 <!-- GENERATED:END:status --> |
 | Public surface | Public Beta |
-| Release | v3.0.3.20261112 |
+| Release | v3.0.4.20261112 |
 
 ## 2. Processing model
 
@@ -60,6 +60,11 @@ No third mode without an ADR in `docs/adr/`.
 - **Theme**: the header toggle writes `data-theme` and
   `localStorage["superpdf-theme"]`; the inline boot script applies the stored
   choice before first paint.
+- **Analytics** (`src/lib/analytics`, `src/components/analytics`): anonymous,
+  cookieless pageviews through a Cloudflare Pages proxy and the
+  `superpdf-track`/`superpdf-analytics` Supabase functions. The footer preview
+  and `/analytics` dashboard share one 30-second poll. See
+  `docs/ANALYTICS.md`.
 
 ## 4. Tool registry
 

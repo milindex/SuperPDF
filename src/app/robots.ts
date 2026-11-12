@@ -11,7 +11,8 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         // Service-worker fallback page: nothing to index.
-        disallow: ["/offline"],
+        // Analytics dashboard: private stats, marked noindex in its layout.
+        disallow: ["/offline", "/analytics"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,

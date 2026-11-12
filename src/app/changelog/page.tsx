@@ -4,10 +4,21 @@ import styles from "./changelog.module.scss";
 
 const RELEASES = [
   {
+    version: "v3.0.4",
+    date: "12 November 2026",
+    title: "Private analytics",
+    current: true,
+    changes: [
+      "Added a live analytics dashboard at /analytics with anonymous visitor counts, countries, devices and the most-used tools.",
+      "Added a collapsible live-stats preview to the footer; it shares a single 30-second poll with the dashboard.",
+      "Analytics uses a random localStorage ID with no cookies, no IP storage and no fingerprinting, and stores data in dedicated superpdf_* tables.",
+      "Updated the privacy, cookie and security pages to describe the anonymous analytics, and excluded the dashboard from search engines.",
+    ],
+  },
+  {
     version: "v3.0.3",
     date: "12 November 2026",
     title: "A lighter, faster workbench",
-    current: true,
     changes: [
       "Tool pages now load only the code for the selected tool, so pages open faster and download less.",
       "Image, OCR, compression and document exports now encode straight to binary instead of giant base64 strings, cutting memory use on large PDFs.",

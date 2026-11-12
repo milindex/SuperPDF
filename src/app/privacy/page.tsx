@@ -6,7 +6,7 @@ import { LEGAL_LAST_UPDATED, pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Privacy policy",
   description:
-    "What SuperPDF collects, what stays in your browser, and what happens to your documents. No accounts, no analytics, no uploads.",
+    "What SuperPDF collects, what stays in your browser, and what happens to your documents. No accounts, no uploads, anonymous analytics only.",
   path: "/privacy",
 });
 

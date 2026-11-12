@@ -11,7 +11,7 @@ export const SITE_KOFI = "https://ko-fi.com/D6N42AGXNQ";
 export const SITE_TITLE = "SuperPDF — PDF tools that never upload your files";
 
 export const SITE_DESCRIPTION =
-  "Merge, split, compress, convert, sign and protect PDFs without uploading them. No account, no tracking, no daily limits — your files stay on your device.";
+  "Merge, split, compress, convert, sign and protect PDFs without uploading them. No account, no uploads, no daily limits — your files stay on your device.";
 
 /** Social card served from `public/og-image.png` (1200×630). */
 export const OG_IMAGE = {
@@ -22,7 +22,7 @@ export const OG_IMAGE = {
 };
 
 /** Shown on every legal page; bump when the policies change. */
-export const LEGAL_LAST_UPDATED = "29 October 2026";
+export const LEGAL_LAST_UPDATED = "12 November 2026";
 
 /** Absolute URL for a site-relative path. */
 export function absoluteUrl(path = "/"): string {

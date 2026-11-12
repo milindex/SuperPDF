@@ -11,6 +11,7 @@ import SmoothScroll from "@/components/SmoothScroll/SmoothScroll";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import RecentTracker from "@/components/RecentTracker/RecentTracker";
+import AnalyticsTracker from "@/components/analytics/AnalyticsTracker";
 import { JsonLd } from "@/components/JsonLd/JsonLd";
 import {
   OG_IMAGE,
@@ -128,6 +129,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SmoothScroll />
           <ScrollRuler />
           <RecentTracker />
+          <AnalyticsTracker />
           <div className="app-shell">
             <a href="#main-content" className="skip-link">
               Skip to content

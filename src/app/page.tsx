@@ -178,7 +178,7 @@ export default function HomePage() {
 
             <p className={styles.heroLede} data-reveal>
               Merge, split, compress, convert, sign and protect PDFs without
-              sending them anywhere. No account, no tracking, no cloud — just the
+              sending them anywhere. No account, no uploads, no cloud — just the
               work, done on your device.
             </p>
 

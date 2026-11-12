@@ -51,3 +51,7 @@ public/sw-check.js
 
 # editor/agent config
 .qodo/
+
+# supabase CLI scratch files
+/supabase/.temp/
+/supabase/.branches/
